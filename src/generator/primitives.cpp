@@ -1,0 +1,92 @@
+#include "generator/primitives.hpp"
+
+// Cria os vértices de um plano
+std::vector <float> generatePlane(float length, int divisions) {
+	std::vector <float> vertices;
+	float half = length / 2.0f; 
+	float divlength = length / divisions; 
+	
+	for (int i = 0; i < divisions; i++) {
+		for (int j = 0; j < divisions; j++) {
+			float x1 = (j * divlength) - half;
+			float x2 = x1 + divlength;
+			float z1 = (i * divlength) - half; 
+			float z2 = z1 + divlength;
+
+			utils::addTriangle(vertices, x1, 0, z1, x2, 0, z1, x2, 0, z2);
+			utils::addTriangle(vertices, x1, 0, z1, x2, 0, z2, x1, 0, z2);
+		} 
+	} 
+	return vertices;
+}
+
+// Depois alterar generateBox para usar generatePlane? Código mais limpo
+
+// Cria os vértices de uma caixa/cubo
+std::vector <float> generateBox(float length, int divisions) {
+	std::vector <float> vertices;
+	float half = length / 2.0f;
+	float divlength = length / divisions;
+
+	// faces do plano XZ
+	for (int i = 0; i < divisions; i++) {
+		for (int j = 0; j < divisions; j++) {
+			float x1 = (j * divlength) - half;
+			float x2 = x1 + divlength;
+			float y1 = half;
+			float y2 = -half;
+			float z1 = (i * divlength) - half;
+			float z2 = z1 + divlength;
+
+			// plano "de cima"
+			utils::addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y1, z2);
+			utils::addTriangle(vertices, x1, y1, z1, x2, y1, z2, x1, y1, z2);
+
+			// plano "de baixo"
+			utils::addTriangle(vertices, x1, y2, z1, x2, y2, z1, x2, y2, z2);
+			utils::addTriangle(vertices, x1, y2, z1, x2, y2, z2, x1, y2, z2);
+		}
+	}
+
+	// faces do plano XY
+	for (int i = 0; i < divisions; i++) {
+		for(int j = 0; j < divisions; j++) {
+			float x1 = (j * divlength) - half;
+			float x2 = x1 + divlength;
+			float y1 = (i * divlength) - half;
+			float y2 = y1 + divlength;
+			float z1 = half;
+			float z2 = -half;
+
+			// plano "da frente"
+			utils::addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y2, z1);
+			utils::addTriangle(vertices, x1, y1, z1, x2, y2, z1, x1, y2, z1);
+
+			// plano "de trás"
+			utils::addTriangle(vertices, x1, y1, z2, x2, y1, z2, x2, y2, z2);
+			utils::addTriangle(vertices, x1, y1, z2, x2, y2, z2, x1, y2, z2);
+		}
+	}
+
+	// faces do plano YZ
+	for (int i = 0; i < divisions; i++) {
+		for(int j = 0; j < divisions; j++) {
+			float x1 = half;
+			float x2 = -half;
+			float y1 = (i * divlength) - half;
+			float y2 = y1 + divlength;
+			float z1 = (j * divlength) - half;
+			float z2 = z1 + divlength;
+
+			// plano "da direita"
+			utils::addTriangle(vertices, x1, y1, z1, x1, y1, z2, x1, y2, z2);
+			utils::addTriangle(vertices, x1, y1, z1, x1, y2, z2, x1, y2, z1);
+
+			// plano "da esquerda"
+			utils::addTriangle(vertices, x2, y1, z1, x2, y1, z2, x2, y2, z2);
+			utils::addTriangle(vertices, x2, y1, z1, x2, y2, z2, x2, y2, z1);
+		}
+	}
+
+	return vertices;
+}
