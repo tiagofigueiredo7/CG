@@ -1,13 +1,4 @@
 #include "engine/engine.hpp"
-#include <math.h>
-
-#ifdef __APPLE__
-
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-
-#endif
 
 // Variáveis globais -----------Talvez guardar de forma melhor????? Tipo num ficheiro de configuração ou algo assim
 float posX, posY, posZ;        // Camera position
@@ -42,6 +33,34 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+void createModel(char* model_file) {
+
+    vector<float> vertices;
+
+    ifstream file(model_file);
+    if (!file.is_open()){
+        cerr << "Erro ao abrir ficheiro" << model_file << endl;
+        return;
+    }
+
+    string line;
+    while(getline(file,line)){
+        if (line.empty()) continue;
+
+        istringstream iss(line);
+        float x, y, z;
+        if (!(iss >> x >> y >> z)) {
+            cerr << "Erro ao ler vértice: " << line << endl;
+            continue;
+        }
+        vertices.push_back(x);
+        vertices.push_back(y);
+        vertices.push_back(z);
+    }
+
+    //Terminar de criar o modelo
+}
+
 void renderScene(void) {
 
 	// clear buffers
@@ -53,7 +72,9 @@ void renderScene(void) {
 		      lookX, lookY, lookZ,
 			  upX, upY, upZ);
     
-    glutSolidTeapot(1.0);
+    for (char* model_file : model_files) {
+        createModel(model_file);
+    }
 
 	// End of frame
 	glutSwapBuffers();
