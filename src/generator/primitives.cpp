@@ -1,5 +1,6 @@
 #include "generator/primitives.hpp"
 using namespace std;
+using namespace utils;
 
 // Cria os vértices de um plano
 vector <float> generatePlane(float length, int divisions) {
@@ -14,8 +15,8 @@ vector <float> generatePlane(float length, int divisions) {
 			float z1 = (i * divlength) - half; 
 			float z2 = z1 + divlength;
 
-			utils::addTriangle(vertices, x1, 0, z1, x2, 0, z1, x2, 0, z2);
-			utils::addTriangle(vertices, x1, 0, z1, x2, 0, z2, x1, 0, z2);
+			addTriangle(vertices, x1, 0, z1, x2, 0, z1, x2, 0, z2);
+			addTriangle(vertices, x1, 0, z1, x2, 0, z2, x1, 0, z2);
 		} 
 	} 
 	return vertices;
@@ -40,12 +41,12 @@ vector <float> generateBox(float length, int divisions) {
 			float z2 = z1 + divlength;
 
 			// plano "de cima"
-			utils::addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y1, z2);
-			utils::addTriangle(vertices, x1, y1, z1, x2, y1, z2, x1, y1, z2);
+			addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y1, z2);
+			addTriangle(vertices, x1, y1, z1, x2, y1, z2, x1, y1, z2);
 
 			// plano "de baixo"
-			utils::addTriangle(vertices, x1, y2, z1, x2, y2, z1, x2, y2, z2);
-			utils::addTriangle(vertices, x1, y2, z1, x2, y2, z2, x1, y2, z2);
+			addTriangle(vertices, x1, y2, z1, x2, y2, z1, x2, y2, z2);
+			addTriangle(vertices, x1, y2, z1, x2, y2, z2, x1, y2, z2);
 		}
 	}
 
@@ -60,12 +61,12 @@ vector <float> generateBox(float length, int divisions) {
 			float z2 = -half;
 
 			// plano "da frente"
-			utils::addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y2, z1);
-			utils::addTriangle(vertices, x1, y1, z1, x2, y2, z1, x1, y2, z1);
+			addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y2, z1);
+			addTriangle(vertices, x1, y1, z1, x2, y2, z1, x1, y2, z1);
 
 			// plano "de trás"
-			utils::addTriangle(vertices, x1, y1, z2, x2, y1, z2, x2, y2, z2);
-			utils::addTriangle(vertices, x1, y1, z2, x2, y2, z2, x1, y2, z2);
+			addTriangle(vertices, x1, y1, z2, x2, y1, z2, x2, y2, z2);
+			addTriangle(vertices, x1, y1, z2, x2, y2, z2, x1, y2, z2);
 		}
 	}
 
@@ -80,14 +81,24 @@ vector <float> generateBox(float length, int divisions) {
 			float z2 = z1 + divlength;
 
 			// plano "da direita"
-			utils::addTriangle(vertices, x1, y1, z1, x1, y1, z2, x1, y2, z2);
-			utils::addTriangle(vertices, x1, y1, z1, x1, y2, z2, x1, y2, z1);
+			addTriangle(vertices, x1, y1, z1, x1, y1, z2, x1, y2, z2);
+			addTriangle(vertices, x1, y1, z1, x1, y2, z2, x1, y2, z1);
 
 			// plano "da esquerda"
-			utils::addTriangle(vertices, x2, y1, z1, x2, y1, z2, x2, y2, z2);
-			utils::addTriangle(vertices, x2, y1, z1, x2, y2, z2, x2, y2, z1);
+			addTriangle(vertices, x2, y1, z1, x2, y1, z2, x2, y2, z2);
+			addTriangle(vertices, x2, y1, z1, x2, y2, z2, x2, y2, z1);
 		}
 	}
 
 	return vertices;
+}
+
+// Cria os vértices de uma esfera
+vector <float> generateSphere(float radius, int slices, int stacks) {
+	return vector <float>();
+}
+
+// Cria os vértices de um cone
+vector <float> generateCone(float radius, float height, int slices, int stacks) {
+	return vector <float>();
 }
