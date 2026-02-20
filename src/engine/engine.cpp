@@ -39,7 +39,7 @@ void createModel(char* model_file) {
 
     ifstream file(model_file);
     if (!file.is_open()){
-        cerr << "Erro ao abrir ficheiro" << model_file << endl;
+        cerr << "Erro ao abrir ficheiro: " << model_file << endl;
         return;
     }
 
@@ -58,7 +58,11 @@ void createModel(char* model_file) {
         vertices.push_back(z);
     }
 
-    //Terminar de criar o modelo
+    glBegin(GL_TRIANGLES);
+        for (size_t i = 0; i < vertices.size(); i += 3) {//TODO: Corrigir a renderização das figuras
+            glVertex3f(vertices[i+2], vertices[i + 1], vertices[i]);
+        }
+    glEnd();
 }
 
 void renderScene(void) {
@@ -71,6 +75,22 @@ void renderScene(void) {
 	gluLookAt(posX, posY, posZ, 
 		      lookX, lookY, lookZ,
 			  upX, upY, upZ);
+
+    // put axis drawing in here ----------------------- TEMPORÁRIO ------------------------------------------------------------------
+	glBegin(GL_LINES);
+		// X axis in red
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-100.0f, 0.0f, 0.0f);
+		glVertex3f( 100.0f, 0.0f, 0.0f);
+		// Y Axis in Green
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, -100.0f, 0.0f);
+		glVertex3f(0.0f, 100.0f, 0.0f);
+		// Z Axis in Blue
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, -100.0f);
+		glVertex3f(0.0f, 0.0f, 100.0f);
+	glEnd();
     
     for (char* model_file : model_files) {
         createModel(model_file);
@@ -168,7 +188,11 @@ void processXML(char* file){
         // Ler modelos
         XMLElement* models = group->FirstChildElement("models");
         if (models) {
-            XMLElement* model;
+            XMLElement* model = models->FirstChildElement("model");
+            const char* file = model->Attribute("file");
+            if (file) {
+                model_files.push_back(strdup(file));
+            }
             while((model = models->NextSiblingElement("model")) != nullptr) {
                 const char* file = model->Attribute("file");
                 if (file) {
