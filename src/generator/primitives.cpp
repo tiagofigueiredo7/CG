@@ -131,24 +131,24 @@ vector <float> generateSphere(float radius, float slices, float stacks){
 			float z4 = radius * cos(b1) * cos(a2);
 
 			if (i == 1){
-				utils::addTriangle(vertices, 
+				addTriangle(vertices, 
 				0.0, y1, 0.0,
 				x2, y2, z2,
 				x1, y1, z1
 				);
 			} else if (i == stacks-1) {
-				utils::addTriangle(vertices, 
+				addTriangle(vertices, 
 				0.0, y4, 0.0,
 				x3, y3, z3,
 				x4, y4, z4
 				);
 			} else {
-				utils::addTriangle(vertices, 
+				addTriangle(vertices, 
 				x1, y1, z1,
 				x3, y3, z3,
 				x4, y4, z4
 				);
-				utils::addTriangle(vertices, 
+				addTriangle(vertices, 
 				x1, y1, z1,
 				x4, y4, z4,
 				x2, y2, z2
