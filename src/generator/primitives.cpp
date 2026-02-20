@@ -1,6 +1,4 @@
 #include "generator/primitives.hpp"
-using namespace std;
-using namespace utils;
 
 // Cria os vértices de um plano
 vector <float> generatePlane(float length, int divisions) {
@@ -93,7 +91,7 @@ vector <float> generateBox(float length, int divisions) {
 	return vertices;
 }
 
-vector <float> generateSphere(float radius, float slices, float stacks){
+vector <float> generateSphere(float radius, int slices, int stacks){
 	vector <float> vertices;
 
 	float a = 2*M_PI/slices;
@@ -156,6 +154,8 @@ vector <float> generateSphere(float radius, float slices, float stacks){
 			}
 		}
 	}
+
+	return vertices;
 
 }
 

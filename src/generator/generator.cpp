@@ -1,5 +1,4 @@
-#include "generator/main.hpp"
-using namespace std;
+#include "generator/generator.hpp"
 
 // Armazena os vértices gerados no ficheiro
 void storeVertices(const vector<float>& vertices, const string& file) {
@@ -34,7 +33,7 @@ int main(int argc, char** argv) {
         vertices = generateSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4])); 
     }
     else if (figure == "cone" && argc == 7) {
-        //vertices = generateCone(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
+        vertices = generateCone(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
     }
     else {
         cerr << "ERRO: Parâmetros inválidos.\nUSAGE: generator <primitive> <params> <dest file>";

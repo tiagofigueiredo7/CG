@@ -1,3 +1,0 @@
-/home/ines/Uni/ANO_3/SEMESTRE_2/CG/CG/build/CMakeFiles/generator.dir
-/home/ines/Uni/ANO_3/SEMESTRE_2/CG/CG/build/CMakeFiles/edit_cache.dir
-/home/ines/Uni/ANO_3/SEMESTRE_2/CG/CG/build/CMakeFiles/rebuild_cache.dir

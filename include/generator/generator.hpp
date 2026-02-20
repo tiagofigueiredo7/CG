@@ -4,6 +4,8 @@
 
 #include "generator/primitives.hpp"
 
-void storeVertices(const std::vector<float>& vertices, const std::string& file);
+using namespace std;
+
+void storeVertices(const vector<float>& vertices, const string& file);
 
 int main(int argc, char** argv);
