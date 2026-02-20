@@ -1,8 +1,9 @@
 #include "generator/primitives.hpp"
+using namespace std;
 
 // Cria os vértices de um plano
-std::vector <float> generatePlane(float length, int divisions) {
-	std::vector <float> vertices;
+vector <float> generatePlane(float length, int divisions) {
+	vector <float> vertices;
 	float half = length / 2.0f; 
 	float divlength = length / divisions; 
 	
@@ -23,8 +24,8 @@ std::vector <float> generatePlane(float length, int divisions) {
 // Depois alterar generateBox para usar generatePlane? Código mais limpo
 
 // Cria os vértices de uma caixa/cubo
-std::vector <float> generateBox(float length, int divisions) {
-	std::vector <float> vertices;
+vector <float> generateBox(float length, int divisions) {
+	vector <float> vertices;
 	float half = length / 2.0f;
 	float divlength = length / divisions;
 
