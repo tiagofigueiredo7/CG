@@ -13,15 +13,5 @@ namespace utils {
 		v.push_back(y3);
 		v.push_back(z3);
 	}
-
-	// Função auxiliar para extrair valor de atributo
-	string getAttribute(const string& line, const string& attr) {
-		size_t pos = line.find(attr + "=\"");
-		if (pos == string::npos) return "";
-		
-		pos += attr.length() + 2; // pular attr="
-		size_t end = line.find("\"", pos);
-		return line.substr(pos, end - pos);
-	}
 }
 

@@ -9,13 +9,13 @@
 
 #endif
 
-// Variáveis globais
+// Variáveis globais -----------Talvez guardar de forma melhor????? Tipo num ficheiro de configuração ou algo assim
 float posX, posY, posZ;        // Camera position
 float lookX, lookY, lookZ;     // Camera lookAt
 float upX, upY, upZ;           // Camera up vector
 float fov, nearPlane, farPlane;
 int width, height;
-string model_file = "";
+vector<char *> model_files; // Para guardar vários modelos se necessário
 
 void changeSize(int w, int h) {
 
@@ -147,9 +147,12 @@ void processXML(char* file){
         // Ler modelos
         XMLElement* models = group->FirstChildElement("models");
         if (models) {
-            XMLElement* model = models->FirstChildElement("model");
-            if (model) {
-                model_file = model->Attribute("file");
+            XMLElement* model;
+            while((model = models->NextSiblingElement("model")) != nullptr) {
+                const char* file = model->Attribute("file");
+                if (file) {
+                    model_files.push_back(strdup(file));
+                }
             }
         }
     }

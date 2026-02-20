@@ -3,6 +3,7 @@
 #include <fstream>
 
 #include <tinyxml2.h>
+#include <vector>
 
 #include "utils/utils.hpp"
 
