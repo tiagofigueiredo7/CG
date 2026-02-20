@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
         vertices = generateBox(stof(argv[2]), stoi(argv[3]));
     }
     else if (figure == "sphere" && argc == 6) {
-        //vertices = generateSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4])); 
+        vertices = generateSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4])); 
     }
     else if (figure == "cone" && argc == 7) {
         //vertices = generateCone(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));

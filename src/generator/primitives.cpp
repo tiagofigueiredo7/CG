@@ -91,3 +91,69 @@ vector <float> generateBox(float length, int divisions) {
 
 	return vertices;
 }
+
+vector <float> generateSphere(float radius, float slices, float stacks){
+	vector <float> vertices;
+
+	float a = 2*M_PI/slices;
+	float b = M_PI/stacks;
+
+	float y_cima = radius * sin(b);
+	for (int i = 0; i <= stacks; i++) {
+
+		float b1 = -M_PI/2 + i * b;
+        	float b2 = -M_PI/2 + (i+1) * b;
+
+		for (int j = 0 ; j <= slices ; j++ ){
+
+			float a1 = j * a;
+			float a2 = (j + 1) * a;
+
+			// CANTO SUPERIOR ESQUERDO
+			float x1 = radius * cos(b2) * sin(a1);
+			float y1 = radius * sin(b2);
+			float z1 = radius * cos(b2) * cos(a1);
+
+			// CANTO SUPERIOR DIREITO
+			float x2 = radius * cos(b2) * sin(a2);
+			float y2 = radius * sin(b2);
+			float z2 = radius * cos(b2) * cos(a2);
+
+			// CANTO INFERIOR ESQUERDO
+			float x3 = radius * cos(b1) * sin(a1);
+			float y3 = radius * sin(b1);
+			float z3 = radius * cos(b1) * cos(a1);
+			
+			// CANTO INFERIOR DIREITO
+			float x4 = radius * cos(b1) * sin(a2);
+			float y4 = radius * sin(b1);
+			float z4 = radius * cos(b1) * cos(a2);
+
+			if (i == 1){
+				utils::addTriangle(vertices, 
+				0.0, y1, 0.0,
+				x2, y2, z2,
+				x1, y1, z1
+				);
+			} else if (i == stacks-1) {
+				utils::addTriangle(vertices, 
+				0.0, y4, 0.0,
+				x3, y3, z3,
+				x4, y4, z4
+				);
+			} else {
+				utils::addTriangle(vertices, 
+				x1, y1, z1,
+				x3, y3, z3,
+				x4, y4, z4
+				);
+				utils::addTriangle(vertices, 
+				x1, y1, z1,
+				x4, y4, z4,
+				x2, y2, z2
+				);
+			}
+		}
+	}
+
+}
