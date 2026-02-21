@@ -1,12 +1,12 @@
 #include "engine/engine.hpp"
 
-// Variáveis globais -----------Talvez guardar de forma melhor????? Tipo num ficheiro de configuração ou algo assim
+// Variáveis globais TODO: Talvez guardar de forma melhor?????
 float posX, posY, posZ;        // Camera position
 float lookX, lookY, lookZ;     // Camera lookAt
 float upX, upY, upZ;           // Camera up vector
 float fov, nearPlane, farPlane;
 int width, height;
-vector<char *> model_files; // Para guardar vários modelos se necessário
+vector<char *> model_files;
 
 void changeSize(int w, int h) {
 
