@@ -98,11 +98,10 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 	float a = 2*M_PI/slices;
 	float b = M_PI/stacks;
 
-	float y_cima = radius * sin(b);
-	for (int i = 0; i <= stacks; i++) {
+	for (int i = 0; i < stacks; i++) {
 
-		float b1 = -M_PI/2 + i * b;
-        	float b2 = -M_PI/2 + (i+1) * b;
+		float b1 = M_PI/2 - i * b;
+        	float b2 = M_PI/2 - (i+1) * b;
 
 		for (int j = 0 ; j <= slices ; j++ ){
 
@@ -110,48 +109,37 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 			float a2 = (j + 1) * a;
 
 			// CANTO SUPERIOR ESQUERDO
-			float x1 = radius * cos(b2) * sin(a1);
-			float y1 = radius * sin(b2);
-			float z1 = radius * cos(b2) * cos(a1);
+			float x1 = radius * cos(b1) * sin(a1);
+			float y1 = radius * sin(b1);
+			float z1 = radius * cos(b1) * cos(a1);
 
 			// CANTO SUPERIOR DIREITO
-			float x2 = radius * cos(b2) * sin(a2);
-			float y2 = radius * sin(b2);
-			float z2 = radius * cos(b2) * cos(a2);
+			float x2 = radius * cos(b1) * sin(a2);
+			float y2 = radius * sin(b1);
+			float z2 = radius * cos(b1) * cos(a2);
 
 			// CANTO INFERIOR ESQUERDO
-			float x3 = radius * cos(b1) * sin(a1);
-			float y3 = radius * sin(b1);
-			float z3 = radius * cos(b1) * cos(a1);
-			
-			// CANTO INFERIOR DIREITO
-			float x4 = radius * cos(b1) * sin(a2);
-			float y4 = radius * sin(b1);
-			float z4 = radius * cos(b1) * cos(a2);
+			float x3 = radius * cos(b2) * sin(a1);
+			float y3 = radius * sin(b2);
+			float z3 = radius * cos(b2) * cos(a1);
 
-			if (i == 1){
-				addTriangle(vertices, 
-				0.0, y1, 0.0,
-				x2, y2, z2,
-				x1, y1, z1
-				);
-			} else if (i == stacks-1) {
-				addTriangle(vertices, 
-				0.0, y4, 0.0,
-				x3, y3, z3,
-				x4, y4, z4
-				);
-			} else {
-				addTriangle(vertices, 
-				x1, y1, z1,
-				x3, y3, z3,
-				x4, y4, z4
-				);
-				addTriangle(vertices, 
-				x1, y1, z1,
-				x4, y4, z4,
-				x2, y2, z2
-				);
+			// CANTO INFERIOR DIREITO
+			float x4 = radius * cos(b2) * sin(a2);
+			float y4 = radius * sin(b2);
+			float z4 = radius * cos(b2) * cos(a2);
+
+			if (i == 0) {
+				// Polo superior
+				addTriangle(vertices, x1, y1, z1, x3, y3, z3, x4, y4, z4);
+			} 
+			else if (i == stacks - 1) {
+				// Polo inferior
+				addTriangle(vertices, x2, y2, z2, x1, y1, z1, x3, y3, z3);
+			} 
+			else {
+				// Parte média
+				addTriangle(vertices, x1, y1, z1, x3, y3, z3, x4, y4, z4);
+				addTriangle(vertices, x1, y1, z1, x4, y4, z4, x2, y2, z2);
 			}
 		}
 	}
