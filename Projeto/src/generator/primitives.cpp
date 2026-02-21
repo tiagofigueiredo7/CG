@@ -132,6 +132,7 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 				addTriangle(vertices, x1, y1, z1, x3, y3, z3, x4, y4, z4);
 			} 
 			else if (i == stacks - 1) {
+				// Polo inferior
 				addTriangle(vertices, x2, y2, z2, x1, y1, z1, x3, y3, z3);
 			} 
 			else {
