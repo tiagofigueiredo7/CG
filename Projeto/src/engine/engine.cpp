@@ -59,8 +59,8 @@ void createModel(char* model_file) {
     }
 
     glBegin(GL_TRIANGLES);
-        for (size_t i = 0; i < vertices.size(); i += 3) {//TODO: Corrigir a renderização das figuras
-            glVertex3f(vertices[i+2], vertices[i + 1], vertices[i]);
+        for (size_t i = 0; i < vertices.size(); i += 3) {
+            glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
         }
     glEnd();
 }
@@ -76,7 +76,7 @@ void renderScene(void) {
 		      lookX, lookY, lookZ,
 			  upX, upY, upZ);
 
-    // put axis drawing in here ----------------------- TEMPORÁRIO ------------------------------------------------------------------
+    // put axis drawing in here
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -91,6 +91,9 @@ void renderScene(void) {
 		glVertex3f(0.0f, 0.0f, -100.0f);
 		glVertex3f(0.0f, 0.0f, 100.0f);
 	glEnd();
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glColor3f(1.0f, 1.0f, 1.0f); // cor branca
     
     for (char* model_file : model_files) {
         createModel(model_file);
@@ -189,15 +192,12 @@ void processXML(char* file){
         XMLElement* models = group->FirstChildElement("models");
         if (models) {
             XMLElement* model = models->FirstChildElement("model");
-            const char* file = model->Attribute("file");
-            if (file) {
-                model_files.push_back(strdup(file));
-            }
-            while((model = models->NextSiblingElement("model")) != nullptr) {
+            while(model != nullptr) {
                 const char* file = model->Attribute("file");
                 if (file) {
                     model_files.push_back(strdup(file));
                 }
+                model = model->NextSiblingElement("model");
             }
         }
     }
@@ -230,7 +230,6 @@ int main(int argc, char** argv) {
 
     //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 	
     // enter GLUT's main cycle
 	glutMainLoop();
