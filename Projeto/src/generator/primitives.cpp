@@ -156,7 +156,6 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 	}
 
 	return vertices;
-
 }
 
 // Cria os vértices de um cone
@@ -214,9 +213,6 @@ vector <float> generateCone(float radius, float height, int slices, int stacks) 
 			addTriangle(vertices, x1, y1, z1, x3, y3, z3, x4, y4, z4);
 			addTriangle(vertices, x1, y1, z1, x4, y4, z4, x2, y2, z2);
 		}
-
 	}
-
-
 	return vertices;
 }
