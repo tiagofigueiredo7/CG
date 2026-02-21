@@ -230,6 +230,7 @@ int main(int argc, char** argv) {
 
     //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE); // Remove faces traseiras automaticamente /////O resultado varia se estiver ativado ou não
 	
     // enter GLUT's main cycle
 	glutMainLoop();
