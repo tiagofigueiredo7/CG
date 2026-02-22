@@ -1,12 +1,12 @@
 #include "engine/engine.hpp"
 
-// Variáveis globais TODO: Talvez guardar de forma melhor?????
+// Variáveis globais
 float posX, posY, posZ;        // Camera position
 float lookX, lookY, lookZ;     // Camera lookAt
 float upX, upY, upZ;           // Camera up vector
-float fov, nearPlane, farPlane;
-int width, height;
-vector<char *> model_files;
+float fov, nearPlane, farPlane;// Perspective parameters
+int width, height;             // Window size parameters
+vector<char *> model_files;    // Model files
 
 void changeSize(int w, int h) {
 
@@ -76,22 +76,6 @@ void renderScene(void) {
 		      lookX, lookY, lookZ,
 			  upX, upY, upZ);
 
-    // put axis drawing in here
-	glBegin(GL_LINES);
-		// X axis in red
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-100.0f, 0.0f, 0.0f);
-		glVertex3f( 100.0f, 0.0f, 0.0f);
-		// Y Axis in Green
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, -100.0f, 0.0f);
-		glVertex3f(0.0f, 100.0f, 0.0f);
-		// Z Axis in Blue
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f, 0.0f, -100.0f);
-		glVertex3f(0.0f, 0.0f, 100.0f);
-	glEnd();
-
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
     
@@ -101,18 +85,6 @@ void renderScene(void) {
 
 	// End of frame
 	glutSwapBuffers();
-}
-
-
-
-// write function to process keyboard events
-void processKeys(unsigned char key, int x, int y){
-
-}
-
-
-void processSpecialKeys(int key_code, int x, int y){
-
 }
 
 void processXML(char* file){
@@ -221,12 +193,6 @@ int main(int argc, char** argv) {
     // Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-
-	
-    // put here the registration of the keyboard callbacks
-	glutKeyboardFunc(processKeys);
-	glutSpecialFunc(processSpecialKeys);
-
 
     //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
