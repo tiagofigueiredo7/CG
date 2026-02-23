@@ -27,10 +27,6 @@ void changeSize(int w, int h);
 
 void renderScene(void);
 
-void processKeys(unsigned char key, int xx, int yy);
-
-void processSpecialKeys(int key, int xx, int yy);
-
 void processXML(char* file);
 
 void createModel(char* model_file);
