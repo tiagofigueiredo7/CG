@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "generator/primitives.hpp"
+#include "primitives.hpp"
 
 using namespace std;
 

@@ -1,3 +1,13 @@
+// Biblioteca do glut
+#ifdef __APPLE__
+
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+
+#endif
+
+// Bibliotcas uteis
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -7,15 +17,8 @@
 #include <math.h>
 #include <sstream>
 
-#ifdef __APPLE__
-
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-
-#endif
-
-#include "utils/utils.hpp"
+// Nossas bibliotecas
+#include "../utils/utils.hpp"
 
 using namespace std;
 using namespace utils;
