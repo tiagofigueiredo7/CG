@@ -3,6 +3,9 @@ project(CG)
 
 include_directories(include)
 
+# Definir preferência para usar GLVND (OpenGL moderno)
+set(OpenGL_GL_PREFERENCE GLVND)
+
 # Encontrar bibliotecas necessárias
 find_package(TinyXML2 REQUIRED)
 find_package(OpenGL REQUIRED)
