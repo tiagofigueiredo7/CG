@@ -2,7 +2,7 @@
 
 // Armazena os vértices gerados no ficheiro
 void storeVertices(const vector<float>& vertices, const string& file) {
-    ofstream out(file);
+    ofstream out("./models/" + file);
     if (!out.is_open()) {
         cerr << "ERRO: Não foi possível abrir o ficheiro.";
         return;

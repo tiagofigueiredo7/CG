@@ -1,4 +1,5 @@
 # Pasta .vscode/
 .vscode/
 
-
+# Pasta build
+projeto/src/build/*
