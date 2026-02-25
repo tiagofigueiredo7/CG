@@ -40,7 +40,7 @@ namespace util {
 			}
 		}
 		else {
-			cerr << "[ERRO] Figura não suportada.";
+			cerr << "[ERRO] Figura não suportada.\n";
 			return false;
 		}
 		return true;

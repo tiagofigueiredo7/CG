@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
         vertices = generateCylinder(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
     }
     else {
-        cerr << "[ERRO] Figura não suportada.";
+        cerr << "[ERRO] Figura não suportada.\n";
         return 1;
     }
 
