@@ -13,6 +13,7 @@
 #include "sphere.hpp"
 #include "cone.hpp"
 #include "torus.hpp"
+#include "cilinder.hpp"
 
 using namespace std;
 

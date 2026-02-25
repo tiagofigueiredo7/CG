@@ -33,6 +33,12 @@ namespace util {
 				return false;
 			}
 		}
+		else if(figure == "cilinder"){
+			if(parameters != 6) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura cilinder.\n[USO] generator cilinder <radius> <height> <slices> <dest file>\n";
+				return false;
+			}
+		}
 		else {
 			cerr << "[ERRO] Figura não suportada.";
 			return false;
