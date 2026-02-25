@@ -16,8 +16,6 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - <<report fase 3>>
 - <<report fase 4>>
 
----
-
 > ⚠️ **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
 
 ## Compile
@@ -54,3 +52,5 @@ Este comando é genérico já que é necessário especificar o ficheiro de cena 
 ```bash
 ./engine ../../tests/other/p1/sphere.3d
 ```
+
+> **Nota:** Os ficheiros de cena devem estar localizados na diretoria `projeto/tests/` ou em subdiretorias da mesma, e os ficheiros de modelos devem estar localizados na diretoria `projeto/models/`.
