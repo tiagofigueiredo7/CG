@@ -1,0 +1,14 @@
+<world> 
+    <window width="512" height="512" />
+    <camera> 
+	    <position x="1100" y="800" z="900" />
+	    <lookAt x="0" y="0" z="0" />
+	    <up x="0" y="1" z="0" />
+        <projection fov="100" near="1" far="5000" /> 
+    </camera>
+	<group>
+  		<models> 
+			<model file="../../tests/others/p1/cow.3d" />
+ 		</models>
+ 	</group>
+</world>
