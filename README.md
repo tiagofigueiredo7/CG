@@ -1,5 +1,5 @@
 # CG (Computação Gráfica)
-Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação Gráfica. Este projeto consistiu na implementação de um  mini motor gráfico 3D baseado em cenas, e de um gerador que forneça exemplos de utilização para o mesmo.
+Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação Gráfica. Este projeto consistiu na implementação de um  mini motor gráfico 3D baseado numa estrutura de <i>scene graph</i>, e de um gerador que forneça exemplos de utilização para o mesmo.
 
 ### Membros do Grupo
 - [Duarte Escairo](https://github.com/darteescar)

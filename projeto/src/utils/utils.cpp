@@ -5,13 +5,13 @@ namespace util {
 	bool checkInput(const int parameters , const string figure){
 		if (figure == "plane"){
 			if(parameters != 5) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura plane.\n[USO] generator plane <size> <divisions> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura plane.\n[USO] generator plane <length> <divisions> <dest file>\n";
 				return false;
 			}
 		}
 		else if (figure == "box"){
 			if(parameters != 5) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura box.\n[USO] generator box <size> <divisions> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura box.\n[USO] generator box <length> <divisions> <dest file>\n";
 				return false;
 			}
 		}
