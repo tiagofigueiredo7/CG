@@ -41,8 +41,8 @@ int main(int argc, char** argv) {
     else if (figure == "torus") {
         vertices = generateTorus(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
     }
-    else if(figure == "cilinder") {
-        vertices = generateCilinder(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
+    else if(figure == "cylinder") {
+        vertices = generateCylinder(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
     }
     else {
         cerr << "[ERRO] Figura não suportada.";

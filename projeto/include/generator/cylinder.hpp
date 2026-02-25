@@ -1,5 +1,5 @@
-#ifndef CILINDER_HPP
-#define CILINDER_HPP
+#ifndef CYLINDER_HPP
+#define CYLINDER_HPP
 
 // Bibliotecas uteis
 #include <cmath>
@@ -10,6 +10,6 @@
 using namespace std;
 using namespace util;
 
-vector <float> generateCilinder(float radius, float height, int slices);
+vector <float> generateCylinder(float radius, float height, int slices);
 
 #endif

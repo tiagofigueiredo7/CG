@@ -1,6 +1,6 @@
-#include "generator/cilinder.hpp"
+#include "generator/cylinder.hpp"
 
-vector <float> generateCilinder(float radius, float height, int slices){
+vector <float> generateCylinder(float radius, float height, int slices){
     vector<float> vertices;
 
     // Delta alpha
