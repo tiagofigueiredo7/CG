@@ -1,3 +1,14 @@
+#ifndef ENGINE_HPP
+#define ENGINE_HPP
+
+// Biblioteca do glut
+#ifdef __APPLE__ // Para correr em MacOS
+#include <GLUT/glut.h>  // Para correr em MacOS
+#else
+#include <GL/glut.h>    // Para correr em Linux
+#endif
+
+// Bibliotecas uteis
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -7,15 +18,8 @@
 #include <math.h>
 #include <sstream>
 
-#ifdef __APPLE__
-
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-
-#endif
-
-#include "utils/utils.hpp"
+// Bibliotecas locais
+#include "../utils/utils.hpp"
 
 using namespace std;
 using namespace utils;
@@ -30,3 +34,5 @@ void renderScene(void);
 void processXML(char* file);
 
 void createModel(char* model_file);
+
+#endif

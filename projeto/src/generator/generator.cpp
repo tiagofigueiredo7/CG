@@ -35,6 +35,9 @@ int main(int argc, char** argv) {
     else if (figure == "cone" && argc == 7) {
         vertices = generateCone(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
     }
+    else if (figure == "torus" && argc == 7) {
+        vertices = generateTorus(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
+    }
     else {
         cerr << "ERRO: Parâmetros inválidos.\nUSAGE: generator <primitive> <params> <dest file>";
         return 1;
