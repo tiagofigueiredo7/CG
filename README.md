@@ -50,7 +50,7 @@ Para correr o programa `engine`, basta correr o seguinte comando no terminal, a 
 Este comando é genérico já que é necessário especificar o ficheiro de cena a ser renderizado. Como exemplo de utilização, o comando abaixo renderiza a cena descrita no ficheiro `sphere.3d`:
 
 ```bash
-./engine ../../tests/other/p1/sphere.3d
+./engine ../../tests/others/p1/sphere.xml
 ```
 
 > **Nota:** Os ficheiros de cena devem estar localizados na diretoria `projeto/tests/` ou em subdiretorias da mesma, e os ficheiros de modelos devem estar localizados na diretoria `projeto/models/`.
