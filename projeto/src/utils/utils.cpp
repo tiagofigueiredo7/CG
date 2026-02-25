@@ -5,31 +5,31 @@ namespace util {
 	bool checkInput(const int parameters , const string figure){
 		if (figure == "plane"){
 			if(parameters != 5) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura plane.\n[USAGE] generator plane <size> <divisions> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura plane.\n[USO] generator plane <size> <divisions> <dest file>\n";
 				return false;
 			}
 		}
 		else if (figure == "box"){
 			if(parameters != 5) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura box.\n[nUSAGE] generator box <size> <divisions> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura box.\n[USO] generator box <size> <divisions> <dest file>\n";
 				return false;
 			}
 		}
 		else if (figure == "sphere"){
 			if(parameters != 6) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura sphere.\n[USAGE] generator sphere <radius> <slices> <stacks> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura sphere.\n[USO] generator sphere <radius> <slices> <stacks> <dest file>\n";
 				return false;
 			}
 		}
 		else if (figure == "cone"){
 			if(parameters != 7) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura cone.\n[USAGE] generator cone <radius> <height> <slices> <stacks> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura cone.\n[USO] generator cone <radius> <height> <slices> <stacks> <dest file>\n";
 				return false;
 			}
 		}
 		else if (figure == "torus"){
 			if(parameters != 7) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura torus.\n[USAGE] generator torus <majorRadius> <minorRadius> <slices> <stacks> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura torus.\n[USO] generator torus <majorRadius> <minorRadius> <slices> <stacks> <dest file>\n";
 				return false;
 			}
 		}
