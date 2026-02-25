@@ -11,6 +11,7 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include "cone.hpp"
+#include "torus.hpp"
 
 using namespace std;
 
