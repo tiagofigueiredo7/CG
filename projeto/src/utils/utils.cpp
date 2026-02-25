@@ -1,6 +1,6 @@
-#include "utils/utils.hpp"
+#include "utils/util.hpp"
 
-namespace utils {
+namespace util {
 	// Fazer a verificação do input do generator
 	bool checkInput(const int parameters , const string figure){
 		if (figure == "plane"){

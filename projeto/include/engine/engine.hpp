@@ -19,10 +19,10 @@
 #include <sstream>
 
 // Bibliotecas locais
-#include "../utils/utils.hpp"
+#include "utils/util.hpp"
 
 using namespace std;
-using namespace utils;
+using namespace util;
 using namespace tinyxml2;
 
 int main(int argc, char** argv);

@@ -7,7 +7,7 @@
 #include <fstream>
 
 // Bibliotecas locais
-#include "utils/utils.hpp"
+#include "utils/util.hpp"
 #include "plane.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
