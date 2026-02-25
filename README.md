@@ -45,7 +45,7 @@ Este comando é genérico já que é necessário especificar a figura, os parâm
 Para correr o programa `engine`, basta correr o seguinte comando no terminal, a partir da diretoria `projeto/build`:
 
 ```bash
-./engine <scene_file.xml>
+./engine <scene_file>
 ```
 Este comando é genérico já que é necessário especificar o ficheiro de cena a ser renderizado. Como exemplo de utilização, o comando abaixo renderiza a cena descrita no ficheiro `sphere.3d`:
 
