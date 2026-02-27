@@ -39,8 +39,8 @@ vector <float> generateBox(float length, int divisions) {
             float z2 = -half;
 
             // plano "da frente"
-            addTriangle(vertices, x1, y1, z1, x2, y2, z1, x2, y1, z1);
-            addTriangle(vertices, x1, y1, z1, x1, y2, z1, x2, y2, z1);
+            addTriangle(vertices, x1, y1, z1, x2, y2, z1, x1, y2, z1);
+            addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y2, z1);
 
             // plano "de trás"
 			addTriangle(vertices, x1, y1, z2, x1, y2, z2, x2, y2, z2);
