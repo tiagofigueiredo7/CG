@@ -7,11 +7,13 @@
 #include <fstream>
 
 // Bibliotecas locais
+#include "utils/util.hpp"
 #include "plane.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
 #include "cone.hpp"
 #include "torus.hpp"
+#include "cylinder.hpp"
 
 using namespace std;
 

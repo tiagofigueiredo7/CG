@@ -1,0 +1,147 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,decorations.markings,angles,quotes}
+
+\begin{document}
+
+\tdplotsetmaincoords{70}{110}
+\begin{tikzpicture}[tdplot_main_coords, scale=3]
+    
+    % Parâmetros da esfera
+    \def\r{2}
+    \def\slices{12}
+    \def\stacks{8}
+    
+    % Desenhar meridianos (slices - variando α)
+    \foreach \i in {0,...,\numexpr\slices-1} {
+        \pgfmathsetmacro{\alpha}{\i * 360 / \slices}
+        \draw[gray!30, very thin] 
+            plot[domain=-90:90, samples=40, smooth, variable=\beta] 
+            ({\r*cos(\beta)*sin(\alpha)}, {\r*cos(\beta)*cos(\alpha)}, {\r*sin(\beta)});
+    }
+    
+    % Desenhar paralelos (stacks - variando β)
+    \foreach \s in {1,...,\numexpr\stacks-1} {
+        \pgfmathsetmacro{\beta}{90 - \s * 180 / \stacks}
+        \draw[gray!30, very thin] 
+            plot[domain=0:360, samples=60, smooth, variable=\alpha] 
+            ({\r*cos(\beta)*sin(\alpha)}, {\r*cos(\beta)*cos(\alpha)}, {\r*sin(\beta)});
+    }
+    
+    % Contorno da esfera
+    \draw[thick, black!70] (0,0,0) circle (\r);
+    
+    % Eixos coordenados
+    \draw[-Stealth, line width=1.2pt, blue!70!black] (0,0,0) -- (\r+0.7, 0, 0) node[right] {$z$};
+    \draw[-Stealth, line width=1.2pt, green!70!black] (0,0,0) -- (0, 0, \r+0.7) node[above] {$y$};
+    \draw[-Stealth, line width=1.2pt, red!70!black] (0,0,0) -- (0, \r+0.7, 0) node[above] {$x$};
+    
+    % Escolher ângulos específicos para demonstração
+    \pgfmathsetmacro{\betai}{35}         % βᵢ
+    \pgfmathsetmacro{\betaip}{15}        % βᵢ₊₁
+    \pgfmathsetmacro{\alphaj}{45}        % αⱼ
+    \pgfmathsetmacro{\alphajp}{75}       % αⱼ₊₁
+    
+    % Calcular coordenadas dos 4 pontos
+    \pgfmathsetmacro{\xone}{\r*cos(\betai)*sin(\alphaj)}
+    \pgfmathsetmacro{\yone}{\r*sin(\betai)}
+    \pgfmathsetmacro{\zone}{\r*cos(\betai)*cos(\alphaj)}
+    
+    \pgfmathsetmacro{\xtwo}{\r*cos(\betai)*sin(\alphajp)}
+    \pgfmathsetmacro{\ytwo}{\r*sin(\betai)}
+    \pgfmathsetmacro{\ztwo}{\r*cos(\betai)*cos(\alphajp)}
+    
+    \pgfmathsetmacro{\xthree}{\r*cos(\betaip)*sin(\alphaj)}
+    \pgfmathsetmacro{\ythree}{\r*sin(\betaip)}
+    \pgfmathsetmacro{\zthree}{\r*cos(\betaip)*cos(\alphaj)}
+    
+    \pgfmathsetmacro{\xfour}{\r*cos(\betaip)*sin(\alphajp)}
+    \pgfmathsetmacro{\yfour}{\r*sin(\betaip)}
+    \pgfmathsetmacro{\zfour}{\r*cos(\betaip)*cos(\alphajp)}
+    
+    % Destacar arcos do quadrilátero
+    \draw[red!70, line width=1.2pt] 
+        plot[domain=\alphaj:\alphajp, samples=20, smooth, variable=\alpha] 
+        ({\r*cos(\betai)*sin(\alpha)}, {\r*cos(\betai)*cos(\alpha)}, {\r*sin(\betai)});
+    
+    \draw[red!70, line width=1.2pt] 
+        plot[domain=\alphaj:\alphajp, samples=20, smooth, variable=\alpha] 
+        ({\r*cos(\betaip)*sin(\alpha)}, {\r*cos(\betaip)*cos(\alpha)}, {\r*sin(\betaip)});
+    
+    \draw[red!70, line width=1.2pt] 
+        plot[domain=\betaip:\betai, samples=20, smooth, variable=\beta] 
+        ({\r*cos(\beta)*sin(\alphaj)}, {\r*cos(\beta)*cos(\alphaj)}, {\r*sin(\beta)});
+    
+    \draw[red!70, line width=1.2pt] 
+        plot[domain=\betaip:\betai, samples=20, smooth, variable=\beta] 
+        ({\r*cos(\beta)*sin(\alphajp)}, {\r*cos(\beta)*cos(\alphajp)}, {\r*sin(\beta)});
+    
+    % Marcar pontos com coordenadas esféricas
+    \fill[black] (\xone, \zone, \yone) circle (0.04);
+    \node[above left, font=\large, shift={(0,1.5,0.3)}] at (\xone, \zone, \yone) 
+        {$(x2,$ \\ $y2,$ \\ $z2)$};
+    
+    \fill[black] (\xtwo, \ztwo, \ytwo) circle (0.04);
+    \node[above right, font=\large, shift={(0.05,-1,0.2)}] at (\xtwo, \ztwo, \ytwo) 
+        {$(x1,$ \\ $y1,$ \\ $z1)$};
+    
+    \fill[black] (\xthree, \zthree, \ythree) circle (0.04);
+    \node[below left, font=\large,shift={(0.05,1,-0.1)}] at (\xthree, \zthree, \ythree) 
+        {$(x4,$ \\ $y4,$ \\ $z4)$};
+    
+    \fill[black] (\xfour, \zfour, \yfour) circle (0.04);
+    \node[below right, font=\large,shift={(0.05,-0.7,-0.3)}] at (\xfour, \zfour, \yfour) 
+        {$(x3,$ \\ $y3,$ \\ $z3)$};
+    
+    % =========================
+    % Ângulo α no plano XZ
+    % =========================
+    
+    \def\raioangulo{1.2} % mesmo comprimento para as duas semirretas
+    
+    % Calcular o raio da semirreta até a projeção de (x2,0,z2)
+    \pgfmathsetmacro{\raiosemirreta}{sqrt(\xtwo*\xtwo + \ztwo*\ztwo)}
+    
+    % Semirreta direção α_j até x2,0,z2
+    \draw[orange!80, thick, dashed] 
+        (0,0,0) -- ({\raiosemirreta*sin(\alphaj)}, {\raiosemirreta*cos(\alphaj)}, 0);
+    
+    % semirreta direção α_{j+1} (mesmo comprimento)
+    \draw[orange!80, thick, dashed] 
+        (0,0,0) -- ({\raioangulo*sin(\alphajp)}, {\raioangulo*cos(\alphajp)}, 0);
+    
+    % arco com seta a começar em α_{j+1} e a apontar para α_j
+    \draw[orange!80, thick, -{Stealth}] 
+        plot[domain=\alphajp:\alphaj, samples=30, variable=\t] 
+            ({\raioangulo*sin(\t)}, {\raioangulo*cos(\t)}, 0);
+    
+    % etiqueta centrada automaticamente
+    \node[orange!80!black, font=\small] 
+        at ({1.4*sin((\alphaj+\alphajp)/2)}, 
+            {1.4*cos((\alphaj+\alphajp)/2)}, 0) 
+    {$\Delta\alpha$};
+    % Mostrar ângulo β
+    \draw[purple!70, thick, dashed] (0,0,0) -- (\xone, \zone, \yone);
+    \draw[purple!70, thick, dashed] (\xone, \zone, 0) -- (\xone, \zone, \yone);
+    \draw[purple!70, thick, {Stealth}-] 
+        plot[domain=0:\betai, samples=15, variable=\t] 
+        ({0.9*cos(\t)*sin(\alphaj)}, {0.9*cos(\t)*cos(\alphaj)}, {0.9*sin(\t)});
+    \node[purple!70!black, font=\small] at (0.6, 0.3, 0.5) {$\beta_i$};
+    
+    % Polos
+    \fill[green!60!black] (0, 0, \r) circle (0.04) node[right, font=\small] {$(0, r, 0)$};
+    \fill[green!60!black] (0, 0, -\r) circle (0.04) node[right, font=\small] {$(0, -r, 0)$};
+    
+    % Anotações
+    \node[align=left, font=\large, draw, fill=white, rounded corners,shift={(0.05,0,1)}] at (2.8, 0, 1.5) {
+        $\alpha \in [0, 2\pi]$ \\
+        $\beta \in [-\pi/2, \pi/2]$ \\[2pt]
+        $\Delta\alpha = \frac{2\pi}{\text{slices}}$ \\
+        $\Delta\beta = \frac{\pi}{\text{stacks}}$
+    };
+    
+\end{tikzpicture}
+
+\end{document}

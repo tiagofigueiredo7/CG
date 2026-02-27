@@ -1,0 +1,112 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,decorations.markings,patterns}
+
+\begin{document}
+
+\tdplotsetmaincoords{70}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=2.5]
+    
+    % Parâmetros do cilindro
+    \def\radius{1.2}
+    \def\height{3}
+    \def\slices{16}
+    \pgfmathsetmacro{\htop}{\height/2}
+    \pgfmathsetmacro{\hbot}{-\height/2}
+    
+    % Desenhar algumas fatias (slices) - linhas verticais
+    \foreach \i in {0,2,...,14} {
+        \pgfmathsetmacro{\alpha}{\i * 360 / \slices}
+        \pgfmathsetmacro{\xx}{\radius * sin(\alpha)}
+        \pgfmathsetmacro{\zz}{\radius * cos(\alpha)}
+        \draw[gray!40, very thin] (\xx, \zz, \hbot) -- (\xx, \zz, \htop);
+    }
+    
+    % Base inferior (y = -h/2)
+    \draw[thick] (0, 0, \hbot) circle (\radius);
+    
+    % Base superior (y = h/2)
+    \draw[thick] (0, 0, \htop) circle (\radius);
+    
+    % Contorno lateral do cilindro
+    \draw[thick] (\radius, 0, \hbot) -- (\radius, 0, \htop);
+    \draw[thick] (-\radius, 0, \hbot) -- (-\radius, 0, \htop);
+    
+    % Eixos coordenados
+    \draw[-Stealth, line width=1pt, blue!70!black] (0, 0, 0) -- (\radius+0.7, 0, 0) node[right] {$z$};
+    \draw[-Stealth, line width=1pt, green!70!black] (0, 0, 0) -- (0, 0, \htop+0.6) node[above] {$y$};
+    \draw[-Stealth, line width=1pt, red!70!black] (0, 0, 0) -- (0, \radius+0.7, 0) node[above] {$x$};
+    
+    % Centros das bases
+    \fill (0, 0, 0) circle (0.03) node[left, font=\small, shift={(0,0.7,-0.4)}] {$(0, 0, 0)$};
+    \fill (0, 0, \htop) circle (0.03) node[above left, font=\small, shift={(0,0,0)}] {$(0, h/2, 0)$};
+    \fill (0, 0, \hbot) circle (0.03) node[below left, font=\small, shift={(0,0.85,0.85)}] {$(0, -h/2, 0)$};
+    
+    % Destacar um quadrilátero da superfície lateral
+    \pgfmathsetmacro{\alphai}{50}
+    \pgfmathsetmacro{\alphaip}{80}
+    
+    \pgfmathsetmacro{\xone}{\radius * sin(\alphai)}
+    \pgfmathsetmacro{\zone}{\radius * cos(\alphai)}
+    
+    \pgfmathsetmacro{\xtwo}{\radius * sin(\alphaip)}
+    \pgfmathsetmacro{\ztwo}{\radius * cos(\alphaip)}
+    
+    % Quadrilátero na superfície lateral
+    \draw[blue!70, line width=1.2pt] 
+        (\xone, \zone, \hbot) -- (\xtwo, \ztwo, \hbot) -- 
+        (\xtwo, \ztwo, \htop) -- (\xone, \zone, \htop) -- cycle;
+    
+    % Marcar os 4 vértices do quadrilátero
+    \fill[black] (\xone, \zone, \hbot) circle (0.03);
+    \node[below right, font=\normalsize, shift={(0,-0.85,-0.3)}] at (\xone, \zone, \hbot) 
+        {$(x2,$ \\ $-h/2,$ \\ $z2)$};
+    
+    \fill[black] (\xtwo, \ztwo, \hbot) circle (0.03);
+    \node[below left, font=\normalsize, shift={(0,1,0.3)}] at (\xtwo+0.2, \ztwo+0.2, \hbot) 
+        {$(x1,$ \\ $-h/2,$ \\ $z1)$};
+    
+    \fill[black] (\xone, \zone, \htop) circle (0.03);
+    \node[above right, font=\normalsize, shift={(0,-0.2,-0.35)}] at (\xone - 0.2, \zone-0.4, \htop) 
+        {$(x2,$ \\ $h/2,$ \\ $z2)$};
+    
+    \fill[black] (\xtwo, \ztwo, \htop) circle (0.03);
+    \node[above left, font=\normalsize, shift={(0,0.5,-0.1)}] at (\xtwo - 0.4, \ztwo, \htop ) 
+        {$(x1,$ \\ $h/2,$ \\ $z1)$};
+    
+    % Marcar pontos nas bases (para triângulos da base)
+    \pgfmathsetmacro{\alphaBase}{30}
+    \pgfmathsetmacro{\xbase}{\radius * sin(\alphaBase)}
+    \pgfmathsetmacro{\zbase}{\radius * cos(\alphaBase)}
+    
+    % Na base inferior
+    \fill[orange!70] (\xbase, \zbase, \hbot) circle (0.03);
+    \draw[orange!70, thick, dashed] (0, 0, \hbot) -- (\xbase, \zbase, \hbot);
+    \node[below, font=\normalsize, orange!70!black] at (\xbase/4, \zbase/0.7, \hbot/1) 
+        {$(r\sin\alpha, r\cos\alpha, -h/2)$};
+    
+    % Mostrar ângulo α
+    \draw[purple!70, thick, -{Stealth}] 
+        plot[domain=0:\alphaBase, samples=20, variable=\t] 
+        ({0.5*sin(\t)}, {0.5*cos(\t)}, \hbot);
+    \node[purple!70!black, font=\small] at (-0.1, 0.4, \hbot) {$\alpha$};
+    
+    % Anotações de dimensões
+    \draw[<->, thick] (0, 0, \hbot) -- (\radius, 0, \hbot);
+    \node[below, font=\normalsize] at (\radius/2, 0, \hbot) {$r$};
+    
+    \draw[<->, thick] (\radius+0.4, 0, \hbot) -- (\radius+0.4, 0, \htop);
+    \node[right, font=\normalsize] at (\radius+0.8, 0, -0.2) {$h$};
+    
+    % Anotações
+    \node[align=left, font=\normalsize, draw, fill=white, rounded corners, shift={(0,0,0.2)}] at (-2, 0, 2) {
+        $\alpha = i \cdot \frac{2\pi}{\text{slices}}$ \\[3pt]
+        Bases: $y = \pm\frac{h}{2}$ \\
+        Superfície lateral: $r$ constante
+    };
+    
+\end{tikzpicture}
+
+\end{document}

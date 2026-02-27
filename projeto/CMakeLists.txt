@@ -18,8 +18,9 @@ file(GLOB UTILS_SOURCES CONFIGURE_DEPENDS "src/utils/*.cpp")
 
 # Generator
 add_executable(generator ${GENERATOR_SOURCES} ${UTILS_SOURCES})
+target_include_directories(generator PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # Engine
 add_executable(engine ${ENGINE_SOURCES} ${UTILS_SOURCES})
 target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} tinyxml2)
-target_include_directories(engine PRIVATE ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
+target_include_directories(engine PRIVATE ${CMAKE_SOURCE_DIR}/include ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})

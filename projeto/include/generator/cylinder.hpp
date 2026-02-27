@@ -1,5 +1,5 @@
-#ifndef CONE_HPP
-#define CONE_HPP
+#ifndef CYLINDER_HPP
+#define CYLINDER_HPP
 
 // Bibliotecas uteis
 #include <cmath>
@@ -10,6 +10,6 @@
 using namespace std;
 using namespace util;
 
-vector <float> generateCone(float radius, float height, int slices, int stacks);
+vector <float> generateCylinder(float radius, float height, int slices);
 
 #endif

@@ -5,10 +5,10 @@
 #include <cmath>
 
 // Bibliotecas locais
-#include "utils/utils.hpp"
+#include "utils/util.hpp"
 
 using namespace std;
-using namespace utils;
+using namespace util;
 
 vector <float> generateSphere(float radius, int slices, int stacks);
 

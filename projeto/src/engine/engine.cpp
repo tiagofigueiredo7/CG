@@ -37,9 +37,10 @@ void createModel(char* model_file) {
 
     vector<float> vertices;
 
-    ifstream file(model_file);
+    string model_path = string("../models/") + model_file;
+    ifstream file(model_path);
     if (!file.is_open()){
-        cerr << "Erro ao abrir ficheiro: " << model_file << endl;
+        cerr << "[ERRO] Abrir ficheiro: " << model_path << endl;
         return;
     }
 
@@ -50,7 +51,7 @@ void createModel(char* model_file) {
         istringstream iss(line);
         float x, y, z;
         if (!(iss >> x >> y >> z)) {
-            cerr << "Erro ao ler vértice: " << line << endl;
+            cerr << "[ERRO] Ler vértice: " << line << endl;
             continue;
         }
         vertices.push_back(x);
@@ -80,16 +81,16 @@ void renderScene(void) {
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-100.0f, 0.0f, 0.0f);
-		glVertex3f( 100.0f, 0.0f, 0.0f);
+		glVertex3f(-10000.0f, 0.0f, 0.0f);
+		glVertex3f( 10000.0f, 0.0f, 0.0f);
 		// Y Axis in Green
 		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, -100.0f, 0.0f);
-		glVertex3f(0.0f, 100.0f, 0.0f);
+		glVertex3f(0.0f, -10000.0f, 0.0f);
+		glVertex3f(0.0f, 10000.0f, 0.0f);
 		// Z Axis in Blue
 		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f, 0.0f, -100.0f);
-		glVertex3f(0.0f, 0.0f, 100.0f);
+		glVertex3f(0.0f, 0.0f, -10000.0f);
+		glVertex3f(0.0f, 0.0f, 10000.0f);
 	glEnd();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -117,14 +118,14 @@ void processXML(char* file){
     XMLError result = doc.LoadFile(file);
     
     if (result != XML_SUCCESS) {
-        cerr << "Erro ao carregar XML: " << result << std::endl;
+        cerr << "[ERRO] Carregar XML: " << result << std::endl;
         return;
     }
     
     // Obter elemento raiz <world>
     XMLElement* world = doc.FirstChildElement("world");
     if (!world) {
-        cerr << "Elemento <world> não encontrado!" << std::endl;
+        cerr << "[ERRO] Elemento <world> não encontrado!" << std::endl;
         return;
     }
     
@@ -193,7 +194,7 @@ void processXML(char* file){
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        cerr << "ERRO: Parâmetros insuficientes.";
+        cerr << "[ERRO] Parâmetros insuficientes.\n[USO] engine <ficheiro_xml>\n";
         return 1; 
     }
 

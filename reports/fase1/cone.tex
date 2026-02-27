@@ -1,0 +1,104 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,decorations.markings,patterns}
+
+\begin{document}
+
+\tdplotsetmaincoords{70}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=2.5]
+    
+    % Parâmetros do cone
+    \def\radius{1.5}
+    \def\height{3}
+    \def\slices{16}
+    \def\stacks{4}
+    
+    % Desenhar base do cone (y=0)
+    \draw[thick] (0, 0, 0) circle (\radius);
+    
+    % Desenhar algumas fatias (slices)
+    \foreach \i in {0,2,...,14} {
+        \pgfmathsetmacro{\alpha}{\i * 360 / \slices}
+        \pgfmathsetmacro{\xbase}{\radius * cos(\alpha)}
+        \pgfmathsetmacro{\zbase}{\radius * sin(\alpha)}
+        \draw[gray!40, very thin] (\xbase, \zbase, 0) -- (0, 0, \height);
+    }
+    
+    % Desenhar stacks (círculos horizontais)
+    \foreach \s in {1,...,\numexpr\stacks-1} {
+        \pgfmathsetmacro{\yi}{\s * \height / \stacks}
+        \pgfmathsetmacro{\ri}{\radius * (\height - \yi) / \height}
+        \draw[gray!40, very thin] (0, 0, \yi) circle (\ri);
+    }
+    
+    % Contorno lateral do cone
+    \draw[thick] (\radius, 0, 0) -- (0, 0, \height);
+    \draw[thick] (-\radius, 0, 0) -- (0, 0, \height);
+    
+    % Eixos coordenados
+    \draw[-Stealth, line width=1pt, blue!70!black] (0, 0, 0) -- (\radius+0.7, 0, 0) node[right] {$z$};
+    \draw[-Stealth, line width=1pt, green!70!black] (0, 0, 0) -- (0, 0, \height+0.5) node[above] {$y$};
+    \draw[-Stealth, line width=1pt, red!70!black] (0, 0, 0) -- (0, \radius+0.7, 0) node[above] {$x$};
+    
+    % Marcar pontos importantes
+    \fill (0, 0, 0) circle (0.03) node[below left, font=\large, shift={(0,0,0.6)} ] {$(0, 0, 0)$};
+    \fill (0, 0, \height) circle (0.03) node[above, font=\large, shift={(0,-1,-0.3)} ] {$(0, h, 0)$};
+    
+    % Destacar um stack específico (i=1)
+    \pgfmathsetmacro{\istep}{1}
+    \pgfmathsetmacro{\yone}{\istep * \height / \stacks}
+    \pgfmathsetmacro{\ytwo}{(\istep + 1) * \height / \stacks}
+    \pgfmathsetmacro{\rone}{\radius * (\height - \yone) / \height}
+    \pgfmathsetmacro{\rtwo}{\radius * (\height - \ytwo) / \height}
+    
+    \draw[blue!70, line width=1.2pt] (0, 0, \yone) circle (\rone);
+    \draw[blue!70, line width=1.2pt] (0, 0, \ytwo) circle (\rtwo);
+    
+    % Marcar pontos em uma fatia específica (α)
+    \pgfmathsetmacro{\alphamark}{45}
+    \pgfmathsetmacro{\xone}{\rone * cos(\alphamark)}
+    \pgfmathsetmacro{\zone}{\rone * sin(\alphamark)}
+    \pgfmathsetmacro{\xtwo}{\rtwo * cos(\alphamark)}
+    \pgfmathsetmacro{\ztwo}{\rtwo * sin(\alphamark)}
+    
+    \draw[orange!70, line width=1.2pt] (\xone, \zone, \yone) -- (\xtwo, \ztwo, \ytwo);
+    
+    \fill[black] (\xone, \zone, \yone) circle (0.03);
+    \node[right, font=\large, align=left] at (\xone, \zone/0.5, \yone/1) 
+        {$(r_i\cos\alpha, r_i\sin\alpha, h_i)$};
+    
+    \fill[black] (\xtwo, \ztwo, \ytwo) circle (0.03);
+    \node[right, font=\large, align=left] at (\xtwo, \ztwo/0.5, \ytwo/1) 
+        {$(r_{i+1}\cos\alpha, r_{i+1}\sin\alpha, h_{i+1})$};
+    
+    % Ponto na base
+    \pgfmathsetmacro{\xbase}{\radius * cos(\alphamark)}
+    \pgfmathsetmacro{\zbase}{\radius * sin(\alphamark)}
+    \fill[black] (\xbase, \zbase, 0) circle (0.03);
+    \node[below right, font=\large] at (\xbase, \zbase, 0) {$(r\cos\alpha, r\sin\alpha, 0)$};
+    
+    % Mostrar ângulo α
+    \draw[purple!70, thick, -{Stealth}] 
+        plot[domain=0:\alphamark, samples=20, variable=\t] 
+        ({0.6*cos(\t)}, {0.6*sin(\t)}, 0);
+    \node[purple!70!black, font=\small] at (0.5, 0.2, -0.15) {$\alpha$};
+    
+    % Anotações de raio e altura
+    \draw[<->, thick] (0, 0, 0) -- (\radius, 0, 0);
+    \node[below, font=\footnotesize] at (\radius/2, 0, 0) {$r$};
+    
+    \draw[<->, thick] (\radius+0.3, 0, 0) -- (\radius+0.3, 0, \height);
+    \node[right, font=\footnotesize] at (\radius+0.3, 0, \height/2) {$h$};
+    
+    % Fórmula do raio em função da altura
+    \node[align=left, font=\LARGE, draw, fill=white, rounded corners] at (-2.2, 0, 2.5) {
+        $\alpha = i \cdot \frac{2\pi}{\text{slices}}$ \\[2pt]
+        $h_i = i \cdot \frac{h}{\text{stacks}}$ \\[2pt]
+        $r_i = r \cdot \frac{h - h_i}{h}$
+    };
+    
+\end{tikzpicture}
+
+\end{document}
