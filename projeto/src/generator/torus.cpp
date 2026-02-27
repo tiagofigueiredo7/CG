@@ -16,29 +16,30 @@ vector <float> generateTorus(float majorRadius, float minorRadius, int slices, i
             float nextPhi = (j+1)*delta_phi;
 
             //definição dos pontos do quadrado
-            // P1---P3
-            // |	|
-            // P2---P4
+            // 		t    nt
+            //	p	P1---P3
+            //		|	 |
+            // 	np	P2---P4
 
             //P1
-            float x1 = (majorRadius + minorRadius*cos(nextPhi))*cos(theta);
-            float y1 = minorRadius*sin(nextPhi);
-            float z1 = (majorRadius + minorRadius*cos(nextPhi))*sin(theta);
+            float x1 = (majorRadius + minorRadius*cos(phi))*cos(theta);
+            float y1 = minorRadius*sin(phi);
+            float z1 = (majorRadius + minorRadius*cos(phi))*sin(theta);
 
             //P2
-            float x2 = (majorRadius + minorRadius*cos(phi))*cos(theta);
-            float y2 = minorRadius*sin(phi);
-            float z2 = (majorRadius + minorRadius*cos(phi))*sin(theta);
+            float x2 = (majorRadius + minorRadius*cos(nextPhi))*cos(theta);
+            float y2 = minorRadius*sin(nextPhi);
+            float z2 = (majorRadius + minorRadius*cos(nextPhi))*sin(theta);
 
             //P3
-            float x3 = (majorRadius + minorRadius*cos(nextPhi))*cos(nextTheta);
-            float y3 = minorRadius*sin(nextPhi);
-            float z3 = (majorRadius + minorRadius*cos(nextPhi))*sin(nextTheta);
+            float x3 = (majorRadius + minorRadius*cos(phi))*cos(nextTheta);
+            float y3 = minorRadius*sin(phi);
+            float z3 = (majorRadius + minorRadius*cos(phi))*sin(nextTheta);
 
             //P4
-            float x4 = (majorRadius + minorRadius*cos(phi))*cos(nextTheta);
-            float y4 = minorRadius*sin(phi);
-            float z4 = (majorRadius + minorRadius*cos(phi))*sin(nextTheta);
+            float x4 = (majorRadius + minorRadius*cos(nextPhi))*cos(nextTheta);
+            float y4 = minorRadius*sin(nextPhi);
+            float z4 = (majorRadius + minorRadius*cos(nextPhi))*sin(nextTheta);
 
             addTriangle(vertices, x1, y1, z1, x2, y2, z2, x3, y3, z3);
             addTriangle(vertices, x3, y3, z3, x2, y2, z2, x4, y4, z4);
