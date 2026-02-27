@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="torus.3d" /> <!-- generator torus 1 0.4 15 15 torus.3d -->
+			<model file="torus.3d" /> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
  		</models>
  	</group>
 </world>
