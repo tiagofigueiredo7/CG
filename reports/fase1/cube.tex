@@ -1,0 +1,82 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+
+\tdplotsetmaincoords{65}{125}
+\begin{tikzpicture}[tdplot_main_coords, scale=2.5]
+    
+    % Parâmetros do cubo
+    \def\length{2}
+    \pgfmathsetmacro{\half}{\length/2}
+    
+    % Desenhar arestas do cubo
+    % Face frontal (z = half)
+    \draw[thick] (-\half, -\half, \half) -- (\half, -\half, \half) -- (\half, \half, \half) -- (-\half, \half, \half) -- cycle;
+    % Face traseira (z = -half)
+    \draw[thick, dashed, gray!60] (-\half, -\half, -\half) -- (\half, -\half, -\half) -- (\half, \half, -\half) -- (-\half, \half, -\half) -- cycle;
+    % Arestas conectando frente e trás
+    \draw[thick] (-\half, -\half, -\half) -- (-\half, -\half, \half);
+    \draw[thick] (\half, -\half, -\half) -- (\half, -\half, \half);
+    \draw[thick] (\half, \half, -\half) -- (\half, \half, \half);
+    \draw[thick, dashed, gray!60] (-\half, \half, -\half) -- (-\half, \half, \half);
+    
+    % Marcar os 8 vértices com coordenadas
+    \foreach \x in {-1, 1} {
+        \foreach \y in {-1, 1} {
+            \foreach \z in {-1, 1} {
+                \pgfmathsetmacro{\xcoord}{\x * \half}
+                \pgfmathsetmacro{\ycoord}{\y * \half}
+                \pgfmathsetmacro{\zcoord}{\z * \half}
+                
+                \fill (\xcoord, \ycoord, \zcoord) circle (0.03);
+                
+                % Posicionar labels de forma inteligente
+                \ifnum\z=1
+                    \ifnum\x=1
+                        \ifnum\y=1
+                            \node[above right, font=\large] at (\xcoord, \ycoord, \zcoord) 
+                                {$\left(\frac{length}{2}, \frac{length}{2}, \frac{length}{2}\right)$};
+                        \else
+                            \node[below right, font=\large] at (\xcoord, \ycoord, \zcoord) 
+                                {$\left(\frac{length}{2}, -\frac{length}{2}, \frac{length}{2}\right)$};
+                        \fi
+                    \else
+                        \ifnum\y=1
+                            \node[above left, font=\large] at (\xcoord, \ycoord, \zcoord) 
+                                {$\left(-\frac{length}{2}, \frac{length}{2}, \frac{length}{2}\right)$};
+                        \else
+                            \node[below left, font=\large] at (\xcoord, \ycoord, \zcoord) 
+                                {$\left(-\frac{length}{2}, -\frac{length}{2}, \frac{length}{2}\right)$};
+                        \fi
+                    \fi
+                \fi
+            }
+        }
+    }
+    
+    % Destacar uma face (face superior y = half)
+    \draw[blue!60, line width=1.2pt, opacity=0.7] 
+        (-\half, \half, -\half) -- (\half, \half, -\half) -- (\half, \half, \half) -- (-\half, \half, \half) -- cycle;
+    
+    % Eixos coordenados
+    \draw[-Stealth, thick, blue!70!black] (0,0,0) -- (\half+0.7, 0, 0) node[right] {$z$};
+    \draw[-Stealth, thick, red!70!black] (0,0,0) -- (0, \half+0.7, 0) node[above] {$x$};
+    \draw[-Stealth, thick, green!70!black] (0,0,0) -- (0, 0, \half+0.7) node[above] {$y$};
+    
+    \fill (0,0,0) circle (0.03) node[below left, font=\large] {$(0,0,0)$};
+    
+    % Anotação
+    \node[align=left, font=\large, draw, fill=white, rounded corners, opacity=0.9] at (-1.8, 0.5, 1.5) {
+        6 faces: \\
+        $XZ$: $y = \pm\frac{length}{2}$ \\
+        $XY$: $z = \pm\frac{length}{2}$ \\
+        $YZ$: $x = \pm\frac{length}{2}$
+    };
+    
+\end{tikzpicture}
+
+\end{document}

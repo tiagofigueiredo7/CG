@@ -1,0 +1,139 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,decorations.markings,angles,quotes}
+
+\begin{document}
+
+\tdplotsetmaincoords{70}{115}
+\begin{tikzpicture}[tdplot_main_coords, scale=2]
+    
+    % Parâmetros do torus
+    \def\majorR{2}      % R_major
+    \def\minorR{0.6}    % R_minor
+    \def\slices{24}     % fatias ao redor do círculo maior
+    \def\stacks{16}     % divisões ao redor do tubo
+    
+    % Desenhar círculos do torus (alguns meridianos)
+    \foreach \i in {0,3,...,21} {
+        \pgfmathsetmacro{\theta}{\i * 360 / \slices}
+        \draw[gray!30, very thin] 
+            plot[domain=0:360, samples=40, smooth, variable=\phi] 
+            ({(\majorR + \minorR*cos(\phi))*cos(\theta)}, 
+             {(\majorR + \minorR*cos(\phi))*sin(\theta)}, 
+             {\minorR*sin(\phi)});
+    }
+    
+    % Desenhar paralelos (ao redor do tubo)
+    \foreach \s in {0,4,...,12} {
+        \pgfmathsetmacro{\phi}{\s * 360 / \stacks}
+        \pgfmathsetmacro{\rr}{\majorR + \minorR*cos(\phi)}
+        \pgfmathsetmacro{\zz}{\minorR*sin(\phi)}
+        \draw[gray!30, very thin] 
+            plot[domain=0:360, samples=60, smooth, variable=\theta] 
+            ({\rr*cos(\theta)}, {\rr*sin(\theta)}, \zz);
+    }
+    
+    % Eixos coordenados
+    \draw[-Stealth, line width=1pt, blue!70!black] (0, 0, 0) -- (\majorR+\minorR+0.8, 0, 0) node[right] {$z$};
+    \draw[-Stealth, line width=1pt, green!70!black] (0, 0, 0) -- (0, 0, \minorR+0.6) node[above] {$y$};
+    \draw[-Stealth, line width=1pt, red!70!black] (0, 0, 0) -- (0, \majorR+\minorR+0.8, 0) node[above] {$x$};
+    
+    \fill (0, 0, 0) circle (0.03) node[below left, font=\large] {$(0,0,0)$};
+    
+    % Círculo maior (círculo central do torus)
+    \draw[dashed, gray!50, thick] (0, 0, 0) circle (\majorR);
+    \draw[<->, thick] (0, 0, 0) -- (\majorR, 0, 0);
+    \node[above, font=\footnotesize] at (\majorR/1.5, 0.5, 0) {$r_{\text{major}}$};
+    
+    % Destacar um quadrilátero específico
+    \pgfmathsetmacro{\thetai}{60}
+    \pgfmathsetmacro{\thetaip}{75}
+    \pgfmathsetmacro{\phij}{45}
+    \pgfmathsetmacro{\phijp}{90}
+    
+    % Calcular os 4 pontos do quadrilátero
+    \pgfmathsetmacro{\xone}{(\majorR + \minorR*cos(\phijp))*cos(\thetai)}
+    \pgfmathsetmacro{\yone}{(\majorR + \minorR*cos(\phijp))*sin(\thetai)}
+    \pgfmathsetmacro{\zone}{\minorR*sin(\phijp)}
+    
+    \pgfmathsetmacro{\xtwo}{(\majorR + \minorR*cos(\phij))*cos(\thetai)}
+    \pgfmathsetmacro{\ytwo}{(\majorR + \minorR*cos(\phij))*sin(\thetai)}
+    \pgfmathsetmacro{\ztwo}{\minorR*sin(\phij)}
+    
+    \pgfmathsetmacro{\xthree}{(\majorR + \minorR*cos(\phijp))*cos(\thetaip)}
+    \pgfmathsetmacro{\ythree}{(\majorR + \minorR*cos(\phijp))*sin(\thetaip)}
+    \pgfmathsetmacro{\zthree}{\minorR*sin(\phijp)}
+    
+    \pgfmathsetmacro{\xfour}{(\majorR + \minorR*cos(\phij))*cos(\thetaip)}
+    \pgfmathsetmacro{\yfour}{(\majorR + \minorR*cos(\phij))*sin(\thetaip)}
+    \pgfmathsetmacro{\zfour}{\minorR*sin(\phij)}
+    
+    % Desenhar quadrilátero destacado
+    \draw[blue!70, line width=1.2pt] 
+        (\xone, \yone, \zone) -- (\xtwo, \ytwo, \ztwo) -- (\xfour, \yfour, \zfour) -- (\xthree, \ythree, \zthree) -- cycle;
+    
+    % Marcar os 4 pontos com coordenadas paramétricas
+    \fill[black] (\xone, \yone, \zone) circle (0.03);
+    \node[above, font=\large, shift={(0,-0.5,-0.1)}] at (\xone, \yone, \zone) 
+        {$(x1,$ \\ $y1,$ \\ $z1)$};
+    
+    \fill[black] (\xtwo, \ytwo, \ztwo) circle (0.03);
+    \node[below, font=\large] at (\xtwo, \ytwo, \ztwo) 
+        {$(x2,$ \\ $y2,$ \\ $z2)$};
+    
+    \fill[black] (\xthree, \ythree, \zthree) circle (0.03);
+    \node[above right, font=\large, shift={(0,0,-0.2)}] at (\xthree, \ythree, \zthree) 
+        {$(x3,$ \\ $y3,$ \\ $z3)$};
+    
+    \fill[black] (\xfour, \yfour, \zfour) circle (0.03);
+    \node[below right, font=\large, shift={(0,0,0.35)}] at (\xfour, \yfour, \zfour) 
+        {$(x4,$ \\ $y4,$ \\ $z4)$};
+    
+    % Mostrar ângulo θ (no plano XZ)
+    \draw[orange!80, thick, -{Stealth}] 
+        plot[domain=0:\thetai, samples=25, variable=\t] 
+        ({1.5*cos(\t)}, {1.5*sin(\t)}, 0);
+    \node[orange!80!black, font=\large] at (0.9, 0.9, 0) {$\theta_i$};
+    
+    % Mostrar raio menor e ângulo φ em um círculo menor
+    \pgfmathsetmacro{\thetaCircle}{0}
+    \draw[purple!70, thick] 
+        plot[domain=0:360, samples=40, smooth, variable=\phi] 
+        ({(\majorR + \minorR*cos(\phi))*cos(\thetaCircle)}, 
+         {(\majorR + \minorR*cos(\phi))*sin(\thetaCircle)}, 
+         {\minorR*sin(\phi)});
+    
+    % Ponto no círculo maior
+    \fill[purple!70] (\majorR, 0, 0) circle (0.03);
+    
+    % Raio menor
+    \pgfmathsetmacro{\xMinor}{(\majorR + \minorR*cos(45))*cos(\thetaCircle)}
+    \pgfmathsetmacro{\yMinor}{(\majorR + \minorR*cos(45))*sin(\thetaCircle)}
+    \pgfmathsetmacro{\zMinor}{\minorR*sin(45)}
+    \draw[purple!70, thick, dashed] (\majorR, 0, 0) -- (\xMinor, \yMinor, \zMinor);
+    \node[above right, font=\footnotesize, purple!70!black] at ({(\majorR+\xMinor)/2}, 0.3, \zMinor/-1) {$r_{\text{minor}}$};
+    
+    % Mostrar ângulo φ (seta do tracejado para o eixo z)
+    \draw[purple!70, thick, -{Stealth}] 
+        plot[domain=45:0, samples=20, variable=\t] 
+        ({(\majorR + 0.4*cos(\t))*cos(\thetaCircle)}, 
+         {(\majorR + 0.4*cos(\t))*sin(\thetaCircle)}, 
+         {0.4*sin(\t)});
+    
+    \node[red!80!black, font=\large] 
+        at ({\majorR+0.25}, -0.25, 0.2) {$\phi$};
+    
+    % Anotações
+    \node[align=left, font=\large, shift={(0,0,0.3)}, draw, fill=white, rounded corners] at (-2.5, -2, 1) {
+        $\theta \in [0, 2\pi]$ (rotação principal) \\
+        $\phi \in [0, 2\pi]$ (tubo) \\[2pt]
+        $\Delta\theta = \frac{2\pi}{\text{slices}}$ \\
+        $\Delta\phi = \frac{2\pi}{\text{stacks}}$ \\[2pt]
+        $R = r_{\text{major}}$, $r = r_{\text{minor}}$
+    };
+    
+\end{tikzpicture}
+
+\end{document}

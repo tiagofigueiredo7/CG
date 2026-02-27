@@ -1,0 +1,81 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing}
+
+\begin{document}
+
+\begin{tikzpicture}[scale=2.5, >=Stealth]
+    
+    % Parâmetros do plano
+    \def\length{4}
+    \def\divisions{4}
+    \pgfmathsetmacro{\half}{\length/2}
+    \pgfmathsetmacro{\divlength}{\length/\divisions}
+    
+    % Eixos coordenados
+    \draw[->, thick, red!70!black] (-\half-0.5, 0) -- (\half+0.5, 0) node[right] {$x$};
+    \draw[->, thick, blue!70!black] (0, -\half-0.5) -- (0, \half+0.5) node[above] {$z$};
+    
+    % Origem
+    \fill (0,0) circle (0.03) node[below left] {$(0,0,0)$};
+    
+    % Desenhar grid completo (linhas claras)
+    \foreach \i in {0,...,\divisions} {
+        \pgfmathsetmacro{\pos}{\i * \divlength - \half}
+        \draw[gray!40, very thin] (-\half, \pos) -- (\half, \pos);
+        \draw[gray!40, very thin] (\pos, -\half) -- (\pos, \half);
+    }
+    
+    % Destacar um quadrado específico (i=1, j=1)
+    \pgfmathsetmacro{\i}{1}
+    \pgfmathsetmacro{\j}{1}
+    \pgfmathsetmacro{\xone}{\j * \divlength - \half}
+    \pgfmathsetmacro{\xtwo}{\xone + \divlength}
+    \pgfmathsetmacro{\zone}{\i * \divlength - \half}
+    \pgfmathsetmacro{\ztwo}{\zone + \divlength}
+    
+    % Quadrado destacado
+    \draw[blue!60, line width=1.2pt] (\xone, \zone) -- (\xtwo, \zone) -- (\xtwo, \ztwo) -- (\xone, \ztwo) -- cycle;
+    
+    % Triângulos que decompõem o quadrado
+    \draw[orange!70, line width=1pt, dashed] (\xone, \zone) -- (\xtwo, \ztwo);
+    
+    % Marcar os 4 vértices com coordenadas exatas
+    \fill[black] (\xone, \zone) circle (0.04);
+    \node[below left, font=\small] at (\xone, \zone) {$\left(\xone, 0, \zone\right)$};
+    
+    \fill[black] (\xtwo, \zone) circle (0.04);
+    \node[below right, font=\small] at (\xtwo, \zone) {$\left(\xtwo, 0, \zone\right)$};
+    
+    \fill[black] (\xone, \ztwo) circle (0.04);
+    \node[above left, font=\small] at (\xone, \ztwo) {$\left(\xone, 0, \ztwo\right)$};
+    
+    \fill[black] (\xtwo, \ztwo) circle (0.04);
+    \node[above right, font=\small] at (\xtwo, \ztwo) {$\left(\xtwo, 0, \ztwo\right)$};
+    
+    % Anotações de dimensões
+    \draw[<->, thick] (-\half, -\half-0.3) -- (\half, -\half-0.3);
+    \node[below, font=\footnotesize] at (0, -\half-0.3) {$\text{length}$};
+    
+    \draw[<->, thick] (\xone, \zone-0.15) -- (\xtwo, \zone-0.15);
+    \node[below, font=\footnotesize] at ({(\xone+\xtwo)/2}, \zone-0.15) {$\text{divlength}$};
+    
+    % Indicar centro
+    \draw[dashed, gray] (-\half, 0) -- (\half, 0);
+    \draw[dashed, gray] (0, -\half) -- (0, \half);
+    
+    % Anotação do plano y=0
+    \node[font=\small, gray!70!black] at (\half+0.5, \half+0.3) {Plano $y=0$ (XZ)};
+    
+    % Fórmulas
+    \node[align=left, font=\footnotesize, draw, fill=white, rounded corners] at (-2.5, 2) {
+        $x_1 = j \cdot \text{divlength} - \frac{\text{length}}{2}$ \\
+        $x_2 = x_1 + \text{divlength}$ \\
+        $z_1 = i \cdot \text{divlength} - \frac{\text{length}}{2}$ \\
+        $z_2 = z_1 + \text{divlength}$
+    };
+    
+\end{tikzpicture}
+
+\end{document}
