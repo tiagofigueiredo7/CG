@@ -11,7 +11,7 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 
 ### Ficheiros relevantes
 - [Enunciado](./extra_files/enunciado.pdf)
-- <<report fase 1>>
+- [Relatório Fase 1](./reports/fase1/relatorio_fase_1.pdf)
 - <<report fase 2>>
 - <<report fase 3>>
 - <<report fase 4>>
