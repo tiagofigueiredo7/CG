@@ -13,17 +13,16 @@
 #include <iostream>
 #include <fstream>
 
-#include <tinyxml2.h>
 #include <vector>
 #include <math.h>
 #include <sstream>
 
 // Bibliotecas locais
 #include "utils/util.hpp"
+#include "engine/Data.hpp"
 
 using namespace std;
 using namespace util;
-using namespace tinyxml2;
 
 int main(int argc, char** argv);
 
@@ -31,7 +30,7 @@ void changeSize(int w, int h);
 
 void renderScene(void);
 
-void processXML(char* file);
+void renderGroup(Group& g);
 
 void createModel(char* model_file);
 

@@ -1,12 +1,7 @@
 #include "engine/engine.hpp"
 
-// Variáveis globais
-float posX, posY, posZ;        // Camera position
-float lookX, lookY, lookZ;     // Camera lookAt
-float upX, upY, upZ;           // Camera up vector
-float fov, nearPlane, farPlane;// Perspective parameters
-int width, height;             // Window size parameters
-vector<char *> model_files;    // Model files
+// Variável global para armazenar os dados lidos do XML
+Data store = Data();
 
 void changeSize(int w, int h) {
 
@@ -27,7 +22,7 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
 	// Set perspective
-	gluPerspective(fov, ratio, nearPlane, farPlane);
+	gluPerspective(store.getFov(), ratio, store.getNearPlane(), store.getFarPlane());
 
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
@@ -36,11 +31,11 @@ void changeSize(int w, int h) {
 void createModel(char* model_file) {
 
     vector<float> vertices;
-
+    
     string model_path = string("../models/") + model_file;
     ifstream file(model_path);
     if (!file.is_open()){
-        cerr << "[ERRO] Abrir ficheiro: " << model_path << endl;
+        cerr << "Erro ao abrir ficheiro: " << model_file << endl;
         return;
     }
 
@@ -51,7 +46,7 @@ void createModel(char* model_file) {
         istringstream iss(line);
         float x, y, z;
         if (!(iss >> x >> y >> z)) {
-            cerr << "[ERRO] Ler vértice: " << line << endl;
+            cerr << "Erro ao ler vértice: " << line << endl;
             continue;
         }
         vertices.push_back(x);
@@ -66,6 +61,28 @@ void createModel(char* model_file) {
     glEnd();
 }
 
+void renderGroup(Group& g){
+	glPushMatrix(); 
+
+	for(transformation t : g.getTransformations()){
+		if (t.type == 0) glTranslatef(t.x,t.y,t.z);
+		else if (t.type == 1) glRotatef(t.angle,t.x,t.y,t.z);
+		else if (t.type == 2) glScalef(t.x,t.y,t.z);
+		else cerr << "ERRO: Transformação desconhecida!";
+	}
+
+	for (char* mf : g.getModelFiles()){
+		createModel(mf);
+	}
+
+	for (Group* gp : g.getSubGroups()){
+		renderGroup(*gp);
+	}
+
+	glPopMatrix();
+
+}
+
 void renderScene(void) {
 
 	// clear buffers
@@ -73,138 +90,49 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(posX, posY, posZ, 
-		      lookX, lookY, lookZ,
-			  upX, upY, upZ);
+	gluLookAt(store.getPosX(), store.getPosY(), store.getPosZ(), 
+		      store.getLookX(), store.getLookY(), store.getLookZ(),
+			  store.getUpX(), store.getUpY(), store.getUpZ());
 
     // Axis lines
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-10000.0f, 0.0f, 0.0f);
-		glVertex3f( 10000.0f, 0.0f, 0.0f);
+		glVertex3f(-1000.0f, 0.0f, 0.0f);
+		glVertex3f( 1000.0f, 0.0f, 0.0f);
 		// Y Axis in Green
 		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, -10000.0f, 0.0f);
-		glVertex3f(0.0f, 10000.0f, 0.0f);
+		glVertex3f(0.0f, -1000.0f, 0.0f);
+		glVertex3f(0.0f, 1000.0f, 0.0f);
 		// Z Axis in Blue
 		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f, 0.0f, -10000.0f);
-		glVertex3f(0.0f, 0.0f, 10000.0f);
+		glVertex3f(0.0f, 0.0f, -1000.0f);
+		glVertex3f(0.0f, 0.0f, 1000.0f);
 	glEnd();
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
-    
-    for (char* model_file : model_files) {
-        createModel(model_file);
-    }
+	
+	Group main_group = *store.getGroup();
+    renderGroup(main_group);
 
 	// End of frame
 	glutSwapBuffers();
 }
 
-void processXML(char* file){
-    // Valores padrão
-    upX = 0.0f;
-    upY = 1.0f;
-    upZ = 0.0f;
-    fov = 60.0f;
-    nearPlane = 1.0f;
-    farPlane = 1000.0f;
-    
-    // Carregar documento XML
-    XMLDocument doc;
-    XMLError result = doc.LoadFile(file);
-    
-    if (result != XML_SUCCESS) {
-        cerr << "[ERRO] Carregar XML: " << result << std::endl;
-        return;
-    }
-    
-    // Obter elemento raiz <world>
-    XMLElement* world = doc.FirstChildElement("world");
-    if (!world) {
-        cerr << "[ERRO] Elemento <world> não encontrado!" << std::endl;
-        return;
-    }
-    
-    // Ler janela
-    XMLElement* window = world->FirstChildElement("window");
-    if (window) {
-        width = window->IntAttribute("width");
-        height = window->IntAttribute("height");
-    }
-    
-    // Ler camara
-    XMLElement* camera = world->FirstChildElement("camera");
-    if (camera) {
-        
-        // Position
-        XMLElement* position = camera->FirstChildElement("position");
-        if (position) {
-            posX = position->FloatAttribute("x");
-            posY = position->FloatAttribute("y");
-            posZ = position->FloatAttribute("z");
-        }
-        
-        // LookAt
-        XMLElement* lookAt = camera->FirstChildElement("lookAt");
-        if (lookAt) {
-            lookX = lookAt->FloatAttribute("x");
-            lookY = lookAt->FloatAttribute("y");
-            lookZ = lookAt->FloatAttribute("z");
-        }
-        
-        // Up (valores padrão se não existir)
-        XMLElement* up = camera->FirstChildElement("up");
-        if (up) {
-            upX = up->FloatAttribute("x", 0.0f);
-            upY = up->FloatAttribute("y", 1.0f);
-            upZ = up->FloatAttribute("z", 0.0f);
-        }
-        
-        // Projection
-        XMLElement* projection = camera->FirstChildElement("projection");
-        if (projection) {
-            fov = projection->FloatAttribute("fov", 60.0f);
-            nearPlane = projection->FloatAttribute("near", 1.0f);
-            farPlane = projection->FloatAttribute("far", 1000.0f);
-        }
-    }
-    
-    // Ler group e models
-    XMLElement* group = world->FirstChildElement("group");
-
-    if (group){
-        // Ler modelos
-        XMLElement* models = group->FirstChildElement("models");
-        if (models) {
-            XMLElement* model = models->FirstChildElement("model");
-            while(model != nullptr) {
-                const char* file = model->Attribute("file");
-                if (file) {
-                    model_files.push_back(strdup(file));
-                }
-                model = model->NextSiblingElement("model");
-            }
-        }
-    }
-}
-
 int main(int argc, char** argv) {
     if (argc < 2) {
-        cerr << "[ERRO] Parâmetros insuficientes.\n[USO] engine <ficheiro_xml>\n";
+        cerr << "ERRO: Parâmetros insuficientes.";
         return 1; 
     }
 
-    processXML(argv[1]);
+    store.parseXML(argv[1]);
 
     // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
-	glutInitWindowSize(width, height);
+	glutInitWindowSize(store.getWidth(), store.getHeight());
 	glutCreateWindow("CG-TP");
 		
     // Required callback registry 
@@ -217,6 +145,6 @@ int main(int argc, char** argv) {
 	
     // enter GLUT's main cycle
 	glutMainLoop();
-	
+
 	return 1;
 }
