@@ -8,8 +8,8 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="plane.3d" /> <!-- generator plane 2 3 plane.3d -->
-			<model file="sphere.3d" /> <!-- generator sphere 1 10 10 sphere.3d -->
+			<model file="cylinder.3d" /> 
+			<model file="torus.3d" />
 
  		</models>
  	</group>

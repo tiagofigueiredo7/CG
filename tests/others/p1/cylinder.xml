@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="cylinder.3d" /> <!-- generator cylinder 1 3 18 sphere.3d -->
+			<model file="cylinder.3d" /> <!-- generator cylinder 1 2 50 cylinder.3d -->
  		</models>
  	</group>
 </world>
