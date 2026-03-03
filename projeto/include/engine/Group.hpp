@@ -6,10 +6,10 @@
 #include <iostream>
 using namespace std;
 
-#include "engine/Transformation.hpp"
-#include "engine/Translate.hpp"
-#include "engine/Rotate.hpp"
-#include "engine/Scale.hpp"
+#include "engine/transformations/Transformation.hpp"
+#include "engine/transformations/Translate.hpp"
+#include "engine/transformations/Rotate.hpp"
+#include "engine/transformations/Scale.hpp"
 
 
 class Group {

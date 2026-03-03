@@ -1,7 +1,7 @@
 #ifndef ROTATE_HPP
 #define ROTATE_HPP
 
-#include "engine/Transformation.hpp"
+#include "engine/transformations/Transformation.hpp"
 
 class Rotate : public Transformation {
 
