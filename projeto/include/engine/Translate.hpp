@@ -6,6 +6,7 @@
 class Translate : public Transformation {
 
     public:
+        Translate(float x, float y, float z);
         Translate();
     
 

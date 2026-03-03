@@ -12,6 +12,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <typeinfo> // Biblioteca com método "typeid" semelhante a "instanceof"
 
 #include <vector>
 #include <math.h>

@@ -98,7 +98,9 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
     if (transf){
         XMLElement* prox = transf->FirstChildElement();
         while (prox != nullptr){
-            transformation t;
+
+            Transformation* t = nullptr;
+
             const char* nome = prox->Name();
             float x = prox->FloatAttribute("x");
             float y = prox->FloatAttribute("y");
@@ -107,17 +109,15 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
             if (strcmp(nome, "rotate") == 0) {
                 angle = prox->FloatAttribute("angle");
             }
-            t.x = x;
-            t.y = y;
-            t.z = z;
-            t.angle = angle;
-            if (strcmp(nome, "translate") == 0) t.type = 0;
-            else if (strcmp(nome, "scale") == 0) t.type = 2;
-            else if (strcmp(nome, "rotate") == 0) t.type = 1;
+
+            if (strcmp(nome, "translate") == 0) t = new Translate(x,y,z);
+            else if (strcmp(nome, "scale") == 0) t = new Scale(x,y,z);
+            else if (strcmp(nome, "rotate") == 0) t = new Rotate(x,y,z,angle);
             else {
                 cerr << "ERRO: Transformação desconhecida!";
                 return;
             }
+
             g.addTransformation(t);
 
             prox = prox->NextSiblingElement();

@@ -4,14 +4,14 @@
 Group::Group() {}
 
 // Getters
-vector<transformation> Group::getTransformations() { return transformations; }
+vector<Transformation*> Group::getTransformations() { return transformations; }
 
 vector<char *> Group::getModelFiles() { return model_files; }
 
 vector<Group* >Group::getSubGroups(){ return subgroups; }
 
 // Add
-void Group::addTransformation(transformation transf){ transformations.push_back(transf); }
+void Group::addTransformation(Transformation* transf){ transformations.push_back(transf); }
 
 void Group::addModelFile(char* model_file) { model_files.push_back(model_file); }
 
@@ -19,6 +19,7 @@ void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
 
 // Print
 void Group::print(int depth) {
+ /*   
     string indent(depth * 2, ' ');
     
     cout << indent << "[GRUPO Nível " << depth << "]" << "\n";
@@ -54,4 +55,5 @@ void Group::print(int depth) {
     if (depth == 0) {
         cout << "\n";
     }
+       */ 
 }

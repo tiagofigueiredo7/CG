@@ -8,7 +8,9 @@ class Transformation {
         float z;
 
     public:
+        Transformation(float x, float y, float z);
         Transformation();
+        virtual ~Transformation();  // destrutor virtual
 
         float getX();
         float getY();
@@ -17,6 +19,7 @@ class Transformation {
         void setX(float novoX);
         void setY(float novoY);
         void setZ(float novoZ);
+
 
 };
 

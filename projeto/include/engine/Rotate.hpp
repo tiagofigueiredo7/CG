@@ -9,11 +9,12 @@ class Rotate : public Transformation {
         float angle;
 
     public:
+        Rotate(float x, float y, float z, float angle);
         Rotate();
 
         float getAngle();
 
-        void setAngle();
+        void setAngle(float novoAngle);
     
 };
 

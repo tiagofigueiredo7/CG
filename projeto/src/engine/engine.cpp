@@ -64,11 +64,19 @@ void createModel(char* model_file) {
 void renderGroup(Group& g){
 	glPushMatrix(); 
 
-	for(transformation t : g.getTransformations()){
-		if (t.type == 0) glTranslatef(t.x,t.y,t.z);
-		else if (t.type == 1) glRotatef(t.angle,t.x,t.y,t.z);
-		else if (t.type == 2) glScalef(t.x,t.y,t.z);
-		else cerr << "[ERRO] Transformação desconhecida!";
+	for(Transformation* t : g.getTransformations()){
+		if (Translate* tr = dynamic_cast<Translate*>(t)){
+			glTranslatef(tr->getX(), tr->getY(), tr->getZ());
+		}
+		else if (Rotate* r = dynamic_cast<Rotate*>(t)){
+			glRotatef(r->getAngle(), r->getX(), r->getY(), r->getZ());
+		}
+		else if (Scale* s = dynamic_cast<Scale*>(t)){
+			glScalef(s->getX(), s->getY(), s->getZ());
+		}
+		else {
+			cerr << "[ERRO] Transformação desconhecida!" << endl;
+		}
 	}
 
 	for (char* mf : g.getModelFiles()){
