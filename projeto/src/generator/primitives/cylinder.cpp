@@ -1,4 +1,4 @@
-#include "generator/cylinder.hpp"
+#include "generator/primitives/cylinder.hpp"
 
 vector <float> generateCylinder(float radius, float height, int slices){
     vector<float> vertices;

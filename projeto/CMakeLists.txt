@@ -12,7 +12,7 @@ find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
 # Juntar todos os arquivos fonte automaticamente
-file(GLOB GENERATOR_SOURCES CONFIGURE_DEPENDS "src/generator/*.cpp")
+file(GLOB_RECURSE GENERATOR_SOURCES CONFIGURE_DEPENDS "src/generator/*.cpp")
 file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS "src/engine/*.cpp")
 file(GLOB UTILS_SOURCES CONFIGURE_DEPENDS "src/utils/*.cpp")
 

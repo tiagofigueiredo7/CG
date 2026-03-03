@@ -1,4 +1,4 @@
-#include "generator/sphere.hpp"
+#include "generator/primitives/sphere.hpp"
 
 vector <float> generateSphere(float radius, int slices, int stacks){
 	vector <float> vertices;

@@ -8,12 +8,12 @@
 
 // Bibliotecas locais
 #include "utils/util.hpp"
-#include "plane.hpp"
-#include "box.hpp"
-#include "sphere.hpp"
-#include "cone.hpp"
-#include "torus.hpp"
-#include "cylinder.hpp"
+#include "primitives/plane.hpp"
+#include "primitives/box.hpp"
+#include "primitives/sphere.hpp"
+#include "primitives/cone.hpp"
+#include "primitives/torus.hpp"
+#include "primitives/cylinder.hpp"
 
 using namespace std;
 

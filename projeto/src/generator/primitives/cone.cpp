@@ -1,4 +1,4 @@
-#include "generator/cone.hpp"
+#include "generator/primitives/cone.hpp"
 
 // Cria os vértices de um cone
 vector <float> generateCone(float radius, float height, int slices, int stacks) {

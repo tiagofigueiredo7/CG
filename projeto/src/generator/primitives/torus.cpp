@@ -1,4 +1,4 @@
-#include "generator/torus.hpp"
+#include "generator/primitives/torus.hpp"
 
 vector <float> generateTorus(float majorRadius, float minorRadius, int slices, int stacks){
     vector<float> vertices;

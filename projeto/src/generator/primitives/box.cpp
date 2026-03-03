@@ -1,4 +1,4 @@
-#include "generator/box.hpp"
+#include "generator/primitives/box.hpp"
 
 // Depois alterar generateBox para usar generatePlane? Código mais limpo
 

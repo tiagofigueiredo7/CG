@@ -1,4 +1,4 @@
-#include "generator/plane.hpp"
+#include "generator/primitives/plane.hpp"
 
 // Cria os vértices de um plano
 vector <float> generatePlane(float length, int divisions) {
