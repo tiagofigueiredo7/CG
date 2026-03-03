@@ -21,6 +21,8 @@ class Group {
     public:
         Group();
 
+        ~Group();
+
         void addTransformation(Transformation* transf);
         void addModelFile(char* model_file);
         void addSubGroup(Group* subgroup);

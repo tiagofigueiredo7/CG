@@ -40,12 +40,16 @@ class Data {
         // Model files and transformations
         Group* group;
 
+        // Group element parser
+        void parseGroupField(Group& g, XMLElement* group);
+
     public:
         Data();
 
-        // Parsers
+        ~Data();
+
+        // Parser XML
         void parseXML(char* file);
-        void parseGroupField(Group& g, XMLElement* group);
 
         // Getters
         float getPosX();

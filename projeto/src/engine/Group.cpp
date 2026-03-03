@@ -3,6 +3,22 @@
 // Construtor
 Group::Group() {}
 
+// Destrutor
+Group::~Group() {
+    for (Transformation* t : this->getTransformations()){
+        delete t;
+    }
+
+    for (char* c: this->getModelFiles()){
+        free(c);
+    }
+
+    for (Group* g: this->getSubGroups()){
+        delete g;
+    }
+
+}
+
 // Getters
 vector<Transformation*> Group::getTransformations() { return transformations; }
 

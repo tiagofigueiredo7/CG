@@ -22,6 +22,14 @@ Data::Data() {
 
     width = 800;
     height = 800;
+
+    group = nullptr;
+}
+
+// Destrutor
+
+Data::~Data(){
+    delete this->group;
 }
 
 // Parser

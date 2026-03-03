@@ -1,7 +1,7 @@
 #include "engine/engine.hpp"
 
 // Variável global para armazenar os dados lidos do XML
-Data store = Data();
+Data* store = new Data();
 
 void changeSize(int w, int h) {
 
@@ -22,7 +22,7 @@ void changeSize(int w, int h) {
     glViewport(0, 0, w, h);
 
 	// Set perspective
-	gluPerspective(store.getFov(), ratio, store.getNearPlane(), store.getFarPlane());
+	gluPerspective(store->getFov(), ratio, store->getNearPlane(), store->getFarPlane());
 
 	// return to the model view matrix mode
 	glMatrixMode(GL_MODELVIEW);
@@ -98,9 +98,9 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(store.getPosX(), store.getPosY(), store.getPosZ(), 
-		      store.getLookX(), store.getLookY(), store.getLookZ(),
-			  store.getUpX(), store.getUpY(), store.getUpZ());
+	gluLookAt(store->getPosX(), store->getPosY(), store->getPosZ(), 
+		      store->getLookX(), store->getLookY(), store->getLookZ(),
+			  store->getUpX(), store->getUpY(), store->getUpZ());
 
     // Axis lines
 	glBegin(GL_LINES);
@@ -121,8 +121,8 @@ void renderScene(void) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
 	
-	Group main_group = *store.getGroup();
-    renderGroup(main_group);
+	Group* main_group = store->getGroup();
+    renderGroup(*main_group);
 
 	// End of frame
 	glutSwapBuffers();
@@ -134,13 +134,13 @@ int main(int argc, char** argv) {
         return 1; 
     }
 
-    store.parseXML(argv[1]);
+    store->parseXML(argv[1]);
 
     // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
-	glutInitWindowSize(store.getWidth(), store.getHeight());
+	glutInitWindowSize(store->getWidth(), store->getHeight());
 	glutCreateWindow("CG-TP");
 		
     // Required callback registry 
