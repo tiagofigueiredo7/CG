@@ -35,7 +35,7 @@ void createModel(char* model_file) {
     string model_path = string("../models/") + model_file;
     ifstream file(model_path);
     if (!file.is_open()){
-        cerr << "Erro ao abrir ficheiro: " << model_file << endl;
+        cerr << "[ERRO] Erro ao abrir ficheiro: " << model_file << endl;
         return;
     }
 
@@ -46,7 +46,7 @@ void createModel(char* model_file) {
         istringstream iss(line);
         float x, y, z;
         if (!(iss >> x >> y >> z)) {
-            cerr << "Erro ao ler vértice: " << line << endl;
+            cerr << "[ERRO] Erro ao ler vértice: " << line << endl;
             continue;
         }
         vertices.push_back(x);
@@ -68,7 +68,7 @@ void renderGroup(Group& g){
 		if (t.type == 0) glTranslatef(t.x,t.y,t.z);
 		else if (t.type == 1) glRotatef(t.angle,t.x,t.y,t.z);
 		else if (t.type == 2) glScalef(t.x,t.y,t.z);
-		else cerr << "ERRO: Transformação desconhecida!";
+		else cerr << "[ERRO] Transformação desconhecida!";
 	}
 
 	for (char* mf : g.getModelFiles()){
@@ -122,7 +122,7 @@ void renderScene(void) {
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        cerr << "ERRO: Parâmetros insuficientes.";
+        cerr << "[ERRO] Parâmetros insuficientes.";
         return 1; 
     }
 
