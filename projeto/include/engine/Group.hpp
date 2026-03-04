@@ -31,7 +31,6 @@ class Group {
         vector<char *> getModelFiles();
         vector<Group*> getSubGroups();
 
-        void print(int depth = 0);
 };
 
 
