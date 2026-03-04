@@ -10,6 +10,8 @@ using namespace std;
 #include "engine/transformations/Translate.hpp"
 #include "engine/transformations/Rotate.hpp"
 #include "engine/transformations/Scale.hpp"
+#include "engine/transformations/Curve.hpp"
+#include "engine/transformations/TimedFullRotate.hpp"
 
 
 class Group {
