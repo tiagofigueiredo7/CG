@@ -4,9 +4,10 @@
 #include "engine/transformations/Transformation.hpp"
 
 #include <vector>
+#include <stdlib.h>
 using namespace std;
 
-class Curve : private Transformation {
+class Curve : public Transformation {
 
     private:
         bool alygn;
@@ -14,8 +15,9 @@ class Curve : private Transformation {
         vector<float*> points;
 
     public:
-        Curve(bool alygn, float time, vector<float*>* points);
+        Curve(bool alygn, float time);
         Curve();
+        ~Curve();
 
         bool getAlygn();
         float getTime();
@@ -23,7 +25,7 @@ class Curve : private Transformation {
 
         void setAlygn(bool novoAlygn);
         void setTime(float novoTime);
-        void setPoints(vector<float*>* novoPoints);
+        void addPoint(float* arr);
     
 
 };

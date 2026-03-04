@@ -113,15 +113,45 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
             float x = prox->FloatAttribute("x");
             float y = prox->FloatAttribute("y");
             float z = prox->FloatAttribute("z");
-            float angle = 0.0f;
-            if (strcmp(nome, "rotate") == 0) {
-                angle = prox->FloatAttribute("angle");
-            }
 
-            if (strcmp(nome, "translate") == 0) t = new Translate(x,y,z);
+
+            if (strcmp(nome, "translate") == 0) {
+                const char* valor = prox->Attribute("time");
+                if (valor == nullptr) {
+                    t = new Translate(x,y,z);
+                } else {
+                    float time = prox->FloatAttribute("time");
+                    bool alygn = prox->BoolAttribute("alygn");
+
+                    t = new Curve(time,alygn);
+
+                    XMLElement* point = prox->FirstChildElement("point");
+                    while(point != nullptr){
+                        float* arr = (float*)malloc(3*sizeof(float));
+                        arr[0] = point->FloatAttribute("x");
+                        arr[1] = point->FloatAttribute("y");
+                        arr[2] = point->FloatAttribute("z");
+
+                        Curve* c = dynamic_cast<Curve*>(t);
+
+                        c->addPoint(arr);
+
+                        point = point->NextSiblingElement("point");
+                    }
+
+                }
+            }
             else if (strcmp(nome, "scale") == 0) t = new Scale(x,y,z);
-            else if (strcmp(nome, "rotate") == 0) t = new Rotate(x,y,z,angle);
-            else {
+            else if (strcmp(nome, "rotate") == 0) {
+                const char* valor = prox->Attribute("angle");
+                if (valor != nullptr) {
+                    float angle = prox->FloatAttribute("angle");
+                    t = new Rotate(x,y,z,angle);
+                } else {
+                    float time = prox->FloatAttribute("time");
+                    t = new TimedFullRotate(x,y,z,time);
+                }
+            } else {
                 cerr << "ERRO: Transformação desconhecida!";
                 return;
             }
