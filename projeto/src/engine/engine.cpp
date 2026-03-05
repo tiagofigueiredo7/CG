@@ -110,6 +110,8 @@ int main(int argc, char** argv) {
         return 1; 
     }
 
+	store->parse_Window_Information(argv[1]);
+
 
     // init GLUT and the window
 	glutInit(&argc, argv);

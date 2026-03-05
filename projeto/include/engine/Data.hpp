@@ -54,6 +54,7 @@ class Data {
         ~Data();
 
         // Parser XML
+        void parse_Window_Information(char* file);
         void init(char* file);
 
         // Getters

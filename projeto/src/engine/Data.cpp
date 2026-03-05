@@ -34,28 +34,45 @@ Data::~Data(){
 
 // Parser
 
+void Data::parse_Window_Information(char* file) {
+    XMLDocument doc;
+    XMLError result = doc.LoadFile(file);
+    
+    if (result != XML_SUCCESS) {
+        cerr << "[Erro] Erro ao carregar XML: " << result << endl;
+        return;
+    }
+    
+    XMLElement* world = doc.FirstChildElement("world");
+    if (!world) {
+        cerr << "[Erro] Elemento <world> não encontrado!" << endl;
+        return;
+    }
+    
+    XMLElement* window = world->FirstChildElement("window");
+    if (window) {
+        this->setWidth(window->IntAttribute("width"));
+        this->setHeight(window->IntAttribute("height"));
+    }
+
+    
+}
+
 void Data::init(char* file) {
     // Carregar documento XML
     XMLDocument doc;
     XMLError result = doc.LoadFile(file);
     
     if (result != XML_SUCCESS) {
-        cerr << "Erro ao carregar XML: " << result << std::endl;
+        cerr << "[Erro] Erro ao carregar XML: " << result << endl;
         return;
     }
     
     // Obter elemento raiz <world>
     XMLElement* world = doc.FirstChildElement("world");
     if (!world) {
-        cerr << "Elemento <world> não encontrado!" << std::endl;
+        cerr << "[Erro] Elemento <world> não encontrado!" << endl;
         return;
-    }
-    
-    // Ler janela
-    XMLElement* window = world->FirstChildElement("window");
-    if (window) {
-        this->setWidth(window->IntAttribute("width"));
-        this->setHeight(window->IntAttribute("height"));
     }
     
     // Ler camara
