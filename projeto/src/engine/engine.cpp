@@ -28,37 +28,11 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void createModel(char* model_file) {
+void createModel(int init, int count, GLuint* buffer){
+	glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
+	glVertexPointer(3,GL_FLOAT,0,0);
 
-    vector<float> vertices;
-    
-    string model_path = string("../models/") + model_file;
-    ifstream file(model_path);
-    if (!file.is_open()){
-        cerr << "[ERRO] Erro ao abrir ficheiro: " << model_file << endl;
-        return;
-    }
-
-    string line;
-    while(getline(file,line)){
-        if (line.empty()) continue;
-
-        istringstream iss(line);
-        float x, y, z;
-        if (!(iss >> x >> y >> z)) {
-            cerr << "[ERRO] Erro ao ler vértice: " << line << endl;
-            continue;
-        }
-        vertices.push_back(x);
-        vertices.push_back(y);
-        vertices.push_back(z);
-    }
-
-    glBegin(GL_TRIANGLES);
-        for (size_t i = 0; i < vertices.size(); i += 3) {
-            glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-        }
-    glEnd();
+	glDrawArrays(GL_TRIANGLES, init, count);
 }
 
 void renderGroup(Group& g){
@@ -79,8 +53,10 @@ void renderGroup(Group& g){
 		}
 	}
 
-	for (char* mf : g.getModelFiles()){
-		createModel(mf);
+	int acumulador = 0;
+	for (int count : g.getVerticesCount()){
+		createModel(acumulador,count,g.getBuffer());
+		acumulador += count;
 	}
 
 	for (Group* gp : g.getSubGroups()){
@@ -122,7 +98,7 @@ void renderScene(void) {
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
 	
 	Group* main_group = store->getGroup();
-    renderGroup(*main_group);
+    if (main_group != nullptr) renderGroup(*main_group);
 
 	// End of frame
 	glutSwapBuffers();
@@ -134,7 +110,6 @@ int main(int argc, char** argv) {
         return 1; 
     }
 
-    store->parseXML(argv[1]);
 
     // init GLUT and the window
 	glutInit(&argc, argv);
@@ -147,10 +122,22 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 
+	// Glew
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	// init GLEW
+#ifndef __APPLE__
+	glewInit();
+#endif
+
+	store->init(argv[1]);
+
+
     //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE); 
-	
+	glEnable(GL_CULL_FACE);
+
+
     // enter GLUT's main cycle
 	glutMainLoop();
 
