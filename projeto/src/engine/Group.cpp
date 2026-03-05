@@ -1,7 +1,11 @@
 #include "engine/Group.hpp"
 
 // Construtor
-Group::Group() {}
+Group::Group() {
+    this->transformations = vector<Transformation*>();
+    this->model_files = vector<char *>();
+    this->subgroups = vector<Group*>();
+}
 
 // Destrutor
 Group::~Group() {

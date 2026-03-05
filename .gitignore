@@ -6,3 +6,5 @@ projeto/build/*
 
 # Modelos .3d
 projeto/models/*.3d
+
+*.txt
