@@ -194,7 +194,9 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
         }
     }
 
-    fill_Buffer(g,m_files);
+    if (m_files.size() > 0) { // Apenas preencher o buffer se houver modelos para desenhar
+        fill_Buffer(g, m_files);
+    }
     for (char* c: m_files) free(c);
 
     XMLElement* child_group = group->FirstChildElement("group");
