@@ -138,9 +138,9 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
                     t = new Translate(x,y,z);
                 } else {
                     float time = prox->FloatAttribute("time");
-                    bool alygn = prox->BoolAttribute("alygn");
+                    bool align = prox->BoolAttribute("align");
 
-                    t = new Curve(time,alygn);
+                    t = new Curve(time,align);
 
                     XMLElement* point = prox->FirstChildElement("point");
                     while(point != nullptr){

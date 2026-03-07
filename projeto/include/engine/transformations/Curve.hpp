@@ -10,20 +10,20 @@ using namespace std;
 class Curve : public Transformation {
 
     private:
-        bool alygn;
+        bool align;
         float time;
         vector<float*> points;
 
     public:
-        Curve(bool alygn, float time);
+        Curve(bool align, float time);
         Curve();
         ~Curve();
 
-        bool getAlygn();
+        bool getAlign();
         float getTime();
         vector<float*> getPoints();
 
-        void setAlygn(bool novoAlygn);
+        void setAlign(bool novoAlign);
         void setTime(float novoTime);
         void addPoint(float* arr);
     

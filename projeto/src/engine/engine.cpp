@@ -48,6 +48,12 @@ void renderGroup(Group& g){
 		else if (Scale* s = dynamic_cast<Scale*>(t)){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
+		else if (Curve* c = dynamic_cast<Curve*>(t)){
+			// Acabar
+		}
+		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)){
+			// Acabar
+		}
 		else {
 			cerr << "[ERRO] Transformação desconhecida!" << endl;
 		}
