@@ -25,6 +25,7 @@ int main(int argc, char** argv) {
     }
 
 	vector <float> vertices;
+    Patch* data = new Patch();
 
     if (figure == "plane") {
         vertices = generatePlane(stof(argv[2]), stoi(argv[3]));
@@ -41,8 +42,12 @@ int main(int argc, char** argv) {
     else if (figure == "torus") {
         vertices = generateTorus(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
     }
-    else if(figure == "cylinder") {
+    else if (figure == "cylinder") {
         vertices = generateCylinder(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
+    }
+    else if (figure == "patch") {
+        data->parse_Patch_File(argv[2]);
+        vertices = generateBezierModel(data,stoi(argv[3]));
     }
     else {
         cerr << "[ERRO] Figura não suportada.\n";

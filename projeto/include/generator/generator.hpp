@@ -14,6 +14,8 @@
 #include "primitives/cone.hpp"
 #include "primitives/torus.hpp"
 #include "primitives/cylinder.hpp"
+#include "primitives/bezier.hpp"
+#include "generator/Patch.hpp"
 
 using namespace std;
 

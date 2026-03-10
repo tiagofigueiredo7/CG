@@ -39,6 +39,12 @@ namespace util {
 				return false;
 			}
 		}
+		else if(figure == "patch"){
+			if(parameters != 5) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura patch.\n[USO] generator patch <patch file> <tesselation> <dest file>\n";
+				return false;
+			}
+		}
 		else {
 			cerr << "[ERRO] Figura não suportada.\n";
 			return false;
