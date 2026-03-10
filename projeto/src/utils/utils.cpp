@@ -1,6 +1,20 @@
 #include "utils/util.hpp"
 
 namespace util {
+
+	// Armazena os vértices gerados no ficheiro
+	void storeVertices(const vector<float>& vertices, const string& file) {
+		ofstream out("../models/" + file);
+		if (!out.is_open()) {
+			cerr << "[ERRO] Não foi possível abrir o ficheiro.";
+			return;
+		}
+		for (size_t i = 0; i < vertices.size(); i += 3) {
+			out << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n"; // um ponto (3 coordenadas) por linha
+		}
+		out.close();
+	}
+	
 	// Fazer a verificação do input do generator
 	bool checkInput(const int parameters , const string figure){
 		if (figure == "plane"){
