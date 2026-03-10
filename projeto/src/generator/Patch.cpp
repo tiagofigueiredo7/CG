@@ -55,28 +55,18 @@ void Patch::parse_Patch_File(char* file_path) {
     // Ler os índices dos patches
     this->indices_patch = (vector<float>**) malloc(n_patches * sizeof(vector<float>*));
 
-
-    for(int i = 0; i<n_patches;i++){//ACABAR
+    for(int i = 0; i < n_patches; i++){
         this->indices_patch[i] = new vector<float>();
-        getline(file,line);
+        getline(file, line);
 
-
-        for (char c : line) {
-            if (c == ' ' || c == '\t') {
-                continue; // Ignorar espaços em branco
+        istringstream iss(line);
+        string index_str;
+        while (getline(iss, index_str, ',')) {
+            int index;
+            istringstream index_stream(index_str);
+            if (index_stream >> index) {
+                this->indices_patch[i]->push_back(index);
             }
-            if (c == ',') {
-                continue; // Ignorar vírgulas
-            }
-
-            /*                    
-            
-            
-            
-            
-            
-            */
-
 
         }
         
@@ -95,16 +85,29 @@ void Patch::parse_Patch_File(char* file_path) {
 
     // Ler os valores dos control points
     for (int i = 0; i < n_control_points; i++) {
-        float x, y, z;
-        istringstream iss_xyz(line);
-        if (!(iss_xyz >> x >> y >> z)) {
-                cerr << "[ERRO] Erro ao ler valores dos control points: " << line << endl;
-                return;
+        getline(file, line);
+        
+        // Parse comma-separated coordinates
+        istringstream iss(line);
+        string str;
+        vector<float> control_point;
+        
+        while (getline(iss, str, ',')) {
+            float coord;
+            istringstream coord_stream(str);
+            if (coord_stream >> coord) {
+                control_point.push_back(coord);
+            }
         }
-
-        this->control_points_values.push_back(x);
-        this->control_points_values.push_back(y);
-        this->control_points_values.push_back(z);
+        
+        if (control_point.size() == 3) {
+            this->control_points_values.push_back(control_point[0]);
+            this->control_points_values.push_back(control_point[1]);
+            this->control_points_values.push_back(control_point[2]);
+        } else {
+            cerr << "[ERRO] Erro ao ler valores dos control points: " << line << endl;
+            return;
+        }
     }
 
     file.close();
