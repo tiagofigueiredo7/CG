@@ -18,8 +18,7 @@
 #include "generator/Patch.hpp"
 
 using namespace std;
-
-void storeVertices(const vector<float>& vertices, const string& file);
+using namespace util;
 
 int main(int argc, char** argv);
 
