@@ -1,0 +1,1070 @@
+<world> 
+    <window width="1024" height="768" />
+    
+    <camera> 
+	    <position x="0" y="40" z="60" />
+	    <lookAt x="40" y="0" z="0" />
+	    <up x="0" y="1" z="0" /> 
+        <projection fov="60" near="1" far="2000" />
+    </camera>
+	
+	<group>
+		<!-- SOL (centro do sistema solar) -->
+		<group> 
+			<transform>
+				<scale x="4" y="4" z="4" />
+			</transform>
+			<models> 
+				<model file="sphere_1_10_10.3d" />
+			</models>
+		</group>
+		
+		<!-- MERCÚRIO -->
+		<group>
+			<transform>
+				<translate x="8" y="0" z="0" />
+				<scale x="0.4" y="0.4" z="0.4" />
+			</transform>
+			<models> 
+				<model file="sphere_1_10_10.3d" />
+			</models>
+		</group>
+		
+		<!-- VÉNUS -->
+		<group>
+			<transform>
+				<translate x="12" y="0" z="0" />
+				<scale x="0.9" y="0.9" z="0.9" />
+			</transform>
+			<models> 
+				<model file="sphere_1_10_10.3d" />
+			</models>
+		</group>
+		
+		<!-- TERRA + LUA -->
+		<group>
+			<transform>
+				<translate x="17" y="0" z="0" />
+			</transform>
+			<!-- Terra -->
+			<group>
+				<transform>
+					<scale x="1" y="1" z="1" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Lua -->
+			<group>
+				<transform>
+					<translate x="2.5" y="0" z="0" />
+					<scale x="0.27" y="0.27" z="0.27" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+		</group>
+		
+		<!-- MARTE + FOBOS + DEIMOS -->
+		<group>
+			<transform>
+				<translate x="23" y="0" z="0" />
+			</transform>
+			<!-- Marte -->
+			<group>
+				<transform>
+					<scale x="0.53" y="0.53" z="0.53" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Fobos -->
+			<group>
+				<transform>
+					<translate x="1.5" y="0" z="0" />
+					<scale x="0.15" y="0.15" z="0.15" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Deimos -->
+			<group>
+				<transform>
+					<translate x="0" y="0" z="2.3" />
+					<scale x="0.12" y="0.12" z="0.12" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+		</group>
+		
+		<!-- CINTURÃO DE ASTEROIDES (circular, raio 30, entre Marte e Júpiter) -->
+		<group>
+			<transform>
+				<translate x="30" y="0" z="0" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="30.3" y="0.5" z="-0.4" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.4" y="0" z="4.7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.7" y="-0.3" z="4.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="27.7" y="0" z="9.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="28" y="0.4" z="8.9" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="25" y="0" z="13.4" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="25.3" y="-0.5" z="13.1" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="21.2" y="0" z="17" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="21.5" y="0.3" z="16.7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="16.9" y="0" z="20" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="17.2" y="-0.4" z="19.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="12.1" y="0" z="22.4" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="12.4" y="0.5" z="22.1" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="6.9" y="0" z="24.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="7.2" y="-0.3" z="23.9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="1.6" y="0" z="25.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="1.9" y="0.4" z="25.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-3.9" y="0" z="26" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-3.6" y="-0.5" z="25.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-9.3" y="0" z="25.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-9" y="0.3" z="25.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-14.4" y="0" z="24.3" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-14.1" y="-0.4" z="24" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-19.1" y="0" z="22.2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-18.8" y="0.5" z="21.9" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-23.2" y="0" z="19.3" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-22.9" y="-0.3" z="19" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-26.5" y="0" z="15.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-26.2" y="0.4" z="15.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-29" y="0" z="11.8" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-28.7" y="-0.5" z="11.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.5" y="0" z="7.4" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.2" y="0.3" z="7.1" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-31" y="0" z="2.8" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.7" y="-0.4" z="2.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.5" y="0" z="-1.9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.2" y="0.5" z="-2.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-29" y="0" z="-6.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-28.7" y="-0.3" z="-6.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-26.5" y="0" z="-10.9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-26.2" y="0.4" z="-11.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-23.2" y="0" z="-14.9" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-22.9" y="-0.5" z="-15.2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-19.1" y="0" z="-18.4" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-18.8" y="0.3" z="-18.7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-14.4" y="0" z="-21.3" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-14.1" y="-0.4" z="-21.6" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-9.3" y="0" z="-23.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-9" y="0.5" z="-23.8" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-3.9" y="0" z="-25" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-3.6" y="-0.3" z="-25.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="1.6" y="0" z="-25.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="1.9" y="0.4" z="-26" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="6.9" y="0" z="-25.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="7.2" y="-0.5" z="-25.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="12.1" y="0" z="-24.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="12.4" y="0.3" z="-24.8" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="16.9" y="0" z="-22.7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="17.2" y="-0.4" z="-23" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="21.2" y="0" z="-20.2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="21.5" y="0.5" z="-20.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="25" y="0" z="-17.1" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="25.3" y="-0.3" z="-17.4" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="27.7" y="0" z="-13.4" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="28" y="0.4" z="-13.7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.4" y="0" z="-9.3" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.7" y="-0.5" z="-9.6" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="30.2" y="0" z="-4.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="30.5" y="0.3" z="-5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.7" y="0" z="2.3" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="30" y="-0.4" z="2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="28.2" y="0" z="6.9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="28.5" y="0.5" z="6.6" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="26" y="0" z="11.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="26.3" y="-0.3" z="10.9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="23.1" y="0" z="15.1" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="23.4" y="0.4" z="14.8" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="19.5" y="0" z="18.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="19.8" y="-0.5" z="18.2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="15.3" y="0" z="21.4" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="15.6" y="0.3" z="21.1" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="10.6" y="0" z="23.6" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="10.9" y="-0.4" z="23.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="5.5" y="0" z="25.2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="5.8" y="0.5" z="24.9" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="0.2" y="0" z="26" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="0.5" y="-0.3" z="25.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-5.1" y="0" z="25.8" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-11.8" y="0" z="24.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-16.7" y="0" z="23.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-21.1" y="0" z="20.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-24.8" y="0" z="17.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-27.7" y="0" z="13.7" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-29.7" y="0" z="9.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.7" y="0" z="5.1" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-30.7" y="0" z="0.4" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-29.7" y="0" z="-4.2" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-27.7" y="0" z="-8.7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-24.8" y="0" z="-12.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-21.1" y="0" z="-16.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-16.7" y="0" z="-19.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-11.8" y="0" z="-22.4" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-6.5" y="0" z="-24.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="-1.1" y="0" z="-25.6" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="4.3" y="0" z="-26" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="9.5" y="0" z="-25.5" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="14.5" y="0" z="-24.1" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="19" y="0" z="-21.9" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="23.1" y="0" z="-18.9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="26.3" y="0" z="-15.3" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="28.5" y="0" z="-11.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.8" y="0" z="-7" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="30.2" y="0" z="-2.3" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.9" y="0" z="0.6" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="29.3" y="0" z="3.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="28" y="0" z="4.6" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="27.1" y="0" z="9" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="24.5" y="0" z="13.2" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="21.3" y="0" z="16.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="17.4" y="0" z="19.9" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="13" y="0" z="22.5" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="8" y="0" z="24.4" />
+				<scale x="0.05" y="0.05" z="0.05" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		<group>
+			<transform>
+				<translate x="2.8" y="0" z="25.8" />
+				<scale x="0.06" y="0.06" z="0.06" />
+			</transform>
+			<models><model file="sphere_1_10_10.3d" /></models>
+		</group>
+		
+		<!-- JÚPITER + 8 LUAS (Io, Europa, Ganimedes) -->
+		<group>
+			<transform>
+				<translate x="45" y="0" z="0" />
+			</transform>
+			<!-- Júpiter -->
+			<group>
+				<transform>
+					<scale x="3.5" y="3.5" z="3.5" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Io -->
+			<group>
+				<transform>
+					<translate x="5.5" y="0" z="0" />
+					<scale x="0.36" y="0.36" z="0.36" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Europa -->
+			<group>
+				<transform>
+					<translate x="0" y="0" z="6.8" />
+					<scale x="0.31" y="0.31" z="0.31" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Ganimedes -->
+			<group>
+				<transform>
+					<translate x="-8.4" y="0" z="0" />
+					<scale x="0.52" y="0.52" z="0.52" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+		</group>
+		
+		<!-- SATURNO + TITÃ -->
+		<group>
+			<transform>
+				<translate x="65" y="0" z="0" />
+			</transform>
+			<!-- Saturno -->
+			<group>
+				<transform>
+					<scale x="2.9" y="2.9" z="2.9" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+			<!-- Titã -->
+			<group>
+				<transform>
+					<translate x="5.5" y="0" z="0" />
+					<scale x="0.51" y="0.51" z="0.51" />
+				</transform>
+				<models> 
+					<model file="sphere_1_10_10.3d" />
+				</models>
+			</group>
+		</group>
+		
+		<!-- URANO -->
+		<group>
+			<transform>
+				<translate x="80" y="0" z="0" />
+				<scale x="2" y="2" z="2" />
+			</transform>
+			<models> 
+				<model file="sphere_1_10_10.3d" />
+			</models>
+		</group>
+		
+		<!-- NEPTUNO -->
+		<group>
+			<transform>
+				<translate x="95" y="0" z="0" />
+				<scale x="1.9" y="1.9" z="1.9" />
+			</transform>
+			<models> 
+				<model file="sphere_1_10_10.3d" />
+			</models>
+		</group>
+ 	</group>
+</world>
