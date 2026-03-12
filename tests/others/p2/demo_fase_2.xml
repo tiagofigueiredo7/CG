@@ -973,7 +973,7 @@
 			<models><model file="sphere_1_10_10.3d" /></models>
 		</group>
 		
-		<!-- JÚPITER + 8 LUAS (Io, Europa, Ganimedes) -->
+		<!-- JÚPITER + 3 LUAS (Io, Europa, Ganimedes) -->
 		<group>
 			<transform>
 				<translate x="45" y="0" z="0" />

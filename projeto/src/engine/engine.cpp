@@ -52,7 +52,11 @@ void renderGroup(Group& g){
 			// Acabar
 		}
 		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)){
-			// Acabar
+			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;// obter tempo em segundos
+			//se elapsedSeconds fosse int, iria acontecer uma rotação de 360/time graus por segundo, iria parecer que timha 1 fps
+			float graus_sec = 360.0f / tfr->getTime();// graus por segundo
+			float angle = fmod(elapsedSeconds * graus_sec, 360.0f);//tirar os graus em excesso
+			glRotatef(angle, tfr->getX(), tfr->getY(), tfr->getZ());
 		}
 		else {
 			cerr << "[ERRO] Transformação desconhecida!" << endl;
@@ -129,6 +133,8 @@ int main(int argc, char** argv) {
     // Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
+	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay()
+								//, onde a mesma manda um pedido para o Glut redesenhar a cena.
 
 	// Glew
 	glEnableClientState(GL_VERTEX_ARRAY);
