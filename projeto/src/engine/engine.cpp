@@ -49,7 +49,7 @@ void renderGroup(Group& g){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
 		else if (Curve* c = dynamic_cast<Curve*>(t)){
-			// Acabar
+			// TODO: Acabar
 		}
 		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)){
 			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;// obter tempo em segundos
@@ -64,10 +64,13 @@ void renderGroup(Group& g){
 	}
 
 	int acumulador = 0;
-	for (int count : g.getVerticesCount()){
-		createModel(acumulador,count,g.getBuffer());
-		acumulador += count;
-	}
+	GLuint* buffer = g.getBuffer();
+	if (buffer[0]) {
+		for (int count : g.getVerticesCount()){
+			createModel(acumulador,count,buffer);
+			acumulador += count;
+		}
+	} 
 
 	for (Group* gp : g.getSubGroups()){
 		renderGroup(*gp);
