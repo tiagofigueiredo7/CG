@@ -11,6 +11,12 @@
 using namespace std;
 using namespace util;
 
+typedef struct _3DPoint Point3D;
+
+Point3D bezier(float u, float v, vector<float>* control_points);
+
+vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* control_points);
+
 vector<float> generateBezierModel(Patch* data, int tesselation);
 
 #endif
