@@ -51,11 +51,15 @@ vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* contr
     return result;
 }
 
-vector<float> generateBezierModel(Patch* data, int tesselation) {
+vector<float> generateBezierModel(char* file_path, int tesselation) {
+
+    Patch data = Patch();
+    data.parse_Patch_File(file_path);
+
     vector<float> vertices;
 
-    int n_patches = data->getPatchesCount();
-    vector<float> control_points_values = data->getControlPointsValues();
+    int n_patches = data.getPatchesCount();
+    vector<float> control_points_values = data.getControlPointsValues();
 
     // Delta usado na construção da matriz de aproximação
     float delta = 1.0f / tesselation;
@@ -74,7 +78,7 @@ vector<float> generateBezierModel(Patch* data, int tesselation) {
     for (int p = 0; p< n_patches; p++){
 
         // Pontos de controlo usados para definir a superficie
-        vector<float> valores = getValores_in_Indices(data->getIndicesPatch(p),&control_points_values);
+        vector<float> valores = getValores_in_Indices(data.getIndicesPatch(p),&control_points_values);
 
         // Matriz que vai conter os pontos usados para fazer os triangulos
         // Cada P(i,i) = u_v[i,j] + pontos de controlo
@@ -94,8 +98,8 @@ vector<float> generateBezierModel(Patch* data, int tesselation) {
                 Point3D C = superficie[i+1][j];
                 Point3D D = superficie[i+1][j+1];
 
-                addTriangle(vertices, A.x, A.y, A.z, C.x, C.y, C.z, B.x, B.y, B.z);//TALVEZ TROCAR A ORDEM DAS LETRAS PARA MUDAR A ORIENTAÇÃO DO TRIANGULO????
-                addTriangle(vertices, C.x, C.y, C.z, D.x, D.y, D.z, B.x, B.y, B.z);
+                addTriangle(vertices, A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+                addTriangle(vertices, C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
             }
         }
 
