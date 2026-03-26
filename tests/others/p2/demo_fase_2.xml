@@ -8,7 +8,7 @@
 		<projection fov="60" near="1" far="2000" />
 	</camera>
 
-	<!-- SOL (centro do sistema solar) -->
+	<!-- SOL -->
 	<group>
 		<transform>
 			<scale x="5.5" y="5.5" z="5.5" />
@@ -90,7 +90,7 @@
 				</models>
 			</group>
 		</group>
-		
+
 		<!-- CINTURÃO DE ASTEROIDES -->
 		<group>
 			<transform>
@@ -4223,10 +4223,10 @@
 			<!-- Anel -->
 			<group>
 				<transform>
-					<scale x="2" y="0.03" z="2" />
+					<scale x="1" y="0.03" z="1" />
 				</transform>
 				<models>
-					<model file="sphere_1_10_10.3d" />
+					<model file="torus.3d" />
 				</models>
 			</group>
 			<!-- Titã -->
@@ -4250,6 +4250,15 @@
 			<models>
 				<model file="sphere_1_10_10.3d" />
 			</models>
+			<!-- Anel -->
+			<group>
+				<transform>
+					<scale x="0.85" y="0.03" z="0.85" />
+				</transform>
+				<models>
+					<model file="torus.3d" />
+				</models>
+			</group>
 		</group>
 
 		<!-- NEPTUNO -->
@@ -4261,6 +4270,15 @@
 			<models>
 				<model file="sphere_1_10_10.3d" />
 			</models>
+			<!-- Anel -->
+			<group>
+				<transform>
+					<scale x="0.85" y="0.03" z="0.85" />
+				</transform>
+				<models>
+					<model file="torus.3d" />
+				</models>
+			</group>
 		</group>
 	</group>
 </world>
