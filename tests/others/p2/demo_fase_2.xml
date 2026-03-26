@@ -8,7 +8,7 @@
 		<projection fov="60" near="1" far="2000" />
 	</camera>
 
-	<!-- SOL (centro do sistema solar) -->
+	<!-- SOL -->
 	<group>
 		<transform>
 			<scale x="5.5" y="5.5" z="5.5" />
