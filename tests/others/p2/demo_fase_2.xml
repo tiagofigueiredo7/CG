@@ -8,13 +8,13 @@
 		<projection fov="60" near="1" far="2000" />
 	</camera>
 
-	<!-- SOL (centro do sistema solar) -->
+	<!-- SOL -->
 	<group>
 		<transform>
 			<scale x="5.5" y="5.5" z="5.5" />
 		</transform>
 		<models>
-			<model file="sphere_1_10_10.3d" />
+			<model file="sphere_1_10_10.3d" /> <!-- generator sphere 1 10 10 sphere_1_10_10.3d -->
 		</models>
 
 		<!-- MERCÚRIO -->
@@ -125,7 +125,7 @@
 				<scale x="0.003" y="0.003" z="0.003" />
 			</transform>
 			<models>
-				<model file="box_2_3.3d" />
+				<model file="box_2_3.3d" /> <!-- generator box 2 3 box_2_3.3d -->
 			</models>
 		</group>
 		<group>
@@ -152,7 +152,7 @@
 				<scale x="0.002" y="0.002" z="0.002" />
 			</transform>
 			<models>
-				<model file="sphere_1_10_10.3d" />
+				<model file="cone_1_2_4_3.3d" /> <!-- generator cone 1 2 4 3 cone_1_2_4_3.3d -->
 			</models>
 		</group>
 		<group>
@@ -4226,7 +4226,7 @@
 					<scale x="1" y="0.03" z="1" />
 				</transform>
 				<models>
-					<model file="torus.3d" />
+					<model file="torus.3d" /> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
 				</models>
 			</group>
 			<!-- Titã -->
@@ -4256,7 +4256,7 @@
 					<scale x="0.85" y="0.03" z="0.85" />
 				</transform>
 				<models>
-					<model file="torus.3d" />
+					<model file="torus.3d" /> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
 				</models>
 			</group>
 		</group>
@@ -4276,7 +4276,7 @@
 					<scale x="0.85" y="0.03" z="0.85" />
 				</transform>
 				<models>
-					<model file="torus.3d" />
+					<model file="torus.3d" /> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
 				</models>
 			</group>
 		</group>

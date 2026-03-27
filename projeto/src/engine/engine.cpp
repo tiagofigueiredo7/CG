@@ -125,7 +125,6 @@ int main(int argc, char** argv) {
 
 	store->parse_Window_Information(argv[1]);
 
-
     // init GLUT and the window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
