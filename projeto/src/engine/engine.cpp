@@ -49,7 +49,20 @@ void renderGroup(Group& g){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
 		else if (Curve* c = dynamic_cast<Curve*>(t)){
-			// TODO: Acabar
+			c->renderCatmullRomCurve();
+			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+			float time = c->getTime(), gt = fmod(elapsedSeconds,time) / time;		
+			float pos[3], deriv[3];
+			c->getGlobalCatmullRomPoint(gt, pos, deriv);
+			glTranslatef(pos[0], pos[1], pos[2]);
+			if (c -> getAlign()){
+				float up[3] = {0,1,0};
+				float x[3] = {deriv[0], deriv[1], deriv[2]}; normalize(x);
+				float z[3]; cross(x, up, z); normalize(z); 
+				float y[3]; cross(z, x, y); normalize(y);
+				float m[16]; buildRotMatrix(x, y, z, m);
+				glMultMatrixf(m);
+			}
 		}
 		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)){
 			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;// obter tempo em segundos
