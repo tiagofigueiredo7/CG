@@ -2,9 +2,11 @@
 
 // Construtor
 Group::Group() {
+    this->buffer = (GLuint*)malloc(sizeof(GLuint));
+    this->buffer[0] = 0;
     this->transformations = vector<Transformation*>();
-    this->model_files = vector<char *>();
     this->subgroups = vector<Group*>();
+    this->vertices_count = vector<int>();
 }
 
 // Destrutor
@@ -13,26 +15,36 @@ Group::~Group() {
         delete t;
     }
 
-    for (char* c: this->getModelFiles()){
-        free(c);
-    }
-
     for (Group* g: this->getSubGroups()){
         delete g;
     }
+
+    // Liberar VBO da GPU antes de liberar o ponteiro
+    if (this->buffer[0] != 0) {
+        glDeleteBuffers(1, this->buffer);
+    }
+
+    free(this->buffer);
 
 }
 
 // Getters
 vector<Transformation*> Group::getTransformations() { return transformations; }
 
-vector<char *> Group::getModelFiles() { return model_files; }
-
 vector<Group* >Group::getSubGroups(){ return subgroups; }
+
+GLuint* Group::getBuffer(){ return buffer; }
+
+vector<int> Group::getVerticesCount() { return vertices_count; }
 
 // Add
 void Group::addTransformation(Transformation* transf){ transformations.push_back(transf); }
 
-void Group::addModelFile(char* model_file) { model_files.push_back(model_file); }
-
 void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
+
+void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
+
+// Print
+void Group::print(int depth) {
+    // Refazer
+}

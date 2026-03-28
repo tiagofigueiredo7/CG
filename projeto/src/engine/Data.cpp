@@ -34,28 +34,45 @@ Data::~Data(){
 
 // Parser
 
-void Data::parseXML(char* file) {
+void Data::parse_Window_Information(char* file) {
+    XMLDocument doc;
+    XMLError result = doc.LoadFile(file);
+    
+    if (result != XML_SUCCESS) {
+        cerr << "[Erro] Erro ao carregar XML: " << result << endl;
+        return;
+    }
+    
+    XMLElement* world = doc.FirstChildElement("world");
+    if (!world) {
+        cerr << "[Erro] Elemento <world> não encontrado!" << endl;
+        return;
+    }
+    
+    XMLElement* window = world->FirstChildElement("window");
+    if (window) {
+        this->setWidth(window->IntAttribute("width"));
+        this->setHeight(window->IntAttribute("height"));
+    }
+
+    
+}
+
+void Data::init(char* file) {
     // Carregar documento XML
     XMLDocument doc;
     XMLError result = doc.LoadFile(file);
     
     if (result != XML_SUCCESS) {
-        cerr << "Erro ao carregar XML: " << result << std::endl;
+        cerr << "[Erro] Erro ao carregar XML: " << result << endl;
         return;
     }
     
     // Obter elemento raiz <world>
     XMLElement* world = doc.FirstChildElement("world");
     if (!world) {
-        cerr << "Elemento <world> não encontrado!" << std::endl;
+        cerr << "[Erro] Elemento <world> não encontrado!" << endl;
         return;
-    }
-    
-    // Ler janela
-    XMLElement* window = world->FirstChildElement("window");
-    if (window) {
-        this->setWidth(window->IntAttribute("width"));
-        this->setHeight(window->IntAttribute("height"));
     }
     
     // Ler camara
@@ -113,15 +130,45 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
             float x = prox->FloatAttribute("x");
             float y = prox->FloatAttribute("y");
             float z = prox->FloatAttribute("z");
-            float angle = 0.0f;
-            if (strcmp(nome, "rotate") == 0) {
-                angle = prox->FloatAttribute("angle");
-            }
 
-            if (strcmp(nome, "translate") == 0) t = new Translate(x,y,z);
+
+            if (strcmp(nome, "translate") == 0) {
+                const char* valor = prox->Attribute("time");
+                if (valor == nullptr) {
+                    t = new Translate(x,y,z);
+                } else {
+                    float time = prox->FloatAttribute("time");
+                    bool align = prox->BoolAttribute("align");
+
+                    t = new Curve(time,align);
+
+                    XMLElement* point = prox->FirstChildElement("point");
+                    while(point != nullptr){
+                        float* arr = (float*)malloc(3*sizeof(float));
+                        arr[0] = point->FloatAttribute("x");
+                        arr[1] = point->FloatAttribute("y");
+                        arr[2] = point->FloatAttribute("z");
+
+                        Curve* c = dynamic_cast<Curve*>(t);
+
+                        c->addPoint(arr);
+
+                        point = point->NextSiblingElement("point");
+                    }
+
+                }
+            }
             else if (strcmp(nome, "scale") == 0) t = new Scale(x,y,z);
-            else if (strcmp(nome, "rotate") == 0) t = new Rotate(x,y,z,angle);
-            else {
+            else if (strcmp(nome, "rotate") == 0) {
+                const char* valor = prox->Attribute("angle");
+                if (valor != nullptr) {
+                    float angle = prox->FloatAttribute("angle");
+                    t = new Rotate(x,y,z,angle);
+                } else {
+                    float time = prox->FloatAttribute("time");
+                    t = new TimedFullRotate(x,y,z,time);
+                }
+            } else {
                 cerr << "ERRO: Transformação desconhecida!";
                 return;
             }
@@ -134,16 +181,23 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
 
     XMLElement* models = group->FirstChildElement("models");
 
+    vector<char* > m_files;
+
     if (models){
         XMLElement* model = models->FirstChildElement("model");
             while(model != nullptr) {
             const char* file = model->Attribute("file");
             if (file) {
-                g.addModelFile(strdup(file));
+                m_files.push_back(strdup(file));
             }
             model = model->NextSiblingElement("model");
         }
     }
+
+    if (m_files.size() > 0) { // Apenas preencher o buffer se houver modelos para desenhar
+        fill_Buffer(g, m_files);
+    }
+    for (char* c: m_files) free(c);
 
     XMLElement* child_group = group->FirstChildElement("group");
 
@@ -155,6 +209,48 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
             child_group = child_group->NextSiblingElement("group");
         }
     }
+}
+
+void Data::fill_Buffer(Group& g, vector<char*>& arr){
+    int count_aux = 0;
+    vector<float> vertices_aux;
+
+    for(char* model_file : arr){
+        count_aux = 0;
+
+        string model_path = string("../models/") + model_file;
+        ifstream file(model_path);
+        if (!file.is_open()){
+            cerr << "[ERRO] Erro ao abrir ficheiro: " << model_file << endl;
+        }
+
+        string line;
+        while(getline(file,line)){
+            if (line.empty()) continue;
+
+            istringstream iss(line);
+            float x, y, z;
+            if (!(iss >> x >> y >> z)) {
+                cerr << "[ERRO] Erro ao ler vértice: " << line << endl;
+                continue;
+            }
+            vertices_aux.push_back(x);
+            vertices_aux.push_back(y);
+            vertices_aux.push_back(z);
+            count_aux += 1;
+        }
+
+        g.addVerticeCount(count_aux);
+        file.close();
+
+    }
+
+    GLuint* buffer = g.getBuffer();
+
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
+	glBufferData(GL_ARRAY_BUFFER,vertices_aux.size()*sizeof(float),&vertices_aux[0],GL_STATIC_DRAW);
+
 }
 
 // Getters

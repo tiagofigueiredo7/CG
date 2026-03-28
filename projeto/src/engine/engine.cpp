@@ -28,37 +28,11 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void createModel(char* model_file) {
+void createModel(int init, int count, GLuint* buffer){
+	glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
+	glVertexPointer(3,GL_FLOAT,0,0);
 
-    vector<float> vertices;
-    
-    string model_path = string("../models/") + model_file;
-    ifstream file(model_path);
-    if (!file.is_open()){
-        cerr << "[ERRO] Erro ao abrir ficheiro: " << model_file << endl;
-        return;
-    }
-
-    string line;
-    while(getline(file,line)){
-        if (line.empty()) continue;
-
-        istringstream iss(line);
-        float x, y, z;
-        if (!(iss >> x >> y >> z)) {
-            cerr << "[ERRO] Erro ao ler vértice: " << line << endl;
-            continue;
-        }
-        vertices.push_back(x);
-        vertices.push_back(y);
-        vertices.push_back(z);
-    }
-
-    glBegin(GL_TRIANGLES);
-        for (size_t i = 0; i < vertices.size(); i += 3) {
-            glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]);
-        }
-    glEnd();
+	glDrawArrays(GL_TRIANGLES, init, count);
 }
 
 void renderGroup(Group& g){
@@ -74,14 +48,29 @@ void renderGroup(Group& g){
 		else if (Scale* s = dynamic_cast<Scale*>(t)){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
+		else if (Curve* c = dynamic_cast<Curve*>(t)){
+			// TODO: Acabar
+		}
+		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)){
+			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;// obter tempo em segundos
+			//se elapsedSeconds fosse int, iria acontecer uma rotação de 360/time graus por segundo, iria parecer que timha 1 fps
+			float graus_sec = 360.0f / tfr->getTime();// graus por segundo
+			float angle = fmod(elapsedSeconds * graus_sec, 360.0f);//tirar os graus em excesso
+			glRotatef(angle, tfr->getX(), tfr->getY(), tfr->getZ());
+		}
 		else {
 			cerr << "[ERRO] Transformação desconhecida!" << endl;
 		}
 	}
 
-	for (char* mf : g.getModelFiles()){
-		createModel(mf);
-	}
+	int acumulador = 0;
+	GLuint* buffer = g.getBuffer();
+	if (buffer[0]) {
+		for (int count : g.getVerticesCount()){
+			createModel(acumulador,count,buffer);
+			acumulador += count;
+		}
+	} 
 
 	for (Group* gp : g.getSubGroups()){
 		renderGroup(*gp);
@@ -134,7 +123,7 @@ int main(int argc, char** argv) {
         return 1; 
     }
 
-    store->parseXML(argv[1]);
+	store->parse_Window_Information(argv[1]);
 
     // init GLUT and the window
 	glutInit(&argc, argv);
@@ -146,11 +135,25 @@ int main(int argc, char** argv) {
     // Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
+	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay()
+								//, onde a mesma manda um pedido para o Glut redesenhar a cena.
+
+	// Glew
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	// init GLEW
+#ifndef __APPLE__
+	glewInit();
+#endif
+
+	store->init(argv[1]);
+
 
     //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE); 
-	
+	glEnable(GL_CULL_FACE);
+
+
     // enter GLUT's main cycle
 	glutMainLoop();
 

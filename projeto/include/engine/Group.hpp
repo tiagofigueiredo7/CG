@@ -4,19 +4,27 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
+#include <GL/glew.h>
+#include <stdlib.h>
+
 using namespace std;
 
 #include "engine/transformations/Transformation.hpp"
 #include "engine/transformations/Translate.hpp"
 #include "engine/transformations/Rotate.hpp"
 #include "engine/transformations/Scale.hpp"
+#include "engine/transformations/Curve.hpp"
+#include "engine/transformations/TimedFullRotate.hpp"
 
 
 class Group {
     private:
         vector<Transformation*> transformations;
-        vector<char *> model_files;
         vector<Group*> subgroups;
+
+        vector<int> vertices_count;
+        GLuint* buffer;
 
     public:
         Group();
@@ -24,12 +32,13 @@ class Group {
         ~Group();
 
         void addTransformation(Transformation* transf);
-        void addModelFile(char* model_file);
         void addSubGroup(Group* subgroup);
+        void addVerticeCount(int count);
 
         vector<Transformation*> getTransformations();
-        vector<char *> getModelFiles();
         vector<Group*> getSubGroups();
+        vector<int> getVerticesCount();
+        GLuint* getBuffer();
 
 };
 

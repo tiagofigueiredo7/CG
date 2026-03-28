@@ -5,18 +5,16 @@
 #ifdef __APPLE__ // Para correr em MacOS
 #include <GLUT/glut.h>  // Para correr em MacOS
 #else
+#include <GL/glew.h>
 #include <GL/glut.h>    // Para correr em Linux
 #endif
 
 // Bibliotecas uteis
-#include <string>
-#include <iostream>
-#include <fstream>
 #include <typeinfo> // Biblioteca com método "typeid" semelhante a "instanceof"
+#include <stdlib.h>
 
 #include <vector>
 #include <math.h>
-#include <sstream>
 
 // Bibliotecas locais
 #include "utils/util.hpp"
@@ -33,6 +31,6 @@ void renderScene(void);
 
 void renderGroup(Group& g);
 
-void createModel(char* model_file);
+void createModel(int init, int count, GLuint* buffer);
 
 #endif

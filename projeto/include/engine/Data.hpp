@@ -3,8 +3,11 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
 #include <tinyxml2.h>
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "engine/Group.hpp"
 
@@ -43,13 +46,16 @@ class Data {
         // Group element parser
         void parseGroupField(Group& g, XMLElement* group);
 
+        void fill_Buffer(Group& g, vector<char*>& arr);
+
     public:
         Data();
 
         ~Data();
 
         // Parser XML
-        void parseXML(char* file);
+        void parse_Window_Information(char* file);
+        void init(char* file);
 
         // Getters
         float getPosX();
