@@ -12,8 +12,8 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 ### Ficheiros relevantes
 - [Enunciado](./extra_files/enunciado.pdf)
 - [Relatório Fase 1](./reports/fase1/relatorio_fase_1.pdf)
-- <<report fase 2>> *(não disponível)*
-- <<report fase 3>> *(não disponível)*
+- [Relatório Fase 2](./reports/fase2/relatorio_fase_2.pdf)
+- <<report fase 3>> *(não disponível)* 
 - <<report fase 4>> *(não disponível)*
 
 #### Demos
@@ -21,7 +21,8 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - <<demo fase 3>> *(não disponível)*
 - <<demo fase 4>> *(não disponível)*
 
-> ⚠️ **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
+> [!WARNING]
+> **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
 
 ## Compile
 
@@ -57,5 +58,5 @@ Este comando é genérico já que é necessário especificar o ficheiro de cena 
 ```bash
 ./engine ../../tests/others/p1/sphere.xml
 ```
-
-> **Nota:** Os ficheiros de cena devem estar localizados na diretoria `tests/` ou em subdiretorias da mesma, e os ficheiros de modelos devem estar localizados na diretoria `projeto/models/`.
+> [!NOTE]
+> Os ficheiros de cena devem estar localizados na diretoria `tests/` ou em subdiretorias da mesma, e os ficheiros de modelos devem estar localizados na diretoria `projeto/models/`.
