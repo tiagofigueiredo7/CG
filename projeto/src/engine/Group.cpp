@@ -43,8 +43,3 @@ void Group::addTransformation(Transformation* transf){ transformations.push_back
 void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
 
 void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
-
-// Print
-void Group::print(int depth) {
-    // Refazer
-}
