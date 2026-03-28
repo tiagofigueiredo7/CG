@@ -40,7 +40,6 @@ class Group {
         vector<int> getVerticesCount();
         GLuint* getBuffer();
 
-        void print(int depth = 0);
 };
 
 
