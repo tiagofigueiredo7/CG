@@ -58,7 +58,7 @@ void Data::parse_Window_Information(char* file) {
     
 }
 
-void Data::init(char* file) {
+void Data::parseXML(char* file) {
     // Carregar documento XML
     XMLDocument doc;
     XMLError result = doc.LoadFile(file);

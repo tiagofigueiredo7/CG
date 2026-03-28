@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
 	glewInit();
 #endif
 
-	store->init(argv[1]);
+	store->parseXML(argv[1]);
 
 
     //  OpenGL settings

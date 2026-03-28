@@ -55,7 +55,7 @@ class Data {
 
         // Parser XML
         void parse_Window_Information(char* file);
-        void init(char* file);
+        void parseXML(char* file);
 
         // Getters
         float getPosX();
