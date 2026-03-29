@@ -36,6 +36,7 @@ void Patch::parse_Patch_File(char* file_path) {
     ifstream file(file_path);
     if (!file.is_open()){
         cerr << "[ERRO] Erro ao abrir ficheiro: " << file_path << endl;
+        return;
     }
 
     string line;
@@ -46,8 +47,9 @@ void Patch::parse_Patch_File(char* file_path) {
     int n_patches;
     istringstream iss_patches(line);
     if (!(iss_patches >> n_patches)) {
-            cerr << "[ERRO] Erro ao ler número de patches: " << line << endl;
-            return;
+        cerr << "[ERRO] Erro ao ler número de patches: " << line << endl;
+        file.close();
+        return;
     }
 
     this->setPatchesCount(n_patches);
@@ -78,8 +80,9 @@ void Patch::parse_Patch_File(char* file_path) {
     int n_control_points;
     istringstream iss_n_control_points(line);
     if (!(iss_n_control_points >> n_control_points)) {
-            cerr << "[ERRO] Erro ao ler número de control points: " << line << endl;
-            return;
+        cerr << "[ERRO] Erro ao ler número de control points: " << line << endl;
+        file.close();
+        return;
     }
     this->setControlPointsCount(n_control_points);
 
@@ -106,6 +109,7 @@ void Patch::parse_Patch_File(char* file_path) {
             this->control_points_values.push_back(control_point[2]);
         } else {
             cerr << "[ERRO] Erro ao ler valores dos control points: " << line << endl;
+            file.close();
             return;
         }
     }
