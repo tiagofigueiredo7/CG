@@ -2,6 +2,7 @@
 #define CURVE_HPP
 
 #include "engine/transformations/Transformation.hpp"
+#include "utils/util.hpp"
 
 #ifdef __APPLE__ // Para correr em MacOS
 #include <GLUT/glut.h>  // Para correr em MacOS
@@ -12,8 +13,8 @@
 
 #include <vector>
 #include <stdlib.h>
-#include <cmath>
 using namespace std;
+using namespace util;
 
 class Curve : public Transformation {
 
@@ -41,14 +42,6 @@ class Curve : public Transformation {
     
 
 };
-
-void multMatrixVector(float *m, float *v, float *res);
-
-void buildRotMatrix(float *x, float *y, float *z, float *m);
-
-void cross(float *a, float *b, float *res);
-
-void normalize(float *a);
 
 
 #endif
