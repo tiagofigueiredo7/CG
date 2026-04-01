@@ -131,7 +131,16 @@ void renderScene(void) {
 	glutSwapBuffers();
 }
 
-void processKeys(unsigned char c, int xx, int yy) {}
+void processKeys(unsigned char c, int xx, int yy) {
+
+	if (c == '0' && dynamic_cast<OrbitalCamera*>(store->getCamera()) != nullptr) {
+		Camera* cam = new Camera(store->getCamera());
+		store->setCamera(cam);
+	} else if (c == '1') {
+		OrbitalCamera* oc = new OrbitalCamera(store->getCamera());
+		store->setCamera(oc);
+	}
+}
 
 
 void processSpecialKeys(int key, int xx, int yy) {

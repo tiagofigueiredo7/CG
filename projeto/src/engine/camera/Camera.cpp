@@ -15,6 +15,20 @@ Camera::Camera() {
     upZ = 0.0f;
 }
 
+Camera::Camera(Camera* cam) {
+    posX = cam->getPosX();
+    posY = cam->getPosY();
+    posZ = cam->getPosZ();
+
+    lookX = cam->getLookX();
+    lookY = cam->getLookY();
+    lookZ = cam->getLookZ();
+
+    upX = cam->getUpX();
+    upY = cam->getUpY();
+    upZ = cam->getUpZ();
+}
+
 Camera::~Camera() {}
 
 

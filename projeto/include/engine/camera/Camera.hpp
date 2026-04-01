@@ -22,6 +22,7 @@ class Camera {
 
     public:
         Camera();
+        Camera(Camera* cam);
         virtual ~Camera();
 
         // Getters

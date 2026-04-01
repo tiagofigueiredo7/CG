@@ -12,7 +12,7 @@ Data::Data() {
     height = 800;
 
     group = nullptr;
-    camera = new OrbitalCamera();//Corrigir
+    camera = new Camera();
 }
 
 // Destrutor

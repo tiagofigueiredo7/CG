@@ -12,6 +12,7 @@ class OrbitalCamera : public Camera {
 
     public:
         OrbitalCamera();
+        OrbitalCamera(Camera* cam);
 
         void update_cartesian_coordinates();
 

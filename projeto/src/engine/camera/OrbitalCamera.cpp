@@ -6,6 +6,12 @@ OrbitalCamera::OrbitalCamera() : Camera() {
     radius_coord = 5.0f;
 }
 
+OrbitalCamera::OrbitalCamera(Camera* cam) : Camera(*cam) {
+    alpha_coord = 0.0f;
+    beta_coord = 0.0f;
+    radius_coord = 5.0f;
+}
+
 void OrbitalCamera::update_cartesian_coordinates(){
     this->setPosX(radius_coord * cos(beta_coord) * sin(alpha_coord));
     this->setPosY(radius_coord * sin(beta_coord));
