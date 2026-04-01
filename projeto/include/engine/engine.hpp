@@ -25,7 +25,15 @@ using namespace util;
 
 int main(int argc, char** argv);
 
+void update_camera(int value);
+
+void processMouseButtons(int button, int state, int xx, int yy);
+
+void processMouseMotion(int xx, int yy);
+
 void processKeys(unsigned char c, int xx, int yy);
+
+void processKeysUp(unsigned char key, int xx, int yy);
 
 void processSpecialKeys(int key, int xx, int yy);
 
