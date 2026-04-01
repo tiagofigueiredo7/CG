@@ -25,6 +25,10 @@ using namespace util;
 
 int main(int argc, char** argv);
 
+void processKeys(unsigned char c, int xx, int yy);
+
+void processSpecialKeys(int key, int xx, int yy);
+
 void changeSize(int w, int h);
 
 void renderScene(void);

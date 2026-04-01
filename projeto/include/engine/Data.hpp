@@ -10,26 +10,16 @@
 #include <sstream>
 
 #include "engine/Group.hpp"
+#include "engine/camera/Camera.hpp"
+#include "engine/camera/OrbitalCamera.hpp"
 
 using namespace std;
 using namespace tinyxml2;
 
 class Data {
-    private:
-        // Camera position
-        float posX;
-        float posY;
-        float posZ;
-
-        // Camera lookAt
-        float lookX;
-        float lookY;
-        float lookZ;     
-
-        // Camera up vector
-        float upX;
-        float upY;
-        float upZ;           
+    private:       
+        // Camera
+        Camera* camera;
 
         // Perspective parameters
         float fov;
@@ -58,18 +48,6 @@ class Data {
         void parseXML(char* file);
 
         // Getters
-        float getPosX();
-        float getPosY();
-        float getPosZ();
-
-        float getLookX();
-        float getLookY();
-        float getLookZ();
-
-        float getUpX();
-        float getUpY();
-        float getUpZ();
-
         float getFov();
         float getNearPlane();
         float getFarPlane();
@@ -78,20 +56,9 @@ class Data {
         int getHeight();
 
         Group* getGroup();
+        Camera* getCamera();
 
         // Setters
-        void setPosX(float x);
-        void setPosY(float y);
-        void setPosZ(float z);
-
-        void setLookX(float x);
-        void setLookY(float y);
-        void setLookZ(float z);
-
-        void setUpX(float x);
-        void setUpY(float y);
-        void setUpZ(float z);
-
         void setFov(float fov);
         void setNearPlane(float near);
         void setFarPlane(float far);
@@ -100,6 +67,7 @@ class Data {
         void setHeight(int h);
 
         void setGroup(Group* g);
+        void setCamera(Camera* c);
 };
 
 

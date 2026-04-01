@@ -100,9 +100,10 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(store->getPosX(), store->getPosY(), store->getPosZ(), 
-		      store->getLookX(), store->getLookY(), store->getLookZ(),
-			  store->getUpX(), store->getUpY(), store->getUpZ());
+	Camera* cam = store->getCamera();
+	gluLookAt(cam->getPosX(), cam->getPosY(), cam->getPosZ(),
+		      cam->getLookX(), cam->getLookY(), cam->getLookZ(),
+			  cam->getUpX(), cam->getUpY(), cam->getUpZ());
 
     // Axis lines
 	glBegin(GL_LINES);
@@ -130,6 +131,51 @@ void renderScene(void) {
 	glutSwapBuffers();
 }
 
+void processKeys(unsigned char c, int xx, int yy) {}
+
+
+void processSpecialKeys(int key, int xx, int yy) {
+
+	Camera* cam = store->getCamera();
+	if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
+
+		switch (key) {
+
+		case GLUT_KEY_RIGHT:
+			oc->update_alpha(-0.1f); break;
+
+		case GLUT_KEY_LEFT:
+			oc->update_alpha(0.1f); break;
+
+		case GLUT_KEY_UP:
+			oc->update_beta(0.1f);
+			if (oc->get_beta() > 1.5f)
+				oc->set_beta(1.5f);
+			break;
+
+		case GLUT_KEY_DOWN:
+			oc->update_beta(-0.1f);
+			if (oc->get_beta() < -1.5f)
+				oc->set_beta(-1.5f);
+			break;
+
+		case GLUT_KEY_PAGE_DOWN: 
+			oc->update_radius(-0.1f);
+			if (oc->get_radius() < 0.1f)
+				oc->set_radius(0.1f);
+			break;
+
+		case GLUT_KEY_PAGE_UP: 
+			oc->update_radius(0.1f);
+			break;
+		}
+		oc->update_cartesian_coordinates();
+		glutPostRedisplay();
+
+	}
+
+}
+
 int main(int argc, char** argv) {
     if (checkInputEngine(argc, argv[1]) == false) {
 		return 1;
@@ -147,8 +193,9 @@ int main(int argc, char** argv) {
     // Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay()
-								//, onde a mesma manda um pedido para o Glut redesenhar a cena.
+	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay() //, onde a mesma manda um pedido para o Glut redesenhar a cena.
+	glutKeyboardFunc(processKeys);
+	glutSpecialFunc(processSpecialKeys);					
 
 	// Glew
 	glEnableClientState(GL_VERTEX_ARRAY);

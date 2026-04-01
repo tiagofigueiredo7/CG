@@ -4,18 +4,6 @@
 
 Data::Data() {
     // Vlores Padrão
-    posX = 0.0f;
-    posY = 0.0f;
-    posZ = 5.0f;
-
-    lookX = 0.0f;
-    lookY = 0.0f;
-    lookZ = -1.0f;
-
-    upX = 0.0f;
-    upY = 1.0f;
-    upZ = 0.0f;
-
     fov = 45.0f;
     nearPlane = 1.0f;
     farPlane = 1000.0f;
@@ -24,12 +12,14 @@ Data::Data() {
     height = 800;
 
     group = nullptr;
+    camera = new OrbitalCamera();//Corrigir
 }
 
 // Destrutor
 
 Data::~Data(){
     delete this->group;
+    delete this->camera;
 }
 
 // Parser
@@ -82,25 +72,25 @@ void Data::parseXML(char* file) {
         // Position
         XMLElement* position = camera->FirstChildElement("position");
         if (position) {
-            this->setPosX(position->FloatAttribute("x"));
-            this->setPosY(position->FloatAttribute("y"));
-            this->setPosZ(position->FloatAttribute("z"));
+            this->camera->setPosX(position->FloatAttribute("x"));
+            this->camera->setPosY(position->FloatAttribute("y"));
+            this->camera->setPosZ(position->FloatAttribute("z"));
         }
         
         // LookAt
         XMLElement* lookAt = camera->FirstChildElement("lookAt");
         if (lookAt) {
-            this->setLookX(lookAt->FloatAttribute("x"));
-            this->setLookY(lookAt->FloatAttribute("y"));
-            this->setLookZ(lookAt->FloatAttribute("z"));
+            this->camera->setLookX(lookAt->FloatAttribute("x"));
+            this->camera->setLookY(lookAt->FloatAttribute("y"));
+            this->camera->setLookZ(lookAt->FloatAttribute("z"));
         }
         
         // Up (valores padrão se não existir)
         XMLElement* up = camera->FirstChildElement("up");
         if (up) {
-            this->setUpX(up->FloatAttribute("x", 0.0f));
-            this->setUpY(up->FloatAttribute("y", 1.0f));
-            this->setUpZ(up->FloatAttribute("z", 0.0f));
+            this->camera->setUpX(up->FloatAttribute("x", 0.0f));
+            this->camera->setUpY(up->FloatAttribute("y", 1.0f));
+            this->camera->setUpZ(up->FloatAttribute("z", 0.0f));
         }
         
         // Projection
@@ -255,24 +245,6 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
 
 // Getters
 
-float Data::getPosX() { return posX; }
-
-float Data::getPosY() { return posY; }
-
-float Data::getPosZ() { return posZ; }
-
-float Data::getLookX() { return lookX; }
-
-float Data::getLookY() { return lookY; }
-
-float Data::getLookZ() { return lookZ; }
-
-float Data::getUpX() { return upX; }
-
-float Data::getUpY() { return upY; }
-
-float Data::getUpZ() { return upZ; }
-
 float Data::getFov() { return fov; }
 
 float Data::getNearPlane() { return nearPlane; }
@@ -285,25 +257,9 @@ int Data::getHeight() { return height; }
 
 Group* Data::getGroup() { return group; }
 
+Camera* Data::getCamera() { return camera; }
+
 //Setters
-
-void Data::setPosX(float x) { posX = x; }
-
-void Data::setPosY(float y) { posY = y; }
-
-void Data::setPosZ(float z) { posZ = z; }
-
-void Data::setLookX(float x) { lookX = x; }
-
-void Data::setLookY(float y) { lookY = y; }
-
-void Data::setLookZ(float z) { lookZ = z; }
-
-void Data::setUpX(float x) { upX = x; }
-
-void Data::setUpY(float y) { upY = y; }
-
-void Data::setUpZ(float z) { upZ = z; }
 
 void Data::setFov(float f) { fov = f; }
 
@@ -316,3 +272,5 @@ void Data::setWidth(int w) { width = w; }
 void Data::setHeight(int h) { height = h; }
 
 void Data::setGroup(Group* g){ group = g; }
+
+void Data::setCamera(Camera* c){ camera = c; }
