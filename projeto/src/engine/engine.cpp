@@ -131,10 +131,9 @@ void renderScene(void) {
 }
 
 int main(int argc, char** argv) {
-    if (argc < 2) {
-        cerr << "[ERRO] Parâmetros insuficientes.";
-        return 1; 
-    }
+    if (checkInputEngine(argc, argv[1]) == false) {
+		return 1;
+	}
 
 	store->parse_Window_Information(argv[1]);
 
@@ -170,5 +169,5 @@ int main(int argc, char** argv) {
     // enter GLUT's main cycle
 	glutMainLoop();
 
-	return 1;
+	return 0;
 }

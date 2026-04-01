@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
     const string figure = argv[1];
     const string file = argv[argc - 1];
 
-    if(checkInput(parameters, figure) == false) {
+    if(checkInputGenerator(parameters, figure) == false) {
         return 1;
     }
 

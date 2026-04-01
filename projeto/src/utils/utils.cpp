@@ -14,9 +14,20 @@ namespace util {
 		}
 		out.close();
 	}
+
+	bool checkInputEngine(const int parameters , const string scene){
+		if (parameters != 2) {
+			cerr << "[ERRO] Parâmetros inválidos para a cena " << scene << ".\n[USO] engine <scene file>\n";
+			return false;
+		} else if (scene.find(".xml") == string::npos) {
+			cerr << "[ERRO] O ficheiro da cena deve ser um ficheiro XML.\n[USO] engine <scene file>\n";
+			return false;
+		}
+		return true;
+	}
 	
 	// Fazer a verificação do input do generator
-	bool checkInput(const int parameters , const string figure){
+	bool checkInputGenerator(const int parameters , const string figure){
 		if (figure == "plane"){
 			if(parameters != 5) {
 				cerr << "[ERRO] Parâmetros inválidos para a figura plane.\n[USO] generator plane <length> <divisions> <dest file>\n";
