@@ -184,8 +184,55 @@ void processSpecialKeys(int key, int xx, int yy) {
 		oc->update_cartesian_coordinates();
 		glutPostRedisplay();
 
+	} else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
+
+		//Acabar
 	}
 
+}
+
+void processMouseButtons(int button, int state, int xx, int yy) {
+
+	Camera* cam = store->getCamera();
+	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
+	
+		if (state == GLUT_DOWN)  {
+			fpc->set_startX(xx);
+			fpc->set_startY(yy);
+			fpc->set_tracking(1);
+		}
+		else if (state == GLUT_UP) {
+			fpc->set_tracking(0);
+		}
+	}
+}
+
+
+void processMouseMotion(int xx, int yy) {
+
+	Camera* cam = store->getCamera();
+	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
+		if (!fpc->get_tracking())
+			return;
+
+		// Only control horizontal rotation (alpha) with mouse movement
+		int deltaX = xx - fpc->get_startX();
+		fpc->set_alpha(fpc->get_alpha() + deltaX * 0.5f);  // Scale mouse movement for smoother control
+		
+		fpc->set_startX(xx);
+		fpc->set_startY(yy);
+		
+	}
+}
+
+void update_camera(int value) {
+	Camera* cam = store->getCamera();
+	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
+		fpc->update_camera();
+		glutPostRedisplay();
+	}
+
+	glutTimerFunc(16, update_camera, 0);
 }
 
 int main(int argc, char** argv) {
@@ -205,9 +252,13 @@ int main(int argc, char** argv) {
     // Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay() //, onde a mesma manda um pedido para o Glut redesenhar a cena.
+	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay() 
+									//, onde a mesma manda um pedido para o Glut redesenhar a cena.
 	glutKeyboardFunc(processKeys);
-	glutSpecialFunc(processSpecialKeys);					
+	glutSpecialFunc(processSpecialKeys);
+
+	glutMouseFunc(processMouseButtons);
+	glutMotionFunc(processMouseMotion);				
 
 	// Glew
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -224,6 +275,8 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+
+	glutTimerFunc(16, update_camera, 0);  // ~60 FPS
 
     // enter GLUT's main cycle
 	glutMainLoop();
