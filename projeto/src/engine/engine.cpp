@@ -98,6 +98,10 @@ void renderScene(void) {
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(store->getCamera())) {
+		fpc->update_camera_LookAt();
+	}
+
 	// set the camera
 	glLoadIdentity();
 	Camera* cam = store->getCamera();
@@ -133,6 +137,8 @@ void renderScene(void) {
 
 void processKeys(unsigned char c, int xx, int yy) {
 
+	if (c == 27) exit(0);
+
 	if (c == '0' && (dynamic_cast<OrbitalCamera*>(store->getCamera()) != nullptr || dynamic_cast<FirstPersonCamera*>(store->getCamera()) != nullptr)) {
 		Camera* cam = new Camera(store->getCamera());
 		store->setCamera(cam);
@@ -143,8 +149,30 @@ void processKeys(unsigned char c, int xx, int yy) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(store->getCamera());
 		store->setCamera(fpc);
 	}
+
+	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(store->getCamera())) {
+		if (c == 'w' || c == 'W') fpc->set_keyW(true);
+		if (c == 'a' || c == 'A') fpc->set_keyA(true);
+		if (c == 's' || c == 'S') fpc->set_keyS(true);
+		if (c == 'd' || c == 'D') fpc->set_keyD(true);
+
+		if (c == ' ') fpc->setPosY(fpc->getPosY() + 0.5);
+		if (c == '\t') fpc->setPosY(fpc->getPosY() - 0.5);
+
+		if (c == 'm' || c == 'M') fpc->set_move_speed(fpc->get_move_speed() + 0.1f);
+		if (c == 'n' || c == 'N') fpc->set_move_speed(fpc->get_move_speed() - 0.1f);
+	}
 }
 
+void processKeysUp(unsigned char key, int xx, int yy) {
+	
+	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(store->getCamera())) {
+		if (key == 'w' || key == 'W') fpc->set_keyW(false);
+		if (key == 'a' || key == 'A') fpc->set_keyA(false);
+		if (key == 's' || key == 'S') fpc->set_keyS(false);
+		if (key == 'd' || key == 'D') fpc->set_keyD(false);
+	}
+}
 
 void processSpecialKeys(int key, int xx, int yy) {
 
@@ -184,9 +212,6 @@ void processSpecialKeys(int key, int xx, int yy) {
 		oc->update_cartesian_coordinates();
 		glutPostRedisplay();
 
-	} else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
-
-		//Acabar
 	}
 
 }
@@ -206,7 +231,6 @@ void processMouseButtons(int button, int state, int xx, int yy) {
 		}
 	}
 }
-
 
 void processMouseMotion(int xx, int yy) {
 
@@ -228,7 +252,7 @@ void processMouseMotion(int xx, int yy) {
 void update_camera(int value) {
 	Camera* cam = store->getCamera();
 	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
-		fpc->update_camera();
+		fpc->update_camera_Pos();
 		glutPostRedisplay();
 	}
 
@@ -255,6 +279,7 @@ int main(int argc, char** argv) {
 	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay() 
 									//, onde a mesma manda um pedido para o Glut redesenhar a cena.
 	glutKeyboardFunc(processKeys);
+	glutKeyboardUpFunc(processKeysUp);
 	glutSpecialFunc(processSpecialKeys);
 
 	glutMouseFunc(processMouseButtons);

@@ -32,8 +32,48 @@ FirstPersonCamera::FirstPersonCamera(Camera* cam) : Camera(Camera(*cam)) {
 
 }
 
-void FirstPersonCamera::update_camera() {
-    // Acabar
+void FirstPersonCamera::update_camera_LookAt() {
+    // Convert alpha from degrees to radians
+	float alpha_rad = alpha * M_PI / 180.0f;
+
+    // Camera look-at point (horizontal, looking direction)
+    this->setLookX(this->getPosX() + sin(alpha_rad));
+    this->setLookY(this->getPosY());
+    this->setLookZ(this->getPosZ() + cos(alpha_rad));
+}
+
+void FirstPersonCamera::update_camera_Pos() {
+	
+	// Convert alpha from degrees to radians
+	float alpha_rad = alpha * M_PI / 180.0f;
+	
+	// Calculate direction vector: d = (sin(alpha), 0, cos(alpha))
+	float dirX = sin(alpha_rad);
+	float dirZ = cos(alpha_rad);
+	
+	// Calculate right vector: r = d × up = (cos(alpha), 0, -sin(alpha))
+	float rightX = cos(alpha_rad);
+	float rightZ = -sin(alpha_rad);
+	
+	// Forward/Backward motion (W/S keys)
+	if (keyW) {
+        this->setPosX(this->getPosX() + dirX * move_speed);
+        this->setPosZ(this->getPosZ() + dirZ * move_speed);
+	}
+	if (keyS) {
+		this->setPosX(this->getPosX() - dirX * move_speed);
+		this->setPosZ(this->getPosZ() - dirZ * move_speed);
+	}
+	
+	// Lateral motion (A/D keys)
+	if (keyA) {
+        this->setPosX(this->getPosX() + rightX * move_speed);
+        this->setPosZ(this->getPosZ() + rightZ * move_speed);
+	}
+	if (keyD) {
+		this->setPosX(this->getPosX() - rightX * move_speed);
+        this->setPosZ(this->getPosZ() - rightZ * move_speed);
+	}
 }
 
 void FirstPersonCamera::set_alpha(float a) { alpha = a; }

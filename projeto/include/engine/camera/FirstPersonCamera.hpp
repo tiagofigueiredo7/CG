@@ -23,7 +23,8 @@ class FirstPersonCamera : public Camera {
         FirstPersonCamera();
         FirstPersonCamera(Camera* cam);
 
-        void update_camera();
+        void update_camera_Pos();
+        void update_camera_LookAt();
 
         void set_alpha(float a);
         void set_move_speed(float s);
