@@ -12,6 +12,7 @@
 #include "engine/Group.hpp"
 #include "engine/camera/Camera.hpp"
 #include "engine/camera/OrbitalCamera.hpp"
+#include "engine/camera/FirstPersonCamera.hpp"
 
 using namespace std;
 using namespace tinyxml2;

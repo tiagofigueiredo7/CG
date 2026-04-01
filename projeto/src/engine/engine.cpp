@@ -133,12 +133,15 @@ void renderScene(void) {
 
 void processKeys(unsigned char c, int xx, int yy) {
 
-	if (c == '0' && dynamic_cast<OrbitalCamera*>(store->getCamera()) != nullptr) {
+	if (c == '0' && (dynamic_cast<OrbitalCamera*>(store->getCamera()) != nullptr || dynamic_cast<FirstPersonCamera*>(store->getCamera()) != nullptr)) {
 		Camera* cam = new Camera(store->getCamera());
 		store->setCamera(cam);
 	} else if (c == '1') {
 		OrbitalCamera* oc = new OrbitalCamera(store->getCamera());
 		store->setCamera(oc);
+	} else if (c == '2') {
+		FirstPersonCamera* fpc = new FirstPersonCamera(store->getCamera());
+		store->setCamera(fpc);
 	}
 }
 
