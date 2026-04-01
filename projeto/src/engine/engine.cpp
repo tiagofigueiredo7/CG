@@ -160,7 +160,13 @@ void processKeys(unsigned char c, int xx, int yy) {
 		if (c == '\t') fpc->setPosY(fpc->getPosY() - 0.5);
 
 		if (c == 'm' || c == 'M') fpc->set_move_speed(fpc->get_move_speed() + 0.1f);
-		if (c == 'n' || c == 'N') fpc->set_move_speed(fpc->get_move_speed() - 0.1f);
+		if (c == 'n' || c == 'N') {
+			if (fpc->get_move_speed() <= 0.1f ) {
+				fpc->set_move_speed(0.1f);
+			} else {
+				fpc->set_move_speed(fpc->get_move_speed() - 0.1f);
+			}
+		}
 	}
 }
 
