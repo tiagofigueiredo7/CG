@@ -27,6 +27,7 @@ class FirstPersonCamera : public Camera {
 
         void update_camera_Pos();
         void update_camera_LookAt();
+        void update_move_speed(float s);
 
         void set_alpha(float a);
         void set_move_speed(float s);

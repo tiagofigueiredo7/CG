@@ -87,6 +87,10 @@ void FirstPersonCamera::update_camera_Pos() {
 	}
 }
 
+void FirstPersonCamera::update_move_speed(float s) {
+    move_speed += s;
+}
+
 void FirstPersonCamera::set_alpha(float a) { alpha = a; }
 void FirstPersonCamera::set_move_speed(float s) { move_speed = s; }
 void FirstPersonCamera::set_keyW(bool state) { keyW = state; }
