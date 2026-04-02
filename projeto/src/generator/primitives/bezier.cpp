@@ -1,11 +1,5 @@
 #include "generator/primitives/bezier.hpp"
 
-struct _3DPoint {
-    float x;
-    float y;
-    float z;
-};
-
 Point3D bezier(float u, float v, vector<float>* control_points){
 
     float B[4];

@@ -1,15 +1,16 @@
-#ifndef FITA_MOBIUS_HPP
-#define FITA_MOBIUS_HPP
+#ifndef MOBIUS_HPP
+#define MOBIUS_HPP
 
 // Bibliotecas uteis
 #include <cmath>
 
 // Bibliotecas locais
 #include "utils/util.hpp"
+#include "Point3D.hpp"
 
 using namespace std;
 using namespace util;
 
-vector <float> generateFitaMobius(float radius, float width, int slices);
+vector <float> generateMobiusStrip(float radius, float width, int slices);
 
 #endif

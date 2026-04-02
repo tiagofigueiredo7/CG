@@ -64,9 +64,9 @@ namespace util {
 				return false;
 			}
 		}
-		else if(figure == "fita_mobius"){
+		else if(figure == "mobius"){
 			if(parameters != 6) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura fita_mobius.\n[USO] generator fita_mobius <radius> <width> <slices> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura mobius strip.\n[USO] generator mobius <radius> <width> <slices> <dest file>\n";
 				return false;
 			}
 		}

@@ -7,11 +7,10 @@
 // Bibliotecas locais
 #include "utils/util.hpp"
 #include "generator/Patch.hpp"
+#include "Point3D.hpp"
 
 using namespace std;
 using namespace util;
-
-typedef struct _3DPoint Point3D;
 
 Point3D bezier(float u, float v, vector<float>* control_points);
 
