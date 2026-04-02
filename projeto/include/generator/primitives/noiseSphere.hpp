@@ -11,6 +11,15 @@
 using namespace std;
 using namespace util;
 
-vector <float> generateNoiseSphere(float radius, int slices, int stacks);
+/**
+ * radius: raio da esfera
+ * slices: Divisões em longitude (u)
+ * stacks: Divisões em latitude (v)
+ * amplitude: Intensidade da deformação
+ */
+
+float noise(float u, float v, float amplitude);
+
+vector <float> generateNoiseSphere(float radius, int slices, int stacks, float amplitude);
 
 #endif

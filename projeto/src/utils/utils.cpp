@@ -71,8 +71,8 @@ namespace util {
 			}
 		}
 		else if(figure == "noiseSphere"){
-			if(parameters != 6) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura noise sphere.\n[USO] generator noiseSphere <radius> <slices> <stacks> <dest file>\n";
+			if(parameters != 7) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura noise sphere.\n[USO] generator noiseSphere <radius> <slices> <stacks> <amplitude> <dest file>\n";
 				return false;
 			}
 		}

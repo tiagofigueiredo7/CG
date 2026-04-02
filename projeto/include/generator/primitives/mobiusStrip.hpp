@@ -11,6 +11,12 @@
 using namespace std;
 using namespace util;
 
+/***
+ * radius: Raio do anel central
+ * width: Meia-largura da fita
+ * slices: Divisões ao longo de u (resolução)
+ */
+
 vector <float> generateMobiusStrip(float radius, float width, int slices);
 
 #endif
