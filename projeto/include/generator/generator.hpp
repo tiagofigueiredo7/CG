@@ -15,6 +15,7 @@
 #include "primitives/torus.hpp"
 #include "primitives/cylinder.hpp"
 #include "primitives/bezier.hpp"
+#include "primitives/fita_mobius.hpp"
 #include "generator/Patch.hpp"
 
 using namespace std;
