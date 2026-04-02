@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="noisesphere.3d" /> <!-- generator noiseSphere 1.0 50 50 0.3 5 noisesphere.3d -->
+			<model file="noisesphere.3d" /> <!-- generator noiseSphere 1.0 50 50 0.3 noisesphere.3d -->
  		</models>
  	</group>
 </world>

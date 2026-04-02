@@ -155,8 +155,8 @@ void processKeys(unsigned char c, int xx, int yy) {
 		if (c == 'a' || c == 'A') fpc->set_keyA(true);
 		if (c == 's' || c == 'S') fpc->set_keyS(true);
 		if (c == 'd' || c == 'D') fpc->set_keyD(true);
-		if (c == ' ') fpc->setPosY(fpc->getPosY() + 0.5);
-		if (c == '\t') fpc->setPosY(fpc->getPosY() - 0.5);
+		if (c == ' ') fpc->setPosY(fpc->getPosY() + fpc->get_move_speed());
+		if (c == '\t') fpc->setPosY(fpc->getPosY() - fpc->get_move_speed());
 		if (c == '+') fpc->update_move_speed(0.1f);
 		if (c == '-') {
 			if (fpc->get_move_speed() <= 0.1f ) {

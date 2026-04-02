@@ -4959,8 +4959,8 @@
 		<group>
 			<transform>
 				<rotate time="-90" x="0" y="1" z="0" />
-				<scale x="0.3" y="0.3" z="0.3" />
-				<translate time = "45" align="true">
+				<scale x="0.23" y="0.23" z="0.23" />
+				<translate time = "20" align="true">
 					<point x = "-30" y = "2.0" z = "0" />
 					<point x = "-24" y = "2.4" z = "4" />
 					<point x = "-10" y = "1.8" z = "9" />
@@ -4972,7 +4972,7 @@
 				</translate>
 			</transform>
 			<models>
-				<model file="cone_1_2_4_3.3d" /> <!-- mudar depois -->
+				<model file="noisesphere.3d" /> <!-- generator noiseSphere 1.0 50 50 2.4 noisesphere.3d -->
 			</models>
 		</group>
 
