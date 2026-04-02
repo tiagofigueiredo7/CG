@@ -64,9 +64,15 @@ namespace util {
 				return false;
 			}
 		}
-		else if(figure == "mobius"){
+		else if(figure == "mobiusStrip"){
 			if(parameters != 6) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura mobius strip.\n[USO] generator mobius <radius> <width> <slices> <dest file>\n";
+				cerr << "[ERRO] Parâmetros inválidos para a figura mobius strip.\n[USO] generator mobiusStrip <radius> <width> <slices> <dest file>\n";
+				return false;
+			}
+		}
+		else if(figure == "noiseSphere"){
+			if(parameters != 6) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura noise sphere.\n[USO] generator noiseSphere <radius> <slices> <stacks> <dest file>\n";
 				return false;
 			}
 		}

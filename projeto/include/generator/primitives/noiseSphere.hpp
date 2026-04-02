@@ -1,5 +1,5 @@
-#ifndef MOBIUS_HPP
-#define MOBIUS_HPP
+#ifndef NOISESPHERE_HPP
+#define NOISESPHERE_HPP
 
 // Bibliotecas uteis
 #include <cmath>
@@ -11,6 +11,6 @@
 using namespace std;
 using namespace util;
 
-vector <float> generateMobiusStrip(float radius, float width, int slices);
+vector <float> generateNoiseSphere(float radius, int slices, int stacks);
 
 #endif

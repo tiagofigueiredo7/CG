@@ -1,4 +1,4 @@
-#include "generator/primitives/mobius.hpp"
+#include "generator/primitives/mobiusStrip.hpp"
 
 vector <float> generateMobiusStrip(float radius, float width, int slices){
 

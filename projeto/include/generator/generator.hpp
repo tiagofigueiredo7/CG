@@ -15,7 +15,8 @@
 #include "primitives/torus.hpp"
 #include "primitives/cylinder.hpp"
 #include "primitives/bezier.hpp"
-#include "primitives/mobius.hpp"
+#include "primitives/mobiusStrip.hpp"
+#include "primitives/noiseSphere.hpp"
 #include "generator/Patch.hpp"
 
 using namespace std;

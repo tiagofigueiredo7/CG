@@ -34,8 +34,11 @@ int main(int argc, char** argv) {
     else if (figure == "patch") {
         vertices = generateBezierModel(argv[2], stoi(argv[3]));
     }
-    else if (figure == "mobius") {
+    else if (figure == "mobiusStrip") {
         vertices = generateMobiusStrip(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
+    }
+    else if (figure == "noiseSphere") {
+        vertices = generateNoiseSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4]));
     }
     else {
         cerr << "[ERRO] Figura não suportada.\n";
