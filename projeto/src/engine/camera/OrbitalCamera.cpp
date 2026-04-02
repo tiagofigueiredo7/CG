@@ -1,17 +1,38 @@
 #include "engine/camera/OrbitalCamera.hpp"
 
 OrbitalCamera::OrbitalCamera() : Camera() {
-    alpha_coord = 0.0f;
+    calculate_spherical_from_camera(this);
     beta_coord = 0.0f;
     radius_coord = 5.0f;
     zoom_speed = 0.1f;
 }
 
 OrbitalCamera::OrbitalCamera(Camera* cam) : Camera(*cam) {
-    alpha_coord = 0.0f;
-    beta_coord = 0.0f;
-    radius_coord = 5.0f;
+    calculate_spherical_from_camera(cam);
     zoom_speed = 0.1f;
+}
+
+void OrbitalCamera::calculate_spherical_from_camera(Camera* cam) {
+    float Posx = cam->getPosX();
+    float Posy = cam->getPosY();
+    float Posz = cam->getPosZ();
+
+    float radius = sqrt(Posx * Posx + Posy * Posy + Posz * Posz);
+    if (radius < 1e-6f) {
+        alpha_coord = 0.0f;
+        beta_coord = 0.0f;
+        radius_coord = 5.0f;
+        return;
+    }
+
+    alpha_coord = atan2(Posx, Posz);
+
+    float sinBeta = Posy / radius;
+    if (sinBeta > 1.0f) sinBeta = 1.0f;
+    if (sinBeta < -1.0f) sinBeta = -1.0f;
+    beta_coord = asin(sinBeta);
+
+    radius_coord = radius;
 }
 
 void OrbitalCamera::update_cartesian_coordinates(){

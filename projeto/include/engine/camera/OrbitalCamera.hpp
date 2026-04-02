@@ -5,11 +5,15 @@
 
 class OrbitalCamera : public Camera {
     private:
-        //Coordenadas esféricas
+        // Coordenadas esféricas
         float alpha_coord;
         float beta_coord;
         float radius_coord;
+
+        // Velocidade do zoom
         float zoom_speed;
+
+        void calculate_spherical_from_camera(Camera* cam);
 
     public:
         OrbitalCamera();

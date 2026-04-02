@@ -1,7 +1,7 @@
 #include "engine/camera/FirstPersonCamera.hpp"
 
 FirstPersonCamera::FirstPersonCamera() : Camera() {
-    alpha = get_alpha_from_camera();
+    alpha = get_alpha_from_camera(this);
     move_speed = 0.5f;
 
     startX = 0.0f;
@@ -17,7 +17,7 @@ FirstPersonCamera::FirstPersonCamera() : Camera() {
 }
 
 FirstPersonCamera::FirstPersonCamera(Camera* cam) : Camera(Camera(*cam)) {
-    alpha = get_alpha_from_camera();
+    alpha = get_alpha_from_camera(cam);
     move_speed = 0.5f;
 
     startX = 0.0f;
@@ -32,9 +32,9 @@ FirstPersonCamera::FirstPersonCamera(Camera* cam) : Camera(Camera(*cam)) {
 
 }
 
-float FirstPersonCamera::get_alpha_from_camera() {// TODO: Rever
-    float dirX = this->getLookX() - this->getPosX();
-    float dirZ = this->getLookZ() - this->getPosZ();
+float FirstPersonCamera::get_alpha_from_camera(Camera* cam) {// TODO: Rever
+    float dirX = cam->getLookX() - cam->getPosX();
+    float dirZ = cam->getLookZ() - cam->getPosZ();
 
     if (fabs(dirX) < 1e-6f && fabs(dirZ) < 1e-6f) {
         return 0.0f;

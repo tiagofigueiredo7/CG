@@ -142,7 +142,7 @@ void processKeys(unsigned char c, int xx, int yy) {
 	Camera* cam = store->getCamera();
 
 	if (c == '0' && (dynamic_cast<OrbitalCamera*>(cam) != nullptr || dynamic_cast<FirstPersonCamera*>(cam) != nullptr)) {
-		Camera* cam = new Camera(cam);
+		Camera* cam = new Camera(store->getCamera());
 		store->setCamera(cam);
 	} else if (c == '1') {
 		OrbitalCamera* oc = new OrbitalCamera(cam);
@@ -150,9 +150,7 @@ void processKeys(unsigned char c, int xx, int yy) {
 	} else if (c == '2') {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
 		store->setCamera(fpc);
-	}
-
-	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
+	} else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		if (c == 'w' || c == 'W') fpc->set_keyW(true);
 		if (c == 'a' || c == 'A') fpc->set_keyA(true);
 		if (c == 's' || c == 'S') fpc->set_keyS(true);

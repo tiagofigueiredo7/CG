@@ -17,13 +17,13 @@ class FirstPersonCamera : public Camera {
         bool keyA;
         bool keyS;
         bool keyD;
+
+        float get_alpha_from_camera(Camera* cam);
         
 
     public:
         FirstPersonCamera();
         FirstPersonCamera(Camera* cam);
-
-        float get_alpha_from_camera();
 
         void update_camera_Pos();
         void update_camera_LookAt();
