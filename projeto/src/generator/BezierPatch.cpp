@@ -1,36 +1,36 @@
-#include "generator/Patch.hpp"
+#include "generator/BezierPatch.hpp"
 
-Patch::Patch() {
+BezierPatch::BezierPatch() {
     this->patches_count = 0;
     this->control_points_count = 0;
     this->indices_patch = nullptr;
     this->control_points_values = vector<float>();
 }
 
-Patch::~Patch() {
+BezierPatch::~BezierPatch() {
     for (int i = 0; i < this->patches_count; i++) {
         free(this->indices_patch[i]);
     }
     free(this->indices_patch);
 }
 
-int Patch::getPatchesCount() {
+int BezierPatch::getPatchesCount() {
     return this->patches_count;
 }
 
-vector<float>* Patch::getIndicesPatch(int index) {
+vector<float>* BezierPatch::getIndicesPatch(int index) {
     return this->indices_patch[index];
 }
 
-int Patch::getControlPointsCount() {
+int BezierPatch::getControlPointsCount() {
     return this->control_points_count;
 }
 
-vector<float> Patch::getControlPointsValues() {
+vector<float> BezierPatch::getControlPointsValues() {
     return this->control_points_values;
 }
 
-void Patch::parse_Patch_File(char* file_path) {
+void BezierPatch::parse_Patch_File(char* file_path) {
 
     // Abrir o ficheiro
     ifstream file(file_path);
@@ -117,10 +117,10 @@ void Patch::parse_Patch_File(char* file_path) {
     file.close();
 }
 
-void Patch::setPatchesCount(int count) {
+void BezierPatch::setPatchesCount(int count) {
     this->patches_count = count;
 }
 
-void Patch::setControlPointsCount(int count) {
+void BezierPatch::setControlPointsCount(int count) {
     this->control_points_count = count;
 }

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class Patch {
+class BezierPatch {
     private:
         int patches_count;
         vector<float>** indices_patch;
@@ -22,8 +22,8 @@ class Patch {
 
     public:
 
-        Patch();
-        ~Patch();
+        BezierPatch();
+        ~BezierPatch();
 
         void parse_Patch_File(char* file_path);
 

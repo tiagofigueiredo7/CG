@@ -47,7 +47,7 @@ vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* contr
 
 vector<float> generateBezierModel(char* file_path, int tesselation) {
 
-    Patch data = Patch();
+    BezierPatch data = BezierPatch();
     data.parse_Patch_File(file_path);
 
     vector<float> vertices;
