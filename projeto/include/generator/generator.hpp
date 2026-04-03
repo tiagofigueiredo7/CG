@@ -17,6 +17,7 @@
 #include "primitives/bezier.hpp"
 #include "primitives/mobiusStrip.hpp"
 #include "primitives/noiseSphere.hpp"
+#include "primitives/kleinBottle.hpp"
 #include "generator/Patch.hpp"
 
 using namespace std;

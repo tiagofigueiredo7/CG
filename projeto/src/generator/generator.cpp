@@ -40,6 +40,9 @@ int main(int argc, char** argv) {
     else if (figure == "noiseSphere") {
         vertices = generateNoiseSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4]), stof(argv[5]));
     }
+    else if (figure == "kleinBottle") {
+        vertices = generateKleinBottle(stof(argv[2]), stoi(argv[3]), stoi(argv[4]));
+    }
     else {
         cerr << "[ERRO] Figura não suportada.\n";
         return 1;

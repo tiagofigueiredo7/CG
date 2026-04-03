@@ -15,7 +15,7 @@ float noise(float u, float v, float amplitude){
 vector <float> generateNoiseSphere(float radius, int slices, int stacks, float amplitude){
     
     vector<float> vertices;
-    Point3D grid[slices+1][stacks+1];
+    Point3D grid[stacks+1][slices+1];
     float u=0,v=0,r=0;
 
     for (int i=0; i<=stacks; i++) {

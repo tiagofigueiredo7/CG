@@ -32,13 +32,13 @@ vector <float> generateMobiusStrip(float radius, float width, int slices){
             D = grid[i+1][1];
         }
 
-        // Cada triangulo é adicionado 2 vezes para renderizar direito(Por causa do Cull Face)
-        addTriangle(vertices, A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+        // Cada triangulo é adicionado 2 vezes porque a figura é não orientável
         addTriangle(vertices, A.x, A.y, A.z, C.x, C.y, C.z, B.x, B.y, B.z);
+        addTriangle(vertices, B.x, B.y, B.z, C.x, C.y, C.z, D.x, D.y, D.z);
 
-        addTriangle(vertices, C.x, C.y, C.z, D.x, D.y, D.z, B.x, B.y, B.z);
-        addTriangle(vertices, C.x, C.y, C.z, D.x, D.y, D.z, B.x, B.y, B.z);
-    }
+        addTriangle(vertices, A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+        addTriangle(vertices, C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+}
 
     return vertices;
 

@@ -76,6 +76,12 @@ namespace util {
 				return false;
 			}
 		}
+		else if(figure == "kleinBottle"){
+			if(parameters != 6) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura klein bottle.\n[USO] generator kleinBottle <radius> <slices> <stacks> <dest file>\n";
+				return false;
+			}
+		}
 		else if(figure == "patch"){
 			if(parameters != 5) {
 				cerr << "[ERRO] Parâmetros inválidos para a figura patch.\n[USO] generator patch <patch file> <tesselation> <dest file>\n";
