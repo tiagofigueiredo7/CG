@@ -1,0 +1,26 @@
+#ifndef PROCESS_HPP
+#define PROCESS_HPP
+
+// Biblioteca do glut
+#ifdef __APPLE__ // Para correr em MacOS
+#include <GLUT/glut.h>  // Para correr em MacOS
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>    // Para correr em Linux
+#endif
+
+// Bibliotecas locais
+#include "engine/Data.hpp"
+
+void processMouseButtons_aux(int button, int state, int xx, int yy, Data* store);
+
+void processMouseMotion_aux(int xx, int yy, Data* store);
+
+void processKeys_aux(unsigned char c, int xx, int yy, Data* store);
+
+void processKeysUp_aux(unsigned char key, int xx, int yy, Data* store);
+
+void processSpecialKeys_aux(int key, int xx, int yy, Data* store);
+
+
+#endif
