@@ -1,11 +1,17 @@
 #ifndef GROUP_HPP
 #define GROUP_HPP
 
+// Biblioteca do glut
+#ifdef __APPLE__ // Para correr em MacOS
+#include <GLUT/glut.h>  // Para correr em MacOS
+#else
+#include <GL/glew.h>
+#include <GL/glut.h>    // Para correr em Linux
+#endif
+
 #include <string>
 #include <vector>
 #include <iostream>
-
-#include <GL/glew.h>
 #include <stdlib.h>
 
 using namespace std;
@@ -26,6 +32,8 @@ class Group {
         vector<int> vertices_count;
         GLuint* buffer;
 
+        void createModel(int init, int count, GLuint* buffer);
+
     public:
         Group();
 
@@ -39,6 +47,8 @@ class Group {
         vector<Group*> getSubGroups();
         vector<int> getVerticesCount();
         GLuint* getBuffer();
+
+        void renderGroup();
 
 };
 

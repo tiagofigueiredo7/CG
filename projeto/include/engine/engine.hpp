@@ -42,8 +42,4 @@ void changeSize(int w, int h);
 
 void renderScene(void);
 
-void renderGroup(Group& g);
-
-void createModel(int init, int count, GLuint* buffer);
-
 #endif
