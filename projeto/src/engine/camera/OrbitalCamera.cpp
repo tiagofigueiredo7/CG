@@ -2,14 +2,19 @@
 
 OrbitalCamera::OrbitalCamera() : Camera() {
     calculate_spherical_from_camera(this);
-    beta_coord = 0.0f;
-    radius_coord = 5.0f;
     zoom_speed = 0.1f;
+    this->setLookX(0.0f);
+    this->setLookY(0.0f);
+    this->setLookZ(0.0f);
+
 }
 
 OrbitalCamera::OrbitalCamera(Camera* cam) : Camera(*cam) {
     calculate_spherical_from_camera(cam);
     zoom_speed = 0.1f;
+    this->setLookX(0.0f);
+    this->setLookY(0.0f);
+    this->setLookZ(0.0f);
 }
 
 void OrbitalCamera::calculate_spherical_from_camera(Camera* cam) {

@@ -6,6 +6,7 @@
 class FirstPersonCamera : public Camera {
     private:
         float alpha;      // Rotation angle (degrees)
+        float beta;       // Pitch angle (degrees)
         float move_speed;  // Speed of movement
 
         float startX;
@@ -19,6 +20,7 @@ class FirstPersonCamera : public Camera {
         bool keyD;
 
         float get_alpha_from_camera(Camera* cam);
+        float get_beta_from_camera(Camera* cam);
         
 
     public:
@@ -30,6 +32,7 @@ class FirstPersonCamera : public Camera {
         void update_move_speed(float s);
 
         void set_alpha(float a);
+        void set_beta(float b);
         void set_move_speed(float s);
         void set_keyW(bool state);
         void set_keyA(bool state);
@@ -40,6 +43,7 @@ class FirstPersonCamera : public Camera {
         void set_startY(float y);
 
         float get_alpha();
+        float get_beta();
         float get_move_speed();
         bool get_keyW();
         bool get_keyA();

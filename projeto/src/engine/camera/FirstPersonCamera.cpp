@@ -2,6 +2,7 @@
 
 FirstPersonCamera::FirstPersonCamera() : Camera() {
     alpha = get_alpha_from_camera(this);
+    beta = get_beta_from_camera(this);
     move_speed = 0.5f;
 
     startX = 0.0f;
@@ -18,6 +19,7 @@ FirstPersonCamera::FirstPersonCamera() : Camera() {
 
 FirstPersonCamera::FirstPersonCamera(Camera* cam) : Camera(Camera(*cam)) {
     alpha = get_alpha_from_camera(cam);
+    beta = get_beta_from_camera(cam);
     move_speed = 0.5f;
 
     startX = 0.0f;
@@ -43,14 +45,35 @@ float FirstPersonCamera::get_alpha_from_camera(Camera* cam) {// TODO: Rever
     return atan2(dirX, dirZ) * 180.0f / M_PI ;
 }
 
-void FirstPersonCamera::update_camera_LookAt() {
-    // Convert alpha from degrees to radians
-	float alpha_rad = alpha * M_PI / 180.0f;
+float FirstPersonCamera::get_beta_from_camera(Camera* cam) {
+    float dirX = cam->getLookX() - cam->getPosX();
+    float dirY = cam->getLookY() - cam->getPosY();
+    float dirZ = cam->getLookZ() - cam->getPosZ();
 
-    // Camera look-at point (horizontal, looking direction)
-    this->setLookX(this->getPosX() + sin(alpha_rad));
-    this->setLookY(this->getPosY());
-    this->setLookZ(this->getPosZ() + cos(alpha_rad));
+    float len = sqrt(dirX * dirX + dirY * dirY + dirZ * dirZ);
+    if (len < 1e-6f) {
+        return 0.0f;
+    }
+
+    float sinBeta = dirY / len;
+    if (sinBeta > 1.0f) sinBeta = 1.0f;
+    if (sinBeta < -1.0f) sinBeta = -1.0f;
+    return asin(sinBeta) * 180.0f / M_PI;
+}
+
+void FirstPersonCamera::update_camera_LookAt() {
+	// Convert angles from degrees to radians
+	float alpha_rad = alpha * M_PI / 180.0f;
+	float beta_rad = beta * M_PI / 180.0f;
+
+	// Direction vector from yaw (alpha) and pitch (beta).
+	float dirX = sin(alpha_rad) * cos(beta_rad);
+	float dirY = sin(beta_rad);
+	float dirZ = cos(alpha_rad) * cos(beta_rad);
+
+    this->setLookX(this->getPosX() + dirX);
+    this->setLookY(this->getPosY() + dirY);
+    this->setLookZ(this->getPosZ() + dirZ);
 }
 
 void FirstPersonCamera::update_camera_Pos() {
@@ -92,6 +115,7 @@ void FirstPersonCamera::update_move_speed(float s) {
 }
 
 void FirstPersonCamera::set_alpha(float a) { alpha = a; }
+void FirstPersonCamera::set_beta(float b) { beta = b; }
 void FirstPersonCamera::set_move_speed(float s) { move_speed = s; }
 void FirstPersonCamera::set_keyW(bool state) { keyW = state; }
 void FirstPersonCamera::set_keyA(bool state) { keyA = state; }
@@ -102,6 +126,7 @@ void FirstPersonCamera::set_startX(float x) { startX = x; }
 void FirstPersonCamera::set_startY(float y) { startY = y; }
 
 float FirstPersonCamera::get_alpha() { return alpha; }
+float FirstPersonCamera::get_beta() { return beta; }
 float FirstPersonCamera::get_move_speed() { return move_speed; }
 bool FirstPersonCamera::get_keyW() { return keyW; }
 bool FirstPersonCamera::get_keyA() { return keyA; }
