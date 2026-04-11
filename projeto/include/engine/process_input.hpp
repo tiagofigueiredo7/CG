@@ -1,5 +1,5 @@
-#ifndef PROCESS_HPP
-#define PROCESS_HPP
+#ifndef PROCESS_INPUT_HPP
+#define PROCESS_INPUT_HPP
 
 // Biblioteca do glut
 #ifdef __APPLE__ // Para correr em MacOS

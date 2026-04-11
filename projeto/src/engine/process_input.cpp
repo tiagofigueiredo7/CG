@@ -1,4 +1,4 @@
-#include "engine/process.hpp"
+#include "engine/process_input.hpp"
 
 void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 
