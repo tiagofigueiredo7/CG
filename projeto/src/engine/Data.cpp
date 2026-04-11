@@ -273,4 +273,8 @@ void Data::setHeight(int h) { height = h; }
 
 void Data::setGroup(Group* g){ group = g; }
 
-void Data::setCamera(Camera* c){ camera = c; }
+void Data::setCamera(Camera* c){
+    if (camera == c) return;
+    delete camera;
+    camera = c;
+}

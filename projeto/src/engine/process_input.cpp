@@ -5,8 +5,8 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	Camera* cam = store->getCamera();
 
 	if (c == '0' && (dynamic_cast<OrbitalCamera*>(cam) != nullptr || dynamic_cast<FirstPersonCamera*>(cam) != nullptr)) {
-		Camera* cam = new Camera(store->getCamera());
-		store->setCamera(cam);
+		Camera* new_cam = new Camera(store->getCamera());
+		store->setCamera(new_cam);
 	}
 	else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
 		OrbitalCamera* oc = new OrbitalCamera(cam);
