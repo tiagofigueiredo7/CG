@@ -18,6 +18,10 @@ void processMouseMotion_aux(int xx, int yy, Data* store);
 
 void processKeys_aux(unsigned char c, int xx, int yy, Data* store);
 
+void processKeys_Fpc_aux(unsigned char c, int xx, int yy, FirstPersonCamera* fpc);
+
+void processKeys_Orb_aux(unsigned char c, int xx, int yy, OrbitalCamera* oc);
+
 void processKeysUp_aux(unsigned char key, int xx, int yy, Data* store);
 
 void processSpecialKeys_aux(int key, int xx, int yy, Data* store);

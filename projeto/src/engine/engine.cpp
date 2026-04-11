@@ -71,6 +71,7 @@ void renderScene(void) {
 }
 
 void processKeys(unsigned char c, int xx, int yy) {
+	if (c == 27) exit(0);
 	processKeys_aux(c, xx, yy, store);
 }
 

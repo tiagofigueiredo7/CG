@@ -2,48 +2,56 @@
 
 void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 
-	if (c == 27) exit(0);
-
 	Camera* cam = store->getCamera();
 
 	if (c == '0' && (dynamic_cast<OrbitalCamera*>(cam) != nullptr || dynamic_cast<FirstPersonCamera*>(cam) != nullptr)) {
 		Camera* cam = new Camera(store->getCamera());
 		store->setCamera(cam);
-	} else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
+	}
+	else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
 		OrbitalCamera* oc = new OrbitalCamera(cam);
 		store->setCamera(oc);
-	} else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
+	}
+	else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
 		store->setCamera(fpc);
 	} 
 	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
-		if (c == 'w' || c == 'W') fpc->set_keyW(true);
-		if (c == 'a' || c == 'A') fpc->set_keyA(true);
-		if (c == 's' || c == 'S') fpc->set_keyS(true);
-		if (c == 'd' || c == 'D') fpc->set_keyD(true);
-		if (c == ' ') fpc->setPosY(fpc->getPosY() + fpc->get_move_speed());
-		if (c == '\t') fpc->setPosY(fpc->getPosY() - fpc->get_move_speed());
-		if (c == '+') fpc->update_move_speed(0.1f);
-		if (c == '-') {
-			if (fpc->get_move_speed() <= 0.1f ) {
-				fpc->set_move_speed(0.1f);
-			} else {
-				fpc->update_move_speed(-0.1f);
-			}
-		}
-
+		processKeys_Fpc_aux(c, xx, yy, fpc);
 	} 
 	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
-		if (c == '+') oc->update_zoom_speed(0.1f);
-		if (c == '-') {
-			if (oc->get_zoom_speed() <= 0.1f) {
-				oc->set_zoom_speed(0.1f);
-			} else {
-				oc->update_zoom_speed(-0.1f);
-			}
+		processKeys_Orb_aux(c, xx, yy, oc);
+	}
+}
+
+void processKeys_Orb_aux(unsigned char c, int xx, int yy, OrbitalCamera* oc) {
+	if (c == '+') oc->update_zoom_speed(0.1f);
+	if (c == '-') {
+		if (oc->get_zoom_speed() <= 0.1f) {
+			oc->set_zoom_speed(0.1f);
+		} else {
+			oc->update_zoom_speed(-0.1f);
 		}
 	}
 }
+
+void processKeys_Fpc_aux(unsigned char c, int xx, int yy, FirstPersonCamera* fpc) {
+	if (c == 'w' || c == 'W') fpc->set_keyW(true);
+	else if (c == 'a' || c == 'A') fpc->set_keyA(true);
+	else if (c == 's' || c == 'S') fpc->set_keyS(true);
+	else if (c == 'd' || c == 'D') fpc->set_keyD(true);
+	else if (c == ' ') fpc->setPosY(fpc->getPosY() + fpc->get_move_speed());
+	else if (c == '\t') fpc->setPosY(fpc->getPosY() - fpc->get_move_speed());
+	else if (c == '+') fpc->update_move_speed(0.1f);
+	else if (c == '-') {
+		if (fpc->get_move_speed() <= 0.1f ) {
+			fpc->set_move_speed(0.1f);
+		} else {
+			fpc->update_move_speed(-0.1f);
+		}
+	}
+}
+
 
 void processKeysUp_aux(unsigned char key, int xx, int yy, Data* store) {
 	
