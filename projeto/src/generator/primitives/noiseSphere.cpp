@@ -8,7 +8,7 @@ float noise(float u, float v, float amplitude){
     float n = sin((x * 12.9898f + y * 78.233f + z * 37.719f) + 19.19f) *
                 cos((x * 93.989f  - y * 67.345f + z * 54.123f) - 11.73f);
 
-    return amplitude * 0.1f * n;
+    return amplitude * 0.01f * n;
 }
 
 
