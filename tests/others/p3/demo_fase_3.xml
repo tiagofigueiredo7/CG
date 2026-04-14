@@ -4962,17 +4962,17 @@
 				<scale x="0.23" y="0.23" z="0.23" />
 				<translate time = "20" align="true">
 					<point x = "-30" y = "2.0" z = "0" />
-					<point x = "-24" y = "2.4" z = "4" />
-					<point x = "-10" y = "1.8" z = "9" />
-					<point x = "12" y = "0.9" z = "14" />
-					<point x = "35" y = "0.0" z = "0" />
-					<point x = "14" y = "-0.9" z = "-14" />
-					<point x = "-8" y = "-1.6" z = "-9" />
 					<point x = "-22" y = "-1.0" z = "-4" />
+					<point x = "-8" y = "-1.6" z = "-9" />
+					<point x = "14" y = "-0.9" z = "-14" />
+					<point x = "35" y = "0.0" z = "0" />
+					<point x = "12" y = "0.9" z = "14" />
+					<point x = "-10" y = "1.8" z = "9" />
+					<point x = "-24" y = "2.4" z = "4" />
 				</translate>
 			</transform>
 			<models>
-				<model file="noisesphere.3d" /> <!-- generator noiseSphere 1.0 50 50 2.4 noisesphere.3d -->
+				<model file="comet_10.3d" /> <!-- generator patch comet.patch 10 comet_10.3d -->
 			</models>
 		</group>
 
