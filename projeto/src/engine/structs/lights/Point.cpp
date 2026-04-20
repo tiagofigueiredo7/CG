@@ -1,4 +1,4 @@
-#include "engine/lights/Point.hpp"
+#include "engine/structs/lights/Point.hpp"
 
 Point::Point(float x, float y, float z) : Light() {
     this->posX = x;

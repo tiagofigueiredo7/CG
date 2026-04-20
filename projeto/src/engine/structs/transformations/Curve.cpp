@@ -1,4 +1,4 @@
-#include "engine/transformations/Curve.hpp"
+#include "engine/structs/transformations/Curve.hpp"
 
 Curve::Curve(bool align, float time) {
     this->align = align;

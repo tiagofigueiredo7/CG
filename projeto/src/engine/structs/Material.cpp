@@ -1,4 +1,4 @@
-#include "engine/Material.hpp"
+#include "engine/structs/Material.hpp"
 
 Material::Material() {
     // Valores padrão

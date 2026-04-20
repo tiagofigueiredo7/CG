@@ -1,4 +1,4 @@
-#include "engine/camera/FirstPersonCamera.hpp"
+#include "engine/structs/camera/FirstPersonCamera.hpp"
 
 FirstPersonCamera::FirstPersonCamera() : Camera() {
     alpha = get_alpha_from_camera(this);

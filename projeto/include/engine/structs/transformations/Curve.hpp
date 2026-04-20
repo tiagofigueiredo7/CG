@@ -1,7 +1,7 @@
 #ifndef CURVE_HPP
 #define CURVE_HPP
 
-#include "engine/transformations/Transformation.hpp"
+#include "Transformation.hpp"
 #include "utils/util.hpp"
 
 #ifdef __APPLE__ // Para correr em MacOS

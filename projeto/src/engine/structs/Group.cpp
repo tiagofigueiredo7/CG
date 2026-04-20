@@ -1,4 +1,4 @@
-#include "engine/Group.hpp"
+#include "engine/structs/Group.hpp"
 
 // Construtor
 Group::Group() {

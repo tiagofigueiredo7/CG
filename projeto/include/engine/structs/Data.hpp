@@ -9,15 +9,15 @@
 #include <fstream>
 #include <sstream>
 
-#include "engine/Group.hpp"
-#include "engine/camera/Camera.hpp"
-#include "engine/camera/OrbitalCamera.hpp"
-#include "engine/camera/FirstPersonCamera.hpp"
-#include "engine/camera/ThirdPerson.hpp"
-#include "engine/lights/Light.hpp"
-#include "engine/lights/Directional.hpp"
-#include "engine/lights/Point.hpp"
-#include "engine/lights/Spotlight.hpp"
+#include "engine/structs/Group.hpp"
+#include "engine/structs/camera/Camera.hpp"
+#include "engine/structs/camera/OrbitalCamera.hpp"
+#include "engine/structs/camera/FirstPersonCamera.hpp"
+#include "engine/structs/camera/ThirdPerson.hpp"
+#include "engine/structs/lights/Light.hpp"
+#include "engine/structs/lights/Directional.hpp"
+#include "engine/structs/lights/Point.hpp"
+#include "engine/structs/lights/Spotlight.hpp"
 
 using namespace std;
 using namespace tinyxml2;

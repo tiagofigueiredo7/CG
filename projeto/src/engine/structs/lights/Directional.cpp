@@ -1,4 +1,4 @@
-#include "engine/lights/Directional.hpp"
+#include "engine/structs/lights/Directional.hpp"
 
 Directional::Directional(float x, float y, float z) : Light() {
     this->dirX = x;

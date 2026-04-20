@@ -16,13 +16,13 @@
 
 using namespace std;
 
-#include "engine/transformations/Transformation.hpp"
-#include "engine/transformations/Translate.hpp"
-#include "engine/transformations/Rotate.hpp"
-#include "engine/transformations/Scale.hpp"
-#include "engine/transformations/Curve.hpp"
-#include "engine/transformations/TimedFullRotate.hpp"
-#include "engine/Material.hpp"
+#include "engine/structs/transformations/Transformation.hpp"
+#include "engine/structs/transformations/Translate.hpp"
+#include "engine/structs/transformations/Rotate.hpp"
+#include "engine/structs/transformations/Scale.hpp"
+#include "engine/structs/transformations/Curve.hpp"
+#include "engine/structs/transformations/TimedFullRotate.hpp"
+#include "engine/structs/Material.hpp"
 
 
 class Group {

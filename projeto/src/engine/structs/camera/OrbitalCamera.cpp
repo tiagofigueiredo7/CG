@@ -1,4 +1,4 @@
-#include "engine/camera/OrbitalCamera.hpp"
+#include "engine/structs/camera/OrbitalCamera.hpp"
 
 OrbitalCamera::OrbitalCamera() : Camera() {
     calculate_spherical_from_camera(this);

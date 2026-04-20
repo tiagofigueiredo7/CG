@@ -1,7 +1,7 @@
 #ifndef TIMEDFULLROTATE_HPP
 #define TIMEDFULLROTATE_HPP
 
-#include "engine/transformations/Transformation.hpp"
+#include "Transformation.hpp"
 
 class TimedFullRotate : public Transformation {
 

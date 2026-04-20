@@ -1,4 +1,4 @@
-#include "engine/lights/Spotlight.hpp"
+#include "engine/structs/lights/Spotlight.hpp"
 
 Spotlight::Spotlight(float posX, float posY, float posZ, float dirX, float dirY, float dirZ, float cutoff) : Light() {
     this->posX = posX;

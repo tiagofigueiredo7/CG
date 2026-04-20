@@ -1,7 +1,7 @@
 #ifndef TRANSLATE_HPP
 #define TRANSLATE_HPP
 
-#include "engine/transformations/Transformation.hpp"
+#include "Transformation.hpp"
 
 class Translate : public Transformation {
 
