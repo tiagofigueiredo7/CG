@@ -9,6 +9,9 @@
 #include <GL/glut.h>    // Para correr em Linux
 #endif
 
+// Biblioteca de imagens DevIL
+#include <IL/il.h>
+
 // Bibliotecas uteis
 #include <typeinfo> // Biblioteca com método "typeid" semelhante a "instanceof"
 #include <stdlib.h>

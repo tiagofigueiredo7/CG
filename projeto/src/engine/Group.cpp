@@ -7,6 +7,7 @@ Group::Group() {
     this->transformations = vector<Transformation*>();
     this->subgroups = vector<Group*>();
     this->vertices_count = vector<int>();
+	this->materials = vector<Material*>();
 }
 
 // Destrutor
@@ -19,6 +20,10 @@ Group::~Group() {
         delete g;
     }
 
+	for (Material* m : this->getMaterials()) {
+		delete m;
+	}
+
     // Liberar VBO da GPU antes de liberar o ponteiro
     if (this->buffer[0] != 0) {
         glDeleteBuffers(1, this->buffer);
@@ -26,12 +31,15 @@ Group::~Group() {
 
     free(this->buffer);
 
+    
 }
 
 // Getters
 vector<Transformation*> Group::getTransformations() { return transformations; }
 
 vector<Group* >Group::getSubGroups(){ return subgroups; }
+
+vector<Material*> Group::getMaterials() { return materials; }
 
 GLuint* Group::getBuffer(){ return buffer; }
 
@@ -43,6 +51,8 @@ void Group::addTransformation(Transformation* transf){ transformations.push_back
 void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
 
 void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
+
+void Group::addMaterial(Material* material) { materials.push_back(material); }
 
 // Renderização
 
@@ -90,9 +100,10 @@ void Group::renderGroup(){
 	int acumulador = 0;
 	GLuint* buffer = this->getBuffer();
 	if (buffer[0]) {
-		for (int count : this->getVerticesCount()){
-			createModel(acumulador,count,buffer);
-			acumulador += count;
+		for (size_t i = 0; i < materials.size() && i < vertices_count.size(); ++i) {
+			materials[i]->aplicarMaterial();
+			createModel(acumulador, vertices_count[i], buffer);
+			acumulador += vertices_count[i];
 		}
 	} 
 

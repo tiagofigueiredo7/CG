@@ -137,6 +137,8 @@ int main(int argc, char** argv) {
 
 	store->parseXML(argv[1]);
 
+	ilInit();
+
 
     //  OpenGL settings
 	glEnable(GL_DEPTH_TEST);

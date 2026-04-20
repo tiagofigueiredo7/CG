@@ -22,6 +22,7 @@ using namespace std;
 #include "engine/transformations/Scale.hpp"
 #include "engine/transformations/Curve.hpp"
 #include "engine/transformations/TimedFullRotate.hpp"
+#include "engine/Material.hpp"
 
 
 class Group {
@@ -30,7 +31,10 @@ class Group {
         vector<Group*> subgroups;
 
         vector<int> vertices_count;
+        vector<Material*> materials;
+        
         GLuint* buffer;
+
 
         void createModel(int init, int count, GLuint* buffer);
 
@@ -40,6 +44,7 @@ class Group {
         ~Group();
 
         void addTransformation(Transformation* transf);
+        void addMaterial(Material* material);
         void addSubGroup(Group* subgroup);
         void addVerticeCount(int count);
 
@@ -47,6 +52,7 @@ class Group {
         vector<Group*> getSubGroups();
         vector<int> getVerticesCount();
         GLuint* getBuffer();
+        vector<Material*> getMaterials();
 
         void renderGroup();
 

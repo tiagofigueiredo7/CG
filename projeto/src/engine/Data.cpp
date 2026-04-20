@@ -220,11 +220,48 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
 
     if (models){
         XMLElement* model = models->FirstChildElement("model");
-            while(model != nullptr) {
+        while(model != nullptr) {
             const char* file = model->Attribute("file");
             if (file) {
                 m_files.push_back(strdup(file));
             }
+
+            XMLElement* texture = model->FirstChildElement("texture");
+            if (texture) {
+
+            }
+
+            XMLElement* material = model->FirstChildElement("color");
+            if (material) {
+                Material* m = new Material();
+                XMLElement* difuse = material->FirstChildElement("difuse");
+                if (difuse) {
+                    m->setDifuse(difuse->FloatAttribute("r"), difuse->FloatAttribute("g"), difuse->FloatAttribute("b"), 1.0f);
+                }
+
+                XMLElement* ambient = material->FirstChildElement("ambient");
+                if (ambient) {
+                    m->setAmbient(ambient->FloatAttribute("r"), ambient->FloatAttribute("g"), ambient->FloatAttribute("b"), 1.0f);
+                }
+
+                XMLElement* specular = material->FirstChildElement("specular");
+                if (specular) {
+                    m->setSpecular(specular->FloatAttribute("r"), specular->FloatAttribute("g"), specular->FloatAttribute("b"), 1.0f);
+                }
+
+                XMLElement* emissive = material->FirstChildElement("emissive");
+                if (emissive) {
+                    m->setEmissive(emissive->FloatAttribute("r"), emissive->FloatAttribute("g"), emissive->FloatAttribute("b"), 1.0f);
+                }
+
+                XMLElement* shininess = material->FirstChildElement("shininess");
+                if (shininess) {
+                    m->setShininess(shininess->FloatAttribute("value"));
+                }
+
+                g.addMaterial(m);
+            }
+
             model = model->NextSiblingElement("model");
         }
     }
