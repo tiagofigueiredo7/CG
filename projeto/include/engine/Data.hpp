@@ -13,6 +13,11 @@
 #include "engine/camera/Camera.hpp"
 #include "engine/camera/OrbitalCamera.hpp"
 #include "engine/camera/FirstPersonCamera.hpp"
+#include "engine/camera/ThirdPerson.hpp"
+#include "engine/lights/Light.hpp"
+#include "engine/lights/Directional.hpp"
+#include "engine/lights/Point.hpp"
+#include "engine/lights/Spotlight.hpp"
 
 using namespace std;
 using namespace tinyxml2;
@@ -21,6 +26,9 @@ class Data {
     private:       
         // Camera
         Camera* camera;
+
+        // Lights
+        vector<Light*> lights;
 
         // Perspective parameters
         float fov;
@@ -35,7 +43,9 @@ class Data {
         Group* group;
 
         // Group element parser
+        void parseCameraField(XMLElement* camera);
         void parseGroupField(Group& g, XMLElement* group);
+        void parseLightsField(XMLElement* lights);
 
         void fill_Buffer(Group& g, vector<char*>& arr);
 
@@ -69,6 +79,9 @@ class Data {
 
         void setGroup(Group* g);
         void setCamera(Camera* c);
+
+        vector<Light*> getLights();
+        void addLight(Light* light);
 };
 
 

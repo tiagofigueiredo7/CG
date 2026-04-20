@@ -13,6 +13,7 @@ Data::Data() {
 
     group = nullptr;
     camera = new Camera();
+    lights = vector<Light*>();
 }
 
 // Destrutor
@@ -20,6 +21,9 @@ Data::Data() {
 Data::~Data(){
     delete this->group;
     delete this->camera;
+    for (Light* light : lights) {
+        delete light;
+    }
 }
 
 // Parser
@@ -66,48 +70,89 @@ void Data::parseXML(char* file) {
     }
     
     // Ler camara
-    XMLElement* camera = world->FirstChildElement("camera");
-    if (camera) {
-        
-        // Position
-        XMLElement* position = camera->FirstChildElement("position");
-        if (position) {
-            this->camera->setPosX(position->FloatAttribute("x"));
-            this->camera->setPosY(position->FloatAttribute("y"));
-            this->camera->setPosZ(position->FloatAttribute("z"));
-        }
-        
-        // LookAt
-        XMLElement* lookAt = camera->FirstChildElement("lookAt");
-        if (lookAt) {
-            this->camera->setLookX(lookAt->FloatAttribute("x"));
-            this->camera->setLookY(lookAt->FloatAttribute("y"));
-            this->camera->setLookZ(lookAt->FloatAttribute("z"));
-        }
-        
-        // Up (valores padrão se não existir)
-        XMLElement* up = camera->FirstChildElement("up");
-        if (up) {
-            this->camera->setUpX(up->FloatAttribute("x", 0.0f));
-            this->camera->setUpY(up->FloatAttribute("y", 1.0f));
-            this->camera->setUpZ(up->FloatAttribute("z", 0.0f));
-        }
-        
-        // Projection
-        XMLElement* projection = camera->FirstChildElement("projection");
-        if (projection) {
-            this->setFov(projection->FloatAttribute("fov", 60.0f));
-            this->setNearPlane(projection->FloatAttribute("near", 1.0f));
-            this->setFarPlane(projection->FloatAttribute("far", 1000.0f));
-        }
-    }
+    this->parseCameraField(world->FirstChildElement("camera"));
 
+    // Ler luzes
+    this->parseLightsField(world->FirstChildElement("lights"));
+
+    // Ler grupo
     Group* main_group = new Group();
     this->parseGroupField(*main_group, world->FirstChildElement("group"));
     this->setGroup(main_group);
 }
 
+void Data::parseCameraField(XMLElement* camera) {
+    if (!camera) {
+        cerr << "[Erro] Elemento <camera> não encontrado!" << endl;
+        return;
+    }
+
+    // Position
+    XMLElement* position = camera->FirstChildElement("position");
+    if (position) {
+        this->camera->setPosX(position->FloatAttribute("x"));
+        this->camera->setPosY(position->FloatAttribute("y"));
+        this->camera->setPosZ(position->FloatAttribute("z"));
+    }
+    
+    // LookAt
+    XMLElement* lookAt = camera->FirstChildElement("lookAt");
+    if (lookAt) {
+        this->camera->setLookX(lookAt->FloatAttribute("x"));
+        this->camera->setLookY(lookAt->FloatAttribute("y"));
+        this->camera->setLookZ(lookAt->FloatAttribute("z"));
+    }
+    
+    // Up (valores padrão se não existir)
+    XMLElement* up = camera->FirstChildElement("up");
+    if (up) {
+        this->camera->setUpX(up->FloatAttribute("x", 0.0f));
+        this->camera->setUpY(up->FloatAttribute("y", 1.0f));
+        this->camera->setUpZ(up->FloatAttribute("z", 0.0f));
+    }
+    
+    // Projection
+    XMLElement* projection = camera->FirstChildElement("projection");
+    if (projection) {
+        this->setFov(projection->FloatAttribute("fov", 60.0f));
+        this->setNearPlane(projection->FloatAttribute("near", 1.0f));
+        this->setFarPlane(projection->FloatAttribute("far", 1000.0f));
+    }
+}
+
+void Data::parseLightsField(XMLElement* lights) {
+    if (!lights) {
+        cerr << "[Erro] Elemento <lights> não encontrado!" << endl;
+        return;
+    }
+
+    XMLElement* light = lights->FirstChildElement("light");
+    while (light != nullptr) {
+        if (strcmp(light->Attribute("type"), "point") == 0) {
+            Point* p = new Point(light->FloatAttribute("posX"), light->FloatAttribute("posY"), light->FloatAttribute("posZ"));
+            this->addLight(p);
+        } else if (strcmp(light->Attribute("type"), "directional") == 0) {
+            Directional* d = new Directional(light->FloatAttribute("dirX"), light->FloatAttribute("dirY"), light->FloatAttribute("dirZ"));
+            this->addLight(d);
+        } else if (strcmp(light->Attribute("type"), "spotlight") == 0) {
+            Spotlight* s = new Spotlight(
+                light->FloatAttribute("posX"), light->FloatAttribute("posY"), light->FloatAttribute("posZ"),
+                light->FloatAttribute("dirX"), light->FloatAttribute("dirY"), light->FloatAttribute("dirZ"),
+                light->FloatAttribute("cutoff")
+            );
+            this->addLight(s);
+        } else {
+            cerr << "[ERRO] Tipo de luz desconhecido: " << light->Attribute("type") << endl;
+        }
+        light = light->NextSiblingElement("light");
+    }
+}
+
 void Data::parseGroupField(Group& g, XMLElement* group) {
+    if (!group) {
+        cerr << "[Erro] Elemento <group> não encontrado!" << endl;
+        return;
+    }
     XMLElement* transf = group->FirstChildElement("transform");
 
     if (transf){
@@ -277,4 +322,16 @@ void Data::setCamera(Camera* c){
     if (camera == c) return;
     delete camera;
     camera = c;
+}
+
+vector<Light*> Data::getLights() {
+    return lights;
+}
+
+void Data::addLight(Light* light) {
+    if (lights.size() >= 8) {
+        cerr << "[Aviso] Número máximo de luzes (8) atingido. Luz não adicionada." << endl;
+        return;
+    }
+    lights.push_back(light);
 }

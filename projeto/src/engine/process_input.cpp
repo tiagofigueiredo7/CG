@@ -15,7 +15,11 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
 		store->setCamera(fpc);
-	} 
+	}
+	else if (c == '3' && (dynamic_cast<ThirdPersonCamera*>(cam) == nullptr)) {
+		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam);
+		store->setCamera(tpc);
+	}
 	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		processKeys_Fpc_aux(c, xx, yy, fpc);
 	} 
