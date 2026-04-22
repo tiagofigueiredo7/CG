@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <tinyxml2.h>
+#include <IL/il.h>
 
 #include <iostream>
 #include <fstream>
@@ -48,6 +49,7 @@ class Data {
         void parseLightsField(XMLElement* lights);
 
         void fill_Buffer(Group& g, vector<char*>& arr);
+        int loadTexture(string s);
 
     public:
         Data();

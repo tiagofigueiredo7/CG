@@ -8,6 +8,7 @@ Group::Group() {
     this->subgroups = vector<Group*>();
     this->vertices_count = vector<int>();
 	this->materials = vector<Material*>();
+	this->texturesIDs = vector<GLuint*>();
 }
 
 // Destrutor
@@ -22,6 +23,10 @@ Group::~Group() {
 
 	for (Material* m : this->getMaterials()) {
 		delete m;
+	}
+
+	for (GLuint* g : this->getTexturesIDs()) {
+		free(g);
 	}
 
     // Liberar VBO da GPU antes de liberar o ponteiro
@@ -45,6 +50,8 @@ GLuint* Group::getBuffer(){ return buffer; }
 
 vector<int> Group::getVerticesCount() { return vertices_count; }
 
+vector<GLuint*> Group::getTexturesIDs() { return texturesIDs; }
+
 // Add
 void Group::addTransformation(Transformation* transf){ transformations.push_back(transf); }
 
@@ -53,6 +60,8 @@ void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
 void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
 
 void Group::addMaterial(Material* material) { materials.push_back(material); }
+
+void Group::addTextureID(GLuint* id) { texturesIDs.push_back(id); }
 
 // Renderização
 
@@ -100,9 +109,13 @@ void Group::renderGroup(){
 	int acumulador = 0;
 	GLuint* buffer = this->getBuffer();
 	if (buffer[0]) {
-		for (size_t i = 0; i < materials.size() && i < vertices_count.size(); ++i) {
+		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size(); ++i) {
 			materials[i]->aplicarMaterial();
-			createModel(acumulador, vertices_count[i], buffer);
+			if (texturesIDs[i][0] != 0) {
+				createModel_wTexture(acumulador, vertices_count[i], buffer, texturesIDs[i]);
+			} else {
+				createModel(acumulador, vertices_count[i], buffer);
+			}
 			acumulador += vertices_count[i];
 		}
 	} 
@@ -115,7 +128,20 @@ void Group::renderGroup(){
 
 }
 
+void Group::createModel_wTexture(int init, int count, GLuint* buffer, GLuint* textureID){
+
+	glBindTexture(GL_TEXTURE_2D, *textureID);
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
+	glVertexPointer(3,GL_FLOAT,0,0);
+
+	glDrawArrays(GL_TRIANGLES, init, count);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 void Group::createModel(int init, int count, GLuint* buffer){
+
 	glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
 	glVertexPointer(3,GL_FLOAT,0,0);
 
