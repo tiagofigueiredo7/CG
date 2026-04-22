@@ -8,6 +8,7 @@
 #include "utils/util.hpp"
 #include "generator/BezierPatch.hpp"
 #include "Point3D.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
@@ -16,6 +17,6 @@ Point3D bezier(float u, float v, vector<float>* control_points);
 
 vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* control_points);
 
-vector<float> generateBezierModel(char* file_path, int tesselation);
+PrimitiveBuffers generateBezierModel(char* file_path, int tesselation);
 
 #endif

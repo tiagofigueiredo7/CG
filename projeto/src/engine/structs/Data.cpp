@@ -129,15 +129,15 @@ void Data::parseLightsField(XMLElement* lights) {
     XMLElement* light = lights->FirstChildElement("light");
     while (light != nullptr) {
         if (strcmp(light->Attribute("type"), "point") == 0) {
-            Point* p = new Point(light->FloatAttribute("posX"), light->FloatAttribute("posY"), light->FloatAttribute("posZ"));
+            Point* p = new Point(light->FloatAttribute("posx"), light->FloatAttribute("posy"), light->FloatAttribute("posz"));
             this->addLight(p);
         } else if (strcmp(light->Attribute("type"), "directional") == 0) {
-            Directional* d = new Directional(light->FloatAttribute("dirX"), light->FloatAttribute("dirY"), light->FloatAttribute("dirZ"));
+            Directional* d = new Directional(light->FloatAttribute("dirx"), light->FloatAttribute("diry"), light->FloatAttribute("dirz"));
             this->addLight(d);
-        } else if (strcmp(light->Attribute("type"), "spotlight") == 0) {
+        } else if (strcmp(light->Attribute("type"), "spotlight") == 0 || strcmp(light->Attribute("type"), "spot") == 0) {
             Spotlight* s = new Spotlight(
-                light->FloatAttribute("posX"), light->FloatAttribute("posY"), light->FloatAttribute("posZ"),
-                light->FloatAttribute("dirX"), light->FloatAttribute("dirY"), light->FloatAttribute("dirZ"),
+                light->FloatAttribute("posx"), light->FloatAttribute("posy"), light->FloatAttribute("posz"),
+                light->FloatAttribute("dirx"), light->FloatAttribute("diry"), light->FloatAttribute("dirz"),
                 light->FloatAttribute("cutoff")
             );
             this->addLight(s);
@@ -297,6 +297,8 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
 void Data::fill_Buffer(Group& g, vector<char*>& arr){
     int count_aux = 0;
     vector<float> vertices_aux;
+    vector<float> normals_aux;
+    vector<float> texCoords_aux;
 
     for(char* model_file : arr){
         count_aux = 0;
@@ -308,7 +310,16 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         }
 
         string line;
-        while(getline(file,line)){
+        getline(file, line); // Ler número de vértices (mas não é necessário para o buffer, apenas para contar)
+        int num = 0;
+        try {
+            num = stoi(line);
+        } catch (exception) {
+            cerr << "[ERRO] Número de vértices inválido no ficheiro: " << model_file << endl;
+            continue;
+        }
+        for (int i = 0; i < num; i++) {
+            getline(file,line);
             if (line.empty()) continue;
 
             istringstream iss(line);
@@ -324,15 +335,52 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         }
 
         g.addVerticeCount(count_aux);
+
+        for (int i = 0; i < num; i++) {
+            getline(file,line);
+            if (line.empty()) continue;
+
+            istringstream iss(line);
+            float x, y, z;
+            if (!(iss >> x >> y >> z)) {
+                cerr << "[ERRO] Erro ao ler normal: " << line << endl;
+                continue;
+            }
+            normals_aux.push_back(x);
+            normals_aux.push_back(y);
+            normals_aux.push_back(z);
+        }
+
+        for (int i = 0; i < num; i++) {
+            getline(file,line);
+            if (line.empty()) continue;
+
+            istringstream iss(line);
+            float u, v;
+            if (!(iss >> u >> v)) {
+                cerr << "[ERRO] Erro ao ler coordenadas de textura: " << line << endl;
+                continue;
+            }
+            texCoords_aux.push_back(u);
+            texCoords_aux.push_back(v);
+        }
+
         file.close();
 
     }
 
-    GLuint* buffer = g.getBuffer();
+    GLuint* buffers = g.getBuffers();
 
-    glGenBuffers(1, buffer);
-    glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
+    glGenBuffers(3, buffers);
+
+    glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
 	glBufferData(GL_ARRAY_BUFFER,vertices_aux.size()*sizeof(float),&vertices_aux[0],GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glBufferData(GL_ARRAY_BUFFER, normals_aux.size() * sizeof(float), &(normals_aux[0]), GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+	glBufferData(GL_ARRAY_BUFFER, texCoords_aux.size() * sizeof(float), &(texCoords_aux[0]), GL_STATIC_DRAW);
 
 }
 
@@ -416,5 +464,30 @@ int Data::loadTexture(string s) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return texID;
+
+}
+
+void Data::initLights() {
+    int i = 0;
+    for (Light* l : this->lights) {
+        GLenum light = static_cast<GLenum>(GL_LIGHT0 + i);
+        glEnable(light);
+        if (Point* p = dynamic_cast<Point*>(l)) {
+            GLfloat position[] = { p->getPosX(), p->getPosY(), p->getPosZ(), 1.0f };
+            glLightfv(light, GL_POSITION, position);
+        } else if (Directional* d = dynamic_cast<Directional*>(l)) {
+            GLfloat direction[] = { d->getDirX(), d->getDirY(), d->getDirZ(), 0.0f };
+            glLightfv(light, GL_POSITION, direction);
+        } else if (Spotlight* s = dynamic_cast<Spotlight*>(l)) {
+            GLfloat position[] = { s->getPosX(), s->getPosY(), s->getPosZ(), 1.0f };
+            GLfloat direction[] = { s->getDirX(), s->getDirY(), s->getDirZ() };
+            glLightfv(light, GL_POSITION, position);
+            glLightfv(light, GL_SPOT_DIRECTION, direction);
+            glLightf(light, GL_SPOT_CUTOFF, s->getCutoff());
+        } else {
+            cerr << "[ERRO] Tipo de luz desconhecido!" << endl;
+        }
+        i++;
+    }
 
 }

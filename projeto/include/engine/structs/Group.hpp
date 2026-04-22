@@ -34,11 +34,11 @@ class Group {
         vector<Material*> materials;
         vector<GLuint*> texturesIDs;
         
-        GLuint* buffer;
+        GLuint* buffers;
 
 
-        void createModel(int init, int count, GLuint* buffer);
-        void createModel_wTexture(int init, int count, GLuint* buffer, GLuint* textureID);
+        void createModel(int init, int count, GLuint* buffers);
+        void createModel_wTexture(int init, int count, GLuint* buffers, GLuint* textureID);
 
     public:
         Group();
@@ -55,7 +55,7 @@ class Group {
         vector<Group*> getSubGroups();
         vector<int> getVerticesCount();
         vector<GLuint*> getTexturesIDs();
-        GLuint* getBuffer();
+        GLuint* getBuffers();
         vector<Material*> getMaterials();
 
         void renderGroup();

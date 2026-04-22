@@ -11,44 +11,44 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-	vector <float> vertices;
+    PrimitiveBuffers buffers;
 
     if (figure == "plane") {
-        vertices = generatePlane(stof(argv[2]), stoi(argv[3]));
+        buffers = generatePlane(stof(argv[2]), stoi(argv[3]));
     }
     else if (figure == "box") {
-        vertices = generateBox(stof(argv[2]), stoi(argv[3]));
+        buffers = generateBox(stof(argv[2]), stoi(argv[3]));
     }
     else if (figure == "sphere") {
-        vertices = generateSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4])); 
+        buffers = generateSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4])); 
     }
     else if (figure == "cone") {
-        vertices = generateCone(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
+        buffers = generateCone(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
     }
     else if (figure == "torus") {
-        vertices = generateTorus(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
+        buffers = generateTorus(stof(argv[2]), stof(argv[3]), stoi(argv[4]), stoi(argv[5]));
     }
     else if (figure == "cylinder") {
-        vertices = generateCylinder(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
+        buffers = generateCylinder(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
     }
     else if (figure == "patch") {
-        vertices = generateBezierModel(argv[2], stoi(argv[3]));
+        buffers = generateBezierModel(argv[2], stoi(argv[3]));
     }
     else if (figure == "mobiusStrip") {
-        vertices = generateMobiusStrip(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
+        buffers = generateMobiusStrip(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
     }
     else if (figure == "noiseSphere") {
-        vertices = generateNoiseSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4]), stof(argv[5]));
+        buffers = generateNoiseSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4]), stof(argv[5]));
     }
     else if (figure == "kleinBottle") {
-        vertices = generateKleinBottle(stof(argv[2]), stoi(argv[3]), stoi(argv[4]));
+        buffers = generateKleinBottle(stof(argv[2]), stoi(argv[3]), stoi(argv[4]));
     }
     else {
         cerr << "[ERRO] Figura não suportada.\n";
         return 1;
     }
 
-    storeVertices(vertices, file);
+    buffers.storeBuffers(file);
 
     return 0;
 }

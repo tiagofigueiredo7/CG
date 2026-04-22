@@ -6,10 +6,11 @@
 
 // Bibliotecas locais
 #include "utils/util.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
 
-vector <float> generateBox(float length, int divisions);
+PrimitiveBuffers generateBox(float length, int divisions);
 
 #endif

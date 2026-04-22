@@ -7,6 +7,7 @@
 // Bibliotecas locais
 #include "utils/util.hpp"
 #include "Point3D.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
@@ -17,6 +18,6 @@ using namespace util;
  * stacks: Divisões em latitude (v)
  */
 
-vector <float> generateKleinBottle(float radius, int slices, int stacks);
+PrimitiveBuffers generateKleinBottle(float radius, int slices, int stacks);
 
 #endif

@@ -7,6 +7,7 @@
 // Bibliotecas locais
 #include "utils/util.hpp"
 #include "Point3D.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
@@ -20,6 +21,6 @@ using namespace util;
 
 float noise(float u, float v, float amplitude);
 
-vector <float> generateNoiseSphere(float radius, int slices, int stacks, float amplitude);
+PrimitiveBuffers generateNoiseSphere(float radius, int slices, int stacks, float amplitude);
 
 #endif

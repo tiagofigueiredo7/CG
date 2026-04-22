@@ -12,9 +12,9 @@ float noise(float u, float v, float amplitude){
 }
 
 
-vector <float> generateNoiseSphere(float radius, int slices, int stacks, float amplitude){
+PrimitiveBuffers generateNoiseSphere(float radius, int slices, int stacks, float amplitude){
     
-    vector<float> vertices;
+    PrimitiveBuffers buffers = PrimitiveBuffers();
     Point3D grid[stacks+1][slices+1];
     float u=0,v=0,r=0;
 
@@ -39,10 +39,10 @@ vector <float> generateNoiseSphere(float radius, int slices, int stacks, float a
             Point3D C = grid[i+1][j];
             Point3D D = grid[i+1][j+1];
 
-            addTriangle(vertices, A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
-            addTriangle(vertices, C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+            buffers.addTriangle(A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+            buffers.addTriangle(C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
         }
     }
 
-    return vertices;
+    return buffers;
 }

@@ -56,6 +56,9 @@ class Data {
 
         ~Data();
 
+        // Lights
+        void initLights();
+
         // Parser XML
         void parse_Window_Information(char* file);
         void parseXML(char* file);

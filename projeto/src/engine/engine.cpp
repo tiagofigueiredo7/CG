@@ -125,24 +125,27 @@ int main(int argc, char** argv) {
 	glutSpecialFunc(processSpecialKeys);
 
 	glutMouseFunc(processMouseButtons);
-	glutMotionFunc(processMouseMotion);				
-
-	// Glew
-	glEnableClientState(GL_VERTEX_ARRAY);
+	glutMotionFunc(processMouseMotion);				;
 
 	// init GLEW
-#ifndef __APPLE__
-	glewInit();
-#endif
-
-	store->parseXML(argv[1]);
+	#ifndef __APPLE__
+		glewInit();
+	#endif
 
 	ilInit();
 
+	store->parseXML(argv[1]);
 
     //  OpenGL settings
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
+
+	store->initLights();
 
 
 	glutTimerFunc(16, update_camera, 0);  // ~60 FPS

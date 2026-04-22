@@ -1,7 +1,7 @@
 #include "generator/primitives/cylinder.hpp"
 
-vector <float> generateCylinder(float radius, float height, int slices){
-    vector<float> vertices;
+PrimitiveBuffers generateCylinder(float radius, float height, int slices){
+    PrimitiveBuffers buffers = PrimitiveBuffers();
 
     // Delta alpha
 	float delta_alpha = 2*M_PI/slices;
@@ -25,14 +25,14 @@ vector <float> generateCylinder(float radius, float height, int slices){
 
         // Adicionar triângulos
         // Base de baixo
-        addTriangle(vertices, 0.0f, h_baixo, 0.0f, x2, h_baixo, z2, x1, h_baixo, z1);
+        buffers.addTriangle(0.0f, h_baixo, 0.0f, x2, h_baixo, z2, x1, h_baixo, z1);
         // Base de cima
-        addTriangle(vertices, x2, h_cima, z2, 0.0f, h_cima, 0.0f, x1, h_cima, z1);
+        buffers.addTriangle(x2, h_cima, z2, 0.0f, h_cima, 0.0f, x1, h_cima, z1);
         // Triângulo esquerda
-        addTriangle(vertices, x2, h_cima, z2, x1, h_cima, z1, x1, h_baixo, z1);
+        buffers.addTriangle(x2, h_cima, z2, x1, h_cima, z1, x1, h_baixo, z1);
         // Triângulo direita
-        addTriangle(vertices, x2, h_baixo, z2, x2, h_cima, z2, x1, h_baixo, z1);
+        buffers.addTriangle(x2, h_baixo, z2, x2, h_cima, z2, x1, h_baixo, z1);
     }
     
-    return vertices;
+    return buffers;
 }

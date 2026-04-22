@@ -19,6 +19,7 @@
 #include "primitives/noiseSphere.hpp"
 #include "primitives/kleinBottle.hpp"
 #include "generator/BezierPatch.hpp"
+#include "generator/PrimitiveBuffers.hpp" 
 
 using namespace std;
 using namespace util;

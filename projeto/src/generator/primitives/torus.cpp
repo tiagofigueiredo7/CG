@@ -1,7 +1,7 @@
 #include "generator/primitives/torus.hpp"
 
-vector <float> generateTorus(float majorRadius, float minorRadius, int slices, int stacks){
-    vector<float> vertices;
+PrimitiveBuffers generateTorus(float majorRadius, float minorRadius, int slices, int stacks){
+    PrimitiveBuffers buffers = PrimitiveBuffers();
 
     float delta_theta = 2*M_PI/slices;	//angulo do cículo externo (maior)
 	float delta_phi = 2*M_PI/stacks;	//angulo do círculo interno (menor - dentro do tubo)
@@ -41,10 +41,10 @@ vector <float> generateTorus(float majorRadius, float minorRadius, int slices, i
             float y4 = minorRadius*sin(nextPhi);
             float z4 = (majorRadius + minorRadius*cos(nextPhi))*sin(nextTheta);
 
-            addTriangle(vertices, x1, y1, z1, x2, y2, z2, x3, y3, z3);
-            addTriangle(vertices, x3, y3, z3, x2, y2, z2, x4, y4, z4);
+            buffers.addTriangle(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+            buffers.addTriangle(x3, y3, z3, x2, y2, z2, x4, y4, z4);
         }
     }
     
-    return vertices;
+    return buffers;
 }

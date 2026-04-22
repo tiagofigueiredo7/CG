@@ -1,7 +1,7 @@
 #include "generator/primitives/sphere.hpp"
 
-vector <float> generateSphere(float radius, int slices, int stacks){
-	vector <float> vertices;
+PrimitiveBuffers generateSphere(float radius, int slices, int stacks){
+	PrimitiveBuffers buffers = PrimitiveBuffers();
 
 	float a = 2*M_PI/slices;
 	float b = M_PI/stacks;
@@ -27,7 +27,7 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 		float y2 = radius * sin(b_top);
 		float z2 = radius * cos(b_top) * cos(a1);
 
-		addTriangle(vertices, x_top, y_top, z_top, x1, y1, z1, x2, y2, z2);
+		buffers.addTriangle(x_top, y_top, z_top, x1, y1, z1, x2, y2, z2);
 	}
 
 	for (int i = 1; i < stacks - 1; i++) {
@@ -54,8 +54,8 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 			float y4 = radius * sin(b1);
 			float z4 = radius * cos(b1) * cos(a1);
 
-			addTriangle(vertices, x1, y1, z1, x3, y3, z3, x2, y2, z2);
-			addTriangle(vertices, x2, y2, z2, x3, y3, z3, x4, y4, z4);
+			buffers.addTriangle(x1, y1, z1, x3, y3, z3, x2, y2, z2);
+			buffers.addTriangle(x2, y2, z2, x3, y3, z3, x4, y4, z4);
 		}
 	}
 
@@ -77,8 +77,8 @@ vector <float> generateSphere(float radius, int slices, int stacks){
 		float y2 = radius * sin(b_bottom);
 		float z2 = radius * cos(b_bottom) * cos(a1);
 
-		addTriangle(vertices, x_bottom, y_bottom, z_bottom, x2, y2, z2, x1, y1, z1);
+		buffers.addTriangle(x_bottom, y_bottom, z_bottom, x2, y2, z2, x1, y1, z1);
 	}
 
-	return vertices;
+	return buffers;
 }
