@@ -60,7 +60,7 @@ void Group::renderGroup(){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
 		else if (Curve* c = dynamic_cast<Curve*>(t)){
-			//c->renderCatmullRomCurve();
+			c->renderCatmullRomCurve();
 			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
 			float time = c->getTime(), gt = fmod(elapsedSeconds,time) / time;		
 			float pos[3], deriv[3];

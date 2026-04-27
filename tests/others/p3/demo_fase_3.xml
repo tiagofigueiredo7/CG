@@ -4961,14 +4961,14 @@
 				<rotate time="-90" x="0" y="1" z="0" />
 				<scale x="0.23" y="0.23" z="0.23" />
 				<translate time = "20" align="true">
-					<point x = "-30" y = "2.0" z = "0" />
-					<point x = "-22" y = "-1.0" z = "-4" />
-					<point x = "-8" y = "-1.6" z = "-9" />
-					<point x = "14" y = "-0.9" z = "-14" />
-					<point x = "35" y = "0.0" z = "0" />
-					<point x = "12" y = "0.9" z = "14" />
-					<point x = "-10" y = "1.8" z = "9" />
-					<point x = "-24" y = "2.4" z = "4" />
+					<point x = "-315" y = "6.3" z = "0" />
+					<point x = "-205" y = "3.8" z = "-101" />
+					<point x = "0" y = "0.0" z = "-153" />
+					<point x = "205" y = "-3.8" z = "-101" />
+					<point x = "315" y = "-6.3" z = "0" />
+					<point x = "205" y = "-3.8" z = "101" />
+					<point x = "0" y = "0.0" z = "153" />
+					<point x = "-205" y = "3.8" z = "101" />
 				</translate>
 			</transform>
 			<models>
