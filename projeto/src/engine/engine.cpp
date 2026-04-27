@@ -33,10 +33,6 @@ void renderScene(void) {
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(store->getCamera())) {
-		fpc->update_camera_LookAt();
-	}
-
 	// set the camera
 	glLoadIdentity();
 	Camera* cam = store->getCamera();
@@ -95,6 +91,7 @@ void update_camera(int value) {
 	Camera* cam = store->getCamera();
 	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		fpc->update_camera_Pos();
+		fpc->update_camera_LookAt();
 		glutPostRedisplay();
 	}
 
