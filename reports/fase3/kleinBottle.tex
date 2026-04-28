@@ -1,0 +1,135 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+	
+	\tdplotsetmaincoords{80}{95}
+	\begin{tikzpicture}[tdplot_main_coords, scale=0.30]
+		
+		% Mapeamento: x3d=x_klein, y3d=z_klein, z3d=y_klein
+		% y_klein (0..8) fica no eixo vertical z3d
+		
+		% Malha - ramo u < pi
+		\foreach \ui in {10,25,...,170} {
+			\draw[gray!25, very thin]
+			plot[domain=0:360, samples=36, smooth, variable=\v]
+			({(2-cos(\ui))*sin(\v)},
+			{3*cos(\ui)*(1+sin(\ui)) + (2-cos(\ui))*cos(\ui)*cos(\v)},
+			{8*sin(\ui) + (2-cos(\ui))*sin(\ui)*cos(\v)});
+		}
+		\foreach \vi in {0,40,...,320} {
+			\draw[gray!25, very thin]
+			plot[domain=0:180, samples=40, smooth, variable=\u]
+			({(2-cos(\u))*sin(\vi)},
+			{3*cos(\u)*(1+sin(\u)) + (2-cos(\u))*cos(\u)*cos(\vi)},
+			{8*sin(\u) + (2-cos(\u))*sin(\u)*cos(\vi)});
+		}
+		
+		% Malha - ramo u >= pi
+		\foreach \ui in {190,205,...,350} {
+			\draw[gray!25, very thin]
+			plot[domain=0:360, samples=36, smooth, variable=\v]
+			({(2-cos(\ui))*sin(\v)},
+			{3*cos(\ui)*(1+sin(\ui)) + (2-cos(\ui))*cos(\v+180)},
+			{8*sin(\ui)});
+		}
+		\foreach \vi in {0,40,...,320} {
+			\draw[gray!25, very thin]
+			plot[domain=180:360, samples=40, smooth, variable=\u]
+			({(2-cos(\u))*sin(\vi)},
+			{3*cos(\u)*(1+sin(\u)) + (2-cos(\u))*cos(\vi+180)},
+			{8*sin(\u)});
+		}
+		
+		% Bordas
+		\draw[red!60, thick]
+		plot[domain=0:180, samples=100, smooth, variable=\u]
+		({0},
+		{3*cos(\u)*(1+sin(\u)) + (2-cos(\u))*cos(\u)},
+		{8*sin(\u) + (2-cos(\u))*sin(\u)});
+		
+		\draw[blue!60, thick]
+		plot[domain=180:360, samples=100, smooth, variable=\u]
+		({0},
+		{3*cos(\u)*(1+sin(\u)) + (2-cos(\u))*cos(180)},
+		{8*sin(\u)});
+		
+		% Eixos
+		\draw[-Stealth, line width=1pt, blue!70!black]  (0,0,0) -- (5,0,0)  node[right] {$x$};
+		\draw[-Stealth, line width=1pt, red!70!black]   (0,0,0) -- (0,9,0)  node[right] {$z$};
+		\draw[-Stealth, line width=1pt, green!70!black] (0,0,0) -- (0,0,13) node[above] {$y$};
+		
+		\fill (0,0,0) circle (0.18);
+		\node[left, font=\footnotesize] at (0.1,0.3,0) {$(0,0,0)$};
+		
+		% Quadrilatero na zona lateral direita, u=40..60, v=50..90
+		% u=40: cos40=0.766,sin40=0.643, 2-cos40=1.234
+		%   v=50: sin50=0.766,cos50=0.643
+		%     x = 1.234*0.766 = 0.945
+		%     y = 3*0.766*(1.643) + 1.234*0.766*0.643 = 3.778+0.608 = 4.386
+		%     z = 8*0.643 + 1.234*0.643*0.643 = 5.144+0.510 = 5.654
+		%   v=90: sin90=1,cos90=0
+		%     x = 1.234*1 = 1.234
+		%     y = 3.778 + 1.234*0.766*0 = 3.778
+		%     z = 5.144 + 1.234*0.643*0 = 5.144
+		% u=60: cos60=0.5,sin60=0.866, 2-cos60=1.5
+		%   v=50:
+		%     x = 1.5*0.766 = 1.149
+		%     y = 3*0.5*(1.866) + 1.5*0.5*0.643 = 2.799+0.482 = 3.281
+		%     z = 8*0.866 + 1.5*0.866*0.643 = 6.928+0.835 = 7.763
+		%   v=90:
+		%     x = 1.5*1 = 1.5
+		%     y = 2.799 + 1.5*0.5*0 = 2.799
+		%     z = 6.928 + 1.5*0.866*0 = 6.928
+		
+		\coordinate (P1) at (0.945, 4.386, 5.654); % u=40,v=50
+		\coordinate (P2) at (1.234, 3.778, 5.144); % u=40,v=90
+		\coordinate (P3) at (1.149, 3.281, 7.763); % u=60,v=50
+		\coordinate (P4) at (1.500, 2.799, 6.928); % u=60,v=90
+		
+		\draw[orange!90!black, line width=2pt]
+		(P1) -- (P2) -- (P4) -- (P3) -- cycle;
+		
+		\fill[black] (P1) circle (0.22);
+		\node[above left, font=\small] at (P1) {$(x_1,y_1,z_1)$};
+		
+		\fill[black] (P2) circle (0.22);
+		\node[below left, font=\small] at (P2) {$(x_2,y_2,z_2)$};
+		
+		\fill[black] (P3) circle (0.22);
+		\node[above right, font=\small] at (P3) {$(x_3,y_3,z_3)$};
+		
+		\fill[black] (P4) circle (0.22);
+		\node[below right, font=\small] at (P4) {$(x_4,y_4,z_4)$};
+		
+		% Angulo u - arco no plano yz (x=0)
+		\draw[purple!70, thick, -{Stealth}]
+		plot[domain=0:40, samples=20, variable=\t]
+		({0}, {5.5*cos(\t)}, {5.5*sin(\t)});
+		\node[purple!70!black, font=\large] at (0.5, 4.8, 3.8) {$u$};
+		
+		% Angulo v - arco pequeno ao redor do tubo em P1->P2
+		\draw[teal, thick, -{Stealth}]
+		plot[domain=50:90, samples=20, variable=\t]
+		({1.234*sin(\t)},
+		{4.386 + 1.234*0.643*(cos(\t)-0.643)},
+		{5.654 + 1.234*0.643*(cos(\t)-0.643)*0});
+		\node[teal, font=\large] at (1.6, 4.1, 5.1) {$v$};
+		
+		% Caixa de anotacoes em coordenadas 2D absolutas (fora do 3D)
+		\begin{scope}[tdplot_screen_coords]
+			\node[align=left, font=\large, draw, fill=white, rounded corners,
+			anchor=south west] at (4.5, -4.5) {
+				$u \in [0, 2\pi]$ \\
+				$v \in [0, 2\pi]$ \\[4pt]
+				$\Delta u = \dfrac{2\pi}{\text{stacks}}$ \\[6pt]
+				$\Delta v = \dfrac{2\pi}{\text{slices}}$
+			};
+		\end{scope}
+		
+	\end{tikzpicture}
+	
+\end{document}

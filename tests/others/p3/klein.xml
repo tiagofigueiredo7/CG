@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="klein.3d" /> <!-- generator kleinBottle 2.0 80 80 klein.3d -->
+			<model file="klein.3d" /> <!-- generator kleinBottle 80 80 klein.3d -->
  		</models>
  	</group>
 </world>

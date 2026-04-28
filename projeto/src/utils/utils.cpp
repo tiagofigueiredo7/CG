@@ -70,15 +70,9 @@ namespace util {
 				return false;
 			}
 		}
-		else if(figure == "noiseSphere"){
-			if(parameters != 7) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura noise sphere.\n[USO] generator noiseSphere <radius> <slices> <stacks> <amplitude> <dest file>\n";
-				return false;
-			}
-		}
 		else if(figure == "kleinBottle"){
-			if(parameters != 6) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura klein bottle.\n[USO] generator kleinBottle <radius> <slices> <stacks> <dest file>\n";
+			if(parameters != 5) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura klein bottle.\n[USO] generator kleinBottle <slices> <stacks> <dest file>\n";
 				return false;
 			}
 		}

@@ -12,11 +12,10 @@ using namespace std;
 using namespace util;
 
 /***
- * radius: Raio do anel central
  * slices: Divisões em longitude (u)
  * stacks: Divisões em latitude (v)
  */
 
-vector <float> generateKleinBottle(float radius, int slices, int stacks);
+vector <float> generateKleinBottle(int slices, int stacks);
 
 #endif
