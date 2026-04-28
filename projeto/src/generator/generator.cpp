@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
         buffers = generateNoiseSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4]), stof(argv[5]));
     }
     else if (figure == "kleinBottle") {
-        buffers = generateKleinBottle(stof(argv[2]), stoi(argv[3]), stoi(argv[4]));
+        buffers = generateKleinBottle(stoi(argv[2]), stoi(argv[3]));
     }
     else {
         cerr << "[ERRO] Figura não suportada.\n";

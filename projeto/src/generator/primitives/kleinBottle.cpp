@@ -1,16 +1,16 @@
 #include "generator/primitives/kleinBottle.hpp"
 
-PrimitiveBuffers generateKleinBottle(float radius, int slices, int stacks) {
+PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
 
     PrimitiveBuffers buffers = PrimitiveBuffers();
-    Point3D grid[stacks+1][slices+1];
+    Point3D grid[slices+1][stacks+1];
     float u=0,v=0;
 
-    for (int i=0; i<=stacks; i++) {
-        u = i*(2*M_PI/stacks);
+    for (int i=0; i<=slices; i++) {
+        u = i*(2*M_PI/slices);
 
-        for (int j=0; j<=slices; j++) {
-            v = j*(2*M_PI/slices);
+        for (int j=0; j<=stacks; j++) {
+            v = j*(2*M_PI/stacks);
 
             if (u<M_PI) {
                 grid[i][j].x = 3*cos(u)*(1+sin(u)) + (2*(1-cos(u)/2))*cos(u)*cos(v);

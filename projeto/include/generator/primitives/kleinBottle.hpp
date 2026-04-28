@@ -13,11 +13,10 @@ using namespace std;
 using namespace util;
 
 /***
- * radius: Raio do anel central
  * slices: Divisões em longitude (u)
  * stacks: Divisões em latitude (v)
  */
 
-PrimitiveBuffers generateKleinBottle(float radius, int slices, int stacks);
+PrimitiveBuffers generateKleinBottle(int slices, int stacks);
 
 #endif
