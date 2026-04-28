@@ -25,8 +25,8 @@ vector<float> generateKleinBottle(int slices, int stacks) {
         }
     }
 
-    for (int i=0; i<stacks;i++){
-        for (int j=0; j<slices;j++){
+    for (int i=0; i<slices;i++){
+        for (int j=0; j<stacks;j++){
             Point3D A = grid[i][j];
             Point3D B = grid[i][j+1];
             Point3D C = grid[i+1][j];
