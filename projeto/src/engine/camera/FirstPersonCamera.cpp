@@ -84,6 +84,7 @@ void FirstPersonCamera::update_camera_Pos() {
 	
 	// Calculate direction vector: d = (sin(alpha)cos(beta), sin(beta), cos(alpha)cos(beta))
 	float dirX = sin(alpha_rad) * cos(beta_rad);
+    float dirY = sin(beta_rad);
 	float dirZ = cos(alpha_rad) * cos(beta_rad);
 	
 	// Calculate right vector: r = up × d = (cos(alpha)cos(beta), 0, -sin(alpha)cos(beta))
@@ -92,10 +93,12 @@ void FirstPersonCamera::update_camera_Pos() {
 	
 	if (keyW) {
         this->setPosX(this->getPosX() + dirX * move_speed);
+        this->setPosY(this->getPosY() + dirY * move_speed);
         this->setPosZ(this->getPosZ() + dirZ * move_speed);
 	}
 	if (keyS) {
 		this->setPosX(this->getPosX() - dirX * move_speed);
+        this->setPosY(this->getPosY() - dirY * move_speed);
 		this->setPosZ(this->getPosZ() - dirZ * move_speed);
 	}
 	
