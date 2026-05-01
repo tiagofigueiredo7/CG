@@ -15,18 +15,18 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
 		store->setCamera(fpc);
-	} 
-	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
-		processKeys_Fpc_aux(c, xx, yy, fpc);
-	} 
-	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
-		processKeys_Orb_aux(c, xx, yy, oc);
 	}
 	else if (c == 'r' || c == 'R') {//Render trajetoria da curva
 		store->setRenderCurve(true);
 	}
 	else if (c == 'h' || c == 'H') {//Esconder trajetoria da curva
 		store->setRenderCurve(false);
+	}
+	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
+		processKeys_Fpc_aux(c, xx, yy, fpc);
+	} 
+	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
+		processKeys_Orb_aux(c, xx, yy, oc);
 	}
 }
 
