@@ -13,7 +13,7 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - [Enunciado](./extra_files/enunciado.pdf)
 - [Relatório Fase 1](./reports/fase1/relatorio_fase_1.pdf)
 - [Relatório Fase 2](./reports/fase2/relatorio_fase_2.pdf)
-- <<report fase 3>> *(não disponível)* 
+- [Relatório Fase 3](./reports/fase3/relatorio_fase_3.pdf)
 - <<report fase 4>> *(não disponível)*
 
 #### Demos
