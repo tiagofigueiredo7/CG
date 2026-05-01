@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="comet.3d" /> <!-- generator patch comet.patch 10 comet_10.3d -->
+			<model file="comet_10.3d" /> <!-- generator patch comet.patch 10 comet_10.3d -->
  		</models>
  	</group>
 </world>
