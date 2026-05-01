@@ -33,7 +33,8 @@ vector<float> BezierPatch::getControlPointsValues() {
 void BezierPatch::parse_Patch_File(char* file_path) {
 
     // Abrir o ficheiro
-    ifstream file(file_path);
+    string path = string("../patchs/") + file_path;
+    ifstream file(path);
     if (!file.is_open()){
         cerr << "[ERRO] Erro ao abrir ficheiro: " << file_path << endl;
         return;
