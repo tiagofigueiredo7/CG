@@ -80,14 +80,15 @@ void FirstPersonCamera::update_camera_Pos() {
 	
 	// Convert alpha from degrees to radians
 	float alpha_rad = alpha * M_PI / 180.0f;
+	float beta_rad = beta * M_PI / 180.0f;
 	
-	// Calculate direction vector: d = (sin(alpha), 0, cos(alpha))
-	float dirX = sin(alpha_rad);
-	float dirZ = cos(alpha_rad);
+	// Calculate direction vector: d = (sin(alpha)cos(beta), sin(beta), cos(alpha)cos(beta))
+	float dirX = sin(alpha_rad) * cos(beta_rad);
+	float dirZ = cos(alpha_rad) * cos(beta_rad);
 	
-	// Calculate right vector: r = d × up = (cos(alpha), 0, -sin(alpha))
-	float rightX = cos(alpha_rad);
-	float rightZ = -sin(alpha_rad);
+	// Calculate right vector: r = up × d = (cos(alpha)cos(beta), 0, -sin(alpha)cos(beta))
+	float rightX = cos(alpha_rad) * cos(beta_rad);
+	float rightZ = -sin(alpha_rad) * cos(beta_rad);
 	
 	if (keyW) {
         this->setPosX(this->getPosX() + dirX * move_speed);
