@@ -21,6 +21,9 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - [Demo Fase 3](./tests/others/p2/demo_fase_3.xml)
 - <<demo fase 4>> *(não disponível)*
 
+#### Patchs
+- Os ficheiros `.patch` podem ser encontrados na diretoria [projeto/patchs](./projeto/patchs/)
+
 > [!WARNING]
 > **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
 
@@ -59,4 +62,4 @@ Este comando é genérico já que é necessário especificar o ficheiro de cena 
 ./engine ../../tests/others/p1/sphere.xml
 ```
 > [!NOTE]
-> Os ficheiros de cena devem estar localizados na diretoria `tests/` ou em subdiretorias da mesma, e os ficheiros de modelos devem estar localizados na diretoria `projeto/models/`.
+> Os ficheiros de cena devem estar localizados na diretoria `tests/` ou em subdiretorias da mesma, os ficheiros de modelos devem estar localizados na diretoria `projeto/models/` e os ficheiros `.patch` devem estar localizados na diretoria `projeto/patchs/`.
