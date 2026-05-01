@@ -14,6 +14,8 @@ Data::Data() {
     group = nullptr;
     camera = new Camera();
     lights = vector<Light*>();
+
+    renderCurve = true;
 }
 
 // Destrutor
@@ -491,3 +493,7 @@ void Data::initLights() {
     }
 
 }
+
+void Data::setRenderCurve(bool flag) { renderCurve = flag; }
+
+bool Data::getRenderCurve() { return renderCurve; }

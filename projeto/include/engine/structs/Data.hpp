@@ -38,7 +38,10 @@ class Data {
 
         // Window size parameters
         int width;
-        int height;      
+        int height;    
+        
+        // Flag para renderizar ou não a trajetória da curva
+        bool renderCurve;
 
         // Model files and transformations
         Group* group;
@@ -87,6 +90,9 @@ class Data {
 
         vector<Light*> getLights();
         void addLight(Light* light);
+
+        void setRenderCurve(bool flag);
+        bool getRenderCurve();
 };
 
 

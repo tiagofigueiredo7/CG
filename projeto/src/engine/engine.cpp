@@ -60,7 +60,7 @@ void renderScene(void) {
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
 	
 	Group* main_group = store->getGroup();
-    if (main_group != nullptr) main_group->renderGroup();
+    if (main_group != nullptr) main_group->renderGroup(store->getRenderCurve());
 
 	// End of frame
 	glutSwapBuffers();

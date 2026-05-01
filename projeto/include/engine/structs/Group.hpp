@@ -58,7 +58,7 @@ class Group {
         GLuint* getBuffers();
         vector<Material*> getMaterials();
 
-        void renderGroup();
+        void renderGroup(bool flag);
 
 };
 
