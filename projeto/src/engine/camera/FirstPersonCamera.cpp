@@ -89,7 +89,6 @@ void FirstPersonCamera::update_camera_Pos() {
 	float rightX = cos(alpha_rad);
 	float rightZ = -sin(alpha_rad);
 	
-	// Forward/Backward motion (W/S keys)
 	if (keyW) {
         this->setPosX(this->getPosX() + dirX * move_speed);
         this->setPosZ(this->getPosZ() + dirZ * move_speed);
@@ -99,7 +98,6 @@ void FirstPersonCamera::update_camera_Pos() {
 		this->setPosZ(this->getPosZ() - dirZ * move_speed);
 	}
 	
-	// Lateral motion (A/D keys)
 	if (keyA) {
         this->setPosX(this->getPosX() + rightX * move_speed);
         this->setPosZ(this->getPosZ() + rightZ * move_speed);

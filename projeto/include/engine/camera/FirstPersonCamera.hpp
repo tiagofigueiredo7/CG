@@ -5,9 +5,9 @@
 
 class FirstPersonCamera : public Camera {
     private:
-        float alpha;      // Rotation angle (degrees)
-        float beta;       // Pitch angle (degrees)
-        float move_speed;  // Speed of movement
+        float alpha;      // Angulo Yaw/alpha (degrees) : Rotação horizontal
+        float beta;       // Angulo Pitch/beta (degrees) : Rotação vertical
+        float move_speed;
 
         float startX;
         float startY;
