@@ -34,7 +34,7 @@ FirstPersonCamera::FirstPersonCamera(Camera* cam) : Camera(Camera(*cam)) {
 
 }
 
-float FirstPersonCamera::get_alpha_from_camera(Camera* cam) {// TODO: Rever
+float FirstPersonCamera::get_alpha_from_camera(Camera* cam) {
     float dirX = cam->getLookX() - cam->getPosX();
     float dirZ = cam->getLookZ() - cam->getPosZ();
 
@@ -62,7 +62,7 @@ float FirstPersonCamera::get_beta_from_camera(Camera* cam) {
 }
 
 void FirstPersonCamera::update_camera_LookAt() {
-	// Convert angles from degrees to radians
+	// Graus para radianos
 	float alpha_rad = alpha * M_PI / 180.0f;
 	float beta_rad = beta * M_PI / 180.0f;
 
@@ -78,16 +78,16 @@ void FirstPersonCamera::update_camera_LookAt() {
 
 void FirstPersonCamera::update_camera_Pos() {
 	
-	// Convert alpha from degrees to radians
+	// Graus para radianos
 	float alpha_rad = alpha * M_PI / 180.0f;
 	float beta_rad = beta * M_PI / 180.0f;
 	
-	// Calculate direction vector: d = (sin(alpha)cos(beta), sin(beta), cos(alpha)cos(beta))
+	// Vetor direção: d = (sin(alpha)cos(beta), sin(beta), cos(alpha)cos(beta))
 	float dirX = sin(alpha_rad) * cos(beta_rad);
     float dirY = sin(beta_rad);
 	float dirZ = cos(alpha_rad) * cos(beta_rad);
 	
-	// Calculate right vector: r = up × d = (cos(alpha)cos(beta), 0, -sin(alpha)cos(beta))
+	// Vetor direção perpendicular a d: r = up × d = (cos(alpha)cos(beta), 0, -sin(alpha)cos(beta))
 	float rightX = cos(alpha_rad) * cos(beta_rad);
 	float rightZ = -sin(alpha_rad) * cos(beta_rad);
 	
