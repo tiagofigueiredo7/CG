@@ -46,7 +46,7 @@ void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
 
 // Renderização
 
-void Group::renderGroup(){
+void Group::renderGroup(bool flag){
 	glPushMatrix(); 
 
 	for(Transformation* t : this->getTransformations()){
@@ -60,7 +60,7 @@ void Group::renderGroup(){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
 		else if (Curve* c = dynamic_cast<Curve*>(t)){
-			c->renderCatmullRomCurve();
+			if (flag) c->renderCatmullRomCurve();
 			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
 			float time = c->getTime(), gt = fmod(elapsedSeconds,time) / time;		
 			float pos[3], deriv[3];
@@ -97,7 +97,7 @@ void Group::renderGroup(){
 	} 
 
 	for (Group* gp : this->getSubGroups()){
-		gp->renderGroup();
+		gp->renderGroup(flag);
 	}
 
 	glPopMatrix();

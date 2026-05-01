@@ -13,6 +13,8 @@ Data::Data() {
 
     group = nullptr;
     camera = new Camera();
+
+    renderCurve = true;
 }
 
 // Destrutor
@@ -278,3 +280,7 @@ void Data::setCamera(Camera* c){
     delete camera;
     camera = c;
 }
+
+void Data::setRenderCurve(bool flag) { renderCurve = flag; }
+
+bool Data::getRenderCurve() { return renderCurve; }

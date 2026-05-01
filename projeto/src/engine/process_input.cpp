@@ -22,6 +22,12 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 		processKeys_Orb_aux(c, xx, yy, oc);
 	}
+	else if (c == 'r' || c == 'R') {//Render trajetoria da curva
+		store->setRenderCurve(true);
+	}
+	else if (c == 'h' || c == 'H') {//Esconder trajetoria da curva
+		store->setRenderCurve(false);
+	}
 }
 
 void processKeys_Orb_aux(unsigned char c, int xx, int yy, OrbitalCamera* oc) {

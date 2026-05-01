@@ -33,6 +33,7 @@ class Data {
 
         // Model files and transformations
         Group* group;
+        bool renderCurve;
 
         // Group element parser
         void parseGroupField(Group& g, XMLElement* group);
@@ -69,6 +70,9 @@ class Data {
 
         void setGroup(Group* g);
         void setCamera(Camera* c);
+
+        void setRenderCurve(bool flag);
+        bool getRenderCurve();
 };
 
 

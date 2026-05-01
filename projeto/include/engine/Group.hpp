@@ -48,7 +48,7 @@ class Group {
         vector<int> getVerticesCount();
         GLuint* getBuffer();
 
-        void renderGroup();
+        void renderGroup(bool flag);
 
 };
 
