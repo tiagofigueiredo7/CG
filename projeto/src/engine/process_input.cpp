@@ -138,11 +138,11 @@ void processMouseMotion_aux(int xx, int yy, Data* store) {
 		if (!fpc->get_tracking())
 			return;
 
-		// Horizontal movement controls yaw (alpha)
+		// Cálculo do ângulo yaw(alpha) a partir do movimento horizontal do mouse
 		int deltaX = xx - fpc->get_startX();
 		fpc->set_alpha(fpc->get_alpha() + deltaX * 0.5f);
 
-		// Vertical movement controls pitch (beta), clamped to avoid flipping.
+		// Cálculo do ângulo pitch(beta) a partir do movimento vertical do mouse
 		int deltaY = yy - fpc->get_startY();
 		float beta = fpc->get_beta() - deltaY * 0.3f;
 		if (beta > 89.0f) beta = 89.0f;
