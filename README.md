@@ -19,7 +19,7 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 #### Demos
 - [Demo Fase 2](./tests/others/p2/demo_fase_2.xml)
 - [Demo Fase 3](./tests/others/p3/demo_fase_3.xml)
-- <<demo fase 4>> *(não disponível)*
+- [Demo Fase 4](./tests/others/p4/demo_fase_4.xml)
 
 #### Patchs
 - Os ficheiros `.patch` podem ser encontrados na diretoria [projeto/patchs](./projeto/patchs/)
