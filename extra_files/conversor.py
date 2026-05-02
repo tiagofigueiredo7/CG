@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Conversor de arquivos .obj para o formato .3d
-Uso: python obj_to_3d.py <arquivo.obj> <saida.3d>
+Uso: python conversor.py <arquivo.obj> <saida.3d>
 """
 
 import sys
@@ -93,9 +93,9 @@ def convert_to_3d(obj_file, output_file):
 
 def main():
     if len(sys.argv) != 3:
-        print("Uso: python obj_to_3d.py <arquivo.obj> <saida.3d>")
+        print("Uso: python conversor.py <arquivo.obj> <saida.3d>")
         print("\nExemplo:")
-        print("  python obj_to_3d.py vaca.obj vaca.3d")
+        print("  python conversor.py vaca.obj vaca.3d")
         sys.exit(1)
     
     obj_file = sys.argv[1]
