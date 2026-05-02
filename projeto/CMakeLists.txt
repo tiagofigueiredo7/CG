@@ -8,6 +8,7 @@ set(OpenGL_GL_PREFERENCE GLVND)
 
 # Encontrar bibliotecas necessárias
 find_package(TinyXML2 REQUIRED)
+find_package(DevIL REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 find_package(GLEW REQUIRED)
@@ -23,5 +24,5 @@ target_include_directories(generator PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # Engine
 add_executable(engine ${ENGINE_SOURCES} ${UTILS_SOURCES})
-target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} tinyxml2)
-target_include_directories(engine PRIVATE ${CMAKE_SOURCE_DIR}/include ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS})
+target_link_libraries(engine ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${GLEW_LIBRARIES} tinyxml2 ${IL_LIBRARIES})
+target_include_directories(engine PRIVATE ${CMAKE_SOURCE_DIR}/include ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${TinyXML2_INCLUDE_DIRS} ${IL_INCLUDE_DIR})

@@ -45,12 +45,12 @@ vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* contr
     return result;
 }
 
-vector<float> generateBezierModel(char* file_path, int tesselation) {
+PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
 
     BezierPatch data = BezierPatch();
     data.parse_Patch_File(file_path);
 
-    vector<float> vertices;
+    PrimitiveBuffers buffers = PrimitiveBuffers();
 
     int n_patches = data.getPatchesCount();
     vector<float> control_points_values = data.getControlPointsValues();
@@ -92,13 +92,16 @@ vector<float> generateBezierModel(char* file_path, int tesselation) {
                 Point3D C = superficie[i+1][j];
                 Point3D D = superficie[i+1][j+1];
 
-                addTriangle(vertices, A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
-                addTriangle(vertices, C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+                buffers.addTriangle(A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+                buffers.addTriangle(C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+
+                //buffers.add
+
             }
         }
 
     }
 
-    return vertices;
+    return buffers;
 
 }

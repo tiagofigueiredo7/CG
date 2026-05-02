@@ -16,6 +16,10 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
 		store->setCamera(fpc);
 	}
+	else if (c == '3' && (dynamic_cast<ThirdPersonCamera*>(cam) == nullptr)) {
+		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam);
+		store->setCamera(tpc);
+	}
 	else if (c == 'r' || c == 'R') {//Render trajetoria da curva
 		store->setRenderCurve(true);
 	}
@@ -134,11 +138,11 @@ void processMouseMotion_aux(int xx, int yy, Data* store) {
 		if (!fpc->get_tracking())
 			return;
 
-		// Cálculo do angulo yaw (alpha)
+		// Cálculo do ângulo yaw(alpha) a partir do movimento horizontal do mouse
 		int deltaX = xx - fpc->get_startX();
 		fpc->set_alpha(fpc->get_alpha() + deltaX * 0.5f);
 
-		// Cálculo do angulo pitch (beta)
+		// Cálculo do ângulo pitch(beta) a partir do movimento vertical do mouse
 		int deltaY = yy - fpc->get_startY();
 		float beta = fpc->get_beta() - deltaY * 0.3f;
 		if (beta > 89.0f) beta = 89.0f;

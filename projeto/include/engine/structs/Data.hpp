@@ -4,15 +4,21 @@
 #include <string>
 #include <vector>
 #include <tinyxml2.h>
+#include <IL/il.h>
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-#include "engine/Group.hpp"
-#include "engine/camera/Camera.hpp"
-#include "engine/camera/OrbitalCamera.hpp"
-#include "engine/camera/FirstPersonCamera.hpp"
+#include "engine/structs/Group.hpp"
+#include "engine/structs/camera/Camera.hpp"
+#include "engine/structs/camera/OrbitalCamera.hpp"
+#include "engine/structs/camera/FirstPersonCamera.hpp"
+#include "engine/structs/camera/ThirdPerson.hpp"
+#include "engine/structs/lights/Light.hpp"
+#include "engine/structs/lights/Directional.hpp"
+#include "engine/structs/lights/Point.hpp"
+#include "engine/structs/lights/Spotlight.hpp"
 
 using namespace std;
 using namespace tinyxml2;
@@ -22,6 +28,9 @@ class Data {
         // Camera
         Camera* camera;
 
+        // Lights
+        vector<Light*> lights;
+
         // Perspective parameters
         float fov;
         float nearPlane;
@@ -29,21 +38,29 @@ class Data {
 
         // Window size parameters
         int width;
-        int height;      
+        int height;    
+        
+        // Flag para renderizar ou não a trajetória da curva
+        bool renderCurve;
 
         // Model files and transformations
         Group* group;
-        bool renderCurve;
 
         // Group element parser
+        void parseCameraField(XMLElement* camera);
         void parseGroupField(Group& g, XMLElement* group);
+        void parseLightsField(XMLElement* lights);
 
         void fill_Buffer(Group& g, vector<char*>& arr);
+        int loadTexture(string s);
 
     public:
         Data();
 
         ~Data();
+
+        // Lights
+        void initLights();
 
         // Parser XML
         void parse_Window_Information(char* file);
@@ -70,6 +87,9 @@ class Data {
 
         void setGroup(Group* g);
         void setCamera(Camera* c);
+
+        vector<Light*> getLights();
+        void addLight(Light* light);
 
         void setRenderCurve(bool flag);
         bool getRenderCurve();

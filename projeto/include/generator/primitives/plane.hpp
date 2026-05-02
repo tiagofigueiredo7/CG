@@ -6,10 +6,11 @@
 
 // Bibliotecas locais
 #include "utils/util.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
 
-vector <float> generatePlane(float length, int divisions);
+PrimitiveBuffers generatePlane(float length, int divisions);
 
 #endif

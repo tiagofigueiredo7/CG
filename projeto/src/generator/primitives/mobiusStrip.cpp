@@ -1,8 +1,8 @@
 #include "generator/primitives/mobiusStrip.hpp"
 
-vector <float> generateMobiusStrip(float radius, float width, int slices){
+PrimitiveBuffers generateMobiusStrip(float radius, float width, int slices){
 
-    vector<float> vertices;
+    PrimitiveBuffers buffers = PrimitiveBuffers();
 
     Point3D grid[slices+1][2];
     float u=0, v=0;
@@ -33,13 +33,12 @@ vector <float> generateMobiusStrip(float radius, float width, int slices){
         }
 
         // Cada triangulo é adicionado 2 vezes porque a figura é não orientável
-        addTriangle(vertices, A.x, A.y, A.z, C.x, C.y, C.z, B.x, B.y, B.z);
-        addTriangle(vertices, B.x, B.y, B.z, C.x, C.y, C.z, D.x, D.y, D.z);
+        buffers.addTriangle( A.x, A.y, A.z, C.x, C.y, C.z, B.x, B.y, B.z);
+        buffers.addTriangle( B.x, B.y, B.z, C.x, C.y, C.z, D.x, D.y, D.z);
 
-        addTriangle(vertices, A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
-        addTriangle(vertices, C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
-}
+        buffers.addTriangle( A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+        buffers.addTriangle( C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+    }
 
-    return vertices;
-
+    return buffers;
 }

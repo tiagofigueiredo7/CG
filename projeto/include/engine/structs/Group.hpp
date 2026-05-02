@@ -16,12 +16,13 @@
 
 using namespace std;
 
-#include "engine/transformations/Transformation.hpp"
-#include "engine/transformations/Translate.hpp"
-#include "engine/transformations/Rotate.hpp"
-#include "engine/transformations/Scale.hpp"
-#include "engine/transformations/Curve.hpp"
-#include "engine/transformations/TimedFullRotate.hpp"
+#include "engine/structs/transformations/Transformation.hpp"
+#include "engine/structs/transformations/Translate.hpp"
+#include "engine/structs/transformations/Rotate.hpp"
+#include "engine/structs/transformations/Scale.hpp"
+#include "engine/structs/transformations/Curve.hpp"
+#include "engine/structs/transformations/TimedFullRotate.hpp"
+#include "engine/structs/Material.hpp"
 
 
 class Group {
@@ -30,9 +31,14 @@ class Group {
         vector<Group*> subgroups;
 
         vector<int> vertices_count;
-        GLuint* buffer;
+        vector<Material*> materials;
+        vector<GLuint*> texturesIDs;
+        
+        GLuint* buffers;
 
-        void createModel(int init, int count, GLuint* buffer);
+
+        void createModel(int init, int count, GLuint* buffers);
+        void createModel_wTexture(int init, int count, GLuint* buffers, GLuint* textureID);
 
     public:
         Group();
@@ -40,13 +46,17 @@ class Group {
         ~Group();
 
         void addTransformation(Transformation* transf);
+        void addMaterial(Material* material);
         void addSubGroup(Group* subgroup);
         void addVerticeCount(int count);
+        void addTextureID(GLuint* id);
 
         vector<Transformation*> getTransformations();
         vector<Group*> getSubGroups();
         vector<int> getVerticesCount();
-        GLuint* getBuffer();
+        vector<GLuint*> getTexturesIDs();
+        GLuint* getBuffers();
+        vector<Material*> getMaterials();
 
         void renderGroup(bool flag);
 

@@ -1,5 +1,5 @@
-#ifndef KLEINBOTTLE_HPP
-#define KLEINBOTTLE_HPP
+#ifndef NOISESPHERE_HPP
+#define NOISESPHERE_HPP
 
 // Bibliotecas uteis
 #include <cmath>
@@ -12,11 +12,15 @@
 using namespace std;
 using namespace util;
 
-/***
+/**
+ * radius: raio da esfera
  * slices: Divisões em longitude (u)
  * stacks: Divisões em latitude (v)
+ * amplitude: Intensidade da deformação
  */
 
-PrimitiveBuffers generateKleinBottle(int slices, int stacks);
+float noise(float u, float v, float amplitude);
+
+PrimitiveBuffers generateNoiseSphere(float radius, int slices, int stacks, float amplitude);
 
 #endif

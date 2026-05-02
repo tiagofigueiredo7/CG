@@ -1,4 +1,4 @@
-#include "engine/transformations/Rotate.hpp"
+#include "engine/structs/transformations/Rotate.hpp"
 
 // Construtores
 Rotate::Rotate(float x, float y, float z, float angle) : Transformation(x, y, z) {

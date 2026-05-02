@@ -10,7 +10,7 @@
 #endif
 
 // Bibliotecas locais
-#include "engine/Data.hpp"
+#include "engine/structs/Data.hpp"
 
 void processMouseButtons_aux(int button, int state, int xx, int yy, Data* store);
 

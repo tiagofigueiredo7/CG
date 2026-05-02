@@ -1,12 +1,16 @@
-#include "engine/Group.hpp"
+#include "engine/structs/Group.hpp"
 
 // Construtor
 Group::Group() {
-    this->buffer = (GLuint*)malloc(sizeof(GLuint));
-    this->buffer[0] = 0;
+    this->buffers = (GLuint*)malloc(sizeof(GLuint) * 3);
+    this->buffers[0] = 0;
+	this->buffers[1] = 0;
+	this->buffers[2] = 0;
     this->transformations = vector<Transformation*>();
     this->subgroups = vector<Group*>();
     this->vertices_count = vector<int>();
+	this->materials = vector<Material*>();
+	this->texturesIDs = vector<GLuint*>();
 }
 
 // Destrutor
@@ -19,13 +23,22 @@ Group::~Group() {
         delete g;
     }
 
+	for (Material* m : this->getMaterials()) {
+		delete m;
+	}
+
+	for (GLuint* g : this->getTexturesIDs()) {
+		free(g);
+	}
+
     // Liberar VBO da GPU antes de liberar o ponteiro
-    if (this->buffer[0] != 0) {
-        glDeleteBuffers(1, this->buffer);
+    if (this->buffers[0] != 0 && this->buffers[1] != 0 && this->buffers[2] != 0) {
+        glDeleteBuffers(3, this->buffers);
     }
 
-    free(this->buffer);
+    free(this->buffers);
 
+    
 }
 
 // Getters
@@ -33,9 +46,13 @@ vector<Transformation*> Group::getTransformations() { return transformations; }
 
 vector<Group* >Group::getSubGroups(){ return subgroups; }
 
-GLuint* Group::getBuffer(){ return buffer; }
+vector<Material*> Group::getMaterials() { return materials; }
+
+GLuint* Group::getBuffers(){ return buffers; }
 
 vector<int> Group::getVerticesCount() { return vertices_count; }
+
+vector<GLuint*> Group::getTexturesIDs() { return texturesIDs; }
 
 // Add
 void Group::addTransformation(Transformation* transf){ transformations.push_back(transf); }
@@ -43,6 +60,10 @@ void Group::addTransformation(Transformation* transf){ transformations.push_back
 void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
 
 void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
+
+void Group::addMaterial(Material* material) { materials.push_back(material); }
+
+void Group::addTextureID(GLuint* id) { texturesIDs.push_back(id); }
 
 // Renderização
 
@@ -88,11 +109,16 @@ void Group::renderGroup(bool flag){
 	}
 
 	int acumulador = 0;
-	GLuint* buffer = this->getBuffer();
-	if (buffer[0]) {
-		for (int count : this->getVerticesCount()){
-			createModel(acumulador,count,buffer);
-			acumulador += count;
+	GLuint* buffers = this->getBuffers();
+	if (buffers[0] && buffers[1] && buffers[2]) {
+		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size(); ++i) {
+			materials[i]->aplicarMaterial();
+			if (texturesIDs[i][0] != 0) {
+				createModel_wTexture(acumulador, vertices_count[i], buffers, texturesIDs[i]);
+			} else {
+				createModel(acumulador, vertices_count[i], buffers);
+			}
+			acumulador += vertices_count[i];
 		}
 	} 
 
@@ -104,9 +130,31 @@ void Group::renderGroup(bool flag){
 
 }
 
-void Group::createModel(int init, int count, GLuint* buffer){
-	glBindBuffer(GL_ARRAY_BUFFER,buffer[0]);
+void Group::createModel_wTexture(int init, int count, GLuint* buffers, GLuint* textureID){
+
+	glBindTexture(GL_TEXTURE_2D, *textureID);
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
 	glVertexPointer(3,GL_FLOAT,0,0);
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
+	glNormalPointer(GL_FLOAT,0,0);
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
+	glTexCoordPointer(2,GL_FLOAT,0,0);
+
+	glDrawArrays(GL_TRIANGLES, init, count);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Group::createModel(int init, int count, GLuint* buffers){
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
+	glVertexPointer(3,GL_FLOAT,0,0);
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
+	glNormalPointer(GL_FLOAT,0,0);
 
 	glDrawArrays(GL_TRIANGLES, init, count);
 }

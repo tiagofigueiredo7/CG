@@ -1,4 +1,4 @@
-#include "engine/transformations/TimedFullRotate.hpp"
+#include "engine/structs/transformations/TimedFullRotate.hpp"
 
 // Construtores
 TimedFullRotate::TimedFullRotate(float x, float y, float z, float time) : Transformation(x, y, z) {

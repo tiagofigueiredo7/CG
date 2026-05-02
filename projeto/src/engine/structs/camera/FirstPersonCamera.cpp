@@ -1,4 +1,4 @@
-#include "engine/camera/FirstPersonCamera.hpp"
+#include "engine/structs/camera/FirstPersonCamera.hpp"
 
 FirstPersonCamera::FirstPersonCamera() : Camera() {
     alpha = get_alpha_from_camera(this);
@@ -81,12 +81,12 @@ void FirstPersonCamera::update_camera_Pos() {
 	// Graus para radianos
 	float alpha_rad = alpha * M_PI / 180.0f;
 	float beta_rad = beta * M_PI / 180.0f;
-	
+
 	// Vetor direção: d = (sin(alpha)cos(beta), sin(beta), cos(alpha)cos(beta))
 	float dirX = sin(alpha_rad) * cos(beta_rad);
     float dirY = sin(beta_rad);
 	float dirZ = cos(alpha_rad) * cos(beta_rad);
-	
+
 	// Vetor direção perpendicular a d: r = up × d = (cos(alpha)cos(beta), 0, -sin(alpha)cos(beta))
 	float rightX = cos(alpha_rad) * cos(beta_rad);
 	float rightZ = -sin(alpha_rad) * cos(beta_rad);

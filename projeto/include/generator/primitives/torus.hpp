@@ -6,10 +6,11 @@
 
 // Bibliotecas locais
 #include "utils/util.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
 
-vector <float> generateTorus(float majorRadius, float minorRadius, int slices, int stacks);
+PrimitiveBuffers generateTorus(float majorRadius, float minorRadius, int slices, int stacks);
 
 #endif

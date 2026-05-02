@@ -1,4 +1,4 @@
-#include "engine/camera/Camera.hpp"
+#include "engine/structs/camera/Camera.hpp"
 
 Camera::Camera() {
     // Vlores Padrão

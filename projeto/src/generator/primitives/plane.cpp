@@ -1,8 +1,8 @@
 #include "generator/primitives/plane.hpp"
 
 // Cria os vértices de um plano
-vector <float> generatePlane(float length, int divisions) {
-    vector <float> vertices;
+PrimitiveBuffers generatePlane(float length, int divisions) {
+    PrimitiveBuffers buffers = PrimitiveBuffers();
     float half = length / 2.0f; 
     float divlength = length / divisions; 
     
@@ -13,9 +13,9 @@ vector <float> generatePlane(float length, int divisions) {
             float z1 = (i * divlength) - half; 
             float z2 = z1 + divlength;
 
-            addTriangle(vertices, x1, 0, z1, x2, 0, z2, x2, 0, z1);
-            addTriangle(vertices, x1, 0, z1, x1, 0, z2, x2, 0, z2);
+            buffers.addTriangle(x1, 0, z1, x2, 0, z2, x2, 0, z1);
+            buffers.addTriangle(x1, 0, z1, x1, 0, z2, x2, 0, z2);
         } 
     } 
-    return vertices;
+    return buffers;
 }

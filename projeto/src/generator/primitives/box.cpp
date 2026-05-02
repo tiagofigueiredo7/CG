@@ -3,8 +3,8 @@
 // Depois alterar generateBox para usar generatePlane? Código mais limpo
 
 // Cria os vértices de uma caixa/cubo
-vector <float> generateBox(float length, int divisions) {
-    vector <float> vertices;
+PrimitiveBuffers generateBox(float length, int divisions) {
+    PrimitiveBuffers buffers = PrimitiveBuffers();
     float half = length / 2.0f;
     float divlength = length / divisions;
 
@@ -19,12 +19,13 @@ vector <float> generateBox(float length, int divisions) {
             float y2 = -half;
 
             // plano "de cima"
-            addTriangle(vertices, x1, y1, z1, x2, y1, z2, x2, y1, z1);
-            addTriangle(vertices, x1, y1, z1, x1, y1, z2, x2, y1, z2);
+            
+            buffers.addTriangle(x1, y1, z1, x2, y1, z2, x2, y1, z1);
+            buffers.addTriangle(x1, y1, z1, x1, y1, z2, x2, y1, z2);
 
             // plano "de baixo"
-            addTriangle(vertices, x1, y2, z1, x2, y2, z1, x2, y2, z2);
-            addTriangle(vertices, x1, y2, z1, x2, y2, z2, x1, y2, z2);
+            buffers.addTriangle(x1, y2, z1, x2, y2, z1, x2, y2, z2);
+            buffers.addTriangle(x1, y2, z1, x2, y2, z2, x1, y2, z2);
         }
     }
 
@@ -39,12 +40,12 @@ vector <float> generateBox(float length, int divisions) {
             float z2 = -half;
 
             // plano "da frente"
-            addTriangle(vertices, x1, y1, z1, x2, y2, z1, x1, y2, z1);
-            addTriangle(vertices, x1, y1, z1, x2, y1, z1, x2, y2, z1);
+            buffers.addTriangle(x1, y1, z1, x2, y2, z1, x1, y2, z1);
+            buffers.addTriangle(x1, y1, z1, x2, y1, z1, x2, y2, z1);
 
             // plano "de trás"
-			addTriangle(vertices, x1, y1, z2, x1, y2, z2, x2, y2, z2);
-			addTriangle(vertices, x1, y1, z2, x2, y2, z2, x2, y1, z2);
+			buffers.addTriangle(x1, y1, z2, x1, y2, z2, x2, y2, z2);
+			buffers.addTriangle(x1, y1, z2, x2, y2, z2, x2, y1, z2);
         }
     }
 
@@ -59,14 +60,14 @@ vector <float> generateBox(float length, int divisions) {
             float z2 = z1 + divlength;
 
             // plano "da direita"
-            addTriangle(vertices, x1, y1, z1, x1, y2, z2, x1, y1, z2);
-            addTriangle(vertices, x1, y1, z1, x1, y2, z1, x1, y2, z2);
+            buffers.addTriangle(x1, y1, z1, x1, y2, z2, x1, y1, z2);
+            buffers.addTriangle(x1, y1, z1, x1, y2, z1, x1, y2, z2);
 
             // plano "da esquerda"
-            addTriangle(vertices, x2, y1, z1, x2, y1, z2, x2, y2, z2);
-            addTriangle(vertices, x2, y1, z1, x2, y2, z2, x2, y2, z1);
+            buffers.addTriangle(x2, y1, z1, x2, y1, z2, x2, y2, z2);
+            buffers.addTriangle(x2, y1, z1, x2, y2, z2, x2, y2, z1);
         }
     }
 
-    return vertices;
+    return buffers;
 }

@@ -1,8 +1,8 @@
 #include "generator/primitives/cone.hpp"
 
 // Cria os vértices de um cone
-vector <float> generateCone(float radius, float height, int slices, int stacks) {
-	vector <float> vertices;
+PrimitiveBuffers generateCone(float radius, float height, int slices, int stacks) {
+	PrimitiveBuffers buffers = PrimitiveBuffers();
 
 	float a = 2*M_PI/slices;
 	float b = height/stacks;
@@ -20,7 +20,7 @@ vector <float> generateCone(float radius, float height, int slices, int stacks) 
 		float y2 = 0;
 		float z2 = radius * sin(a2);
 
-		addTriangle(vertices, x1, y1, z1, x2, y2, z2, 0.0, 0.0, 0.0);
+		buffers.addTriangle(x1, y1, z1, x2, y2, z2, 0.0, 0.0, 0.0);
 	}
 
 	for (int i = 0 ; i < stacks ; i++ ){
@@ -52,9 +52,9 @@ vector <float> generateCone(float radius, float height, int slices, int stacks) 
 			float y4 = b2;
 			float z4 = r2 * sin(a2);
 
-			addTriangle(vertices, x1, y1, z1, x3, y3, z3, x4, y4, z4);
-			addTriangle(vertices, x1, y1, z1, x4, y4, z4, x2, y2, z2);
+			buffers.addTriangle(x1, y1, z1, x3, y3, z3, x4, y4, z4);
+			buffers.addTriangle(x1, y1, z1, x4, y4, z4, x2, y2, z2);
 		}
 	}
-	return vertices;
+	return buffers;
 }

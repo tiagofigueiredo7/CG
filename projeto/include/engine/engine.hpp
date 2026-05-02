@@ -9,6 +9,9 @@
 #include <GL/glut.h>    // Para correr em Linux
 #endif
 
+// Biblioteca de imagens DevIL
+#include <IL/il.h>
+
 // Bibliotecas uteis
 #include <typeinfo> // Biblioteca com método "typeid" semelhante a "instanceof"
 #include <stdlib.h>
@@ -19,7 +22,7 @@
 // Bibliotecas locais
 #include "utils/util.hpp"
 #include "engine/process_input.hpp"
-#include "engine/Data.hpp"
+#include "engine/structs/Data.hpp"
 
 using namespace std;
 using namespace util;

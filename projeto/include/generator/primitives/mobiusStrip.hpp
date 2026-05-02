@@ -7,6 +7,7 @@
 // Bibliotecas locais
 #include "utils/util.hpp"
 #include "Point3D.hpp"
+#include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;
 using namespace util;
@@ -17,6 +18,6 @@ using namespace util;
  * slices: Divisões ao longo de u (resolução)
  */
 
-vector <float> generateMobiusStrip(float radius, float width, int slices);
+PrimitiveBuffers generateMobiusStrip(float radius, float width, int slices);
 
 #endif
