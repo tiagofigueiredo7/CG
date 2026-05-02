@@ -11,31 +11,52 @@ def parse_obj(filepath):
                 vertices.append((x, y, z))
     return vertices
 
-def extract_profile(vertices, bin_size=1.0):
+def find_main_axis(vertices):
+    """Determina o eixo principal do modelo (o de maior extensao)."""
+    ranges = []
+    for i in range(3):
+        vals = [v[i] for v in vertices]
+        ranges.append(max(vals) - min(vals))
+    axis = ranges.index(max(ranges))
+    return axis, ranges
+
+def reorder_vertices(vertices, main_axis):
+    """Reordena as coordenadas de forma a que o eixo principal fique em z."""
+    other = [i for i in range(3) if i != main_axis]
+    return [(v[other[0]], v[other[1]], v[main_axis]) for v in vertices]
+
+def extract_profile(vertices, n_bins):
+    """Divide o modelo em n_bins faixas ao longo de z e extrai o perfil assimetrico."""
+    zs = [v[2] for v in vertices]
+    z_min, z_max = min(zs), max(zs)
+    bin_size = (z_max - z_min) / n_bins
+
     bins = {}
     for x, y, z in vertices:
-        b = round(z / bin_size) * bin_size
+        b = int((z - z_min) / bin_size)
+        b = min(b, n_bins - 1)
         if b not in bins:
             bins[b] = []
-        bins[b].append((x, y))
+        bins[b].append((x, y, z_min + (b + 0.5) * bin_size))
 
     profile = []
     for b in sorted(bins.keys()):
         pts = bins[b]
         lx = [p[0] for p in pts]
         ly = [p[1] for p in pts]
+        z_center = pts[0][2]
         cx = sum(lx) / len(lx)
         cy = sum(ly) / len(ly)
         rx_neg = cx - min(lx)
         rx_pos = max(lx) - cx
         ry_neg = cy - min(ly)
         ry_pos = max(ly) - cy
-        profile.append((b, cx, cy, rx_neg, rx_pos, ry_neg, ry_pos))
+        profile.append((z_center, cx, cy, rx_neg, rx_pos, ry_neg, ry_pos))
 
     return profile
 
-def select_key_levels(profile, n_levels=7):
-    # Selecionar n_levels niveis distribuidos uniformemente ao longo do perfil
+def select_key_levels(profile, n_levels):
+    """Seleciona n_levels niveis distribuidos uniformemente ao longo do perfil."""
     total = len(profile)
     indices = [round(i * (total - 1) / (n_levels - 1)) for i in range(n_levels)]
     return [profile[i] for i in indices]
@@ -43,16 +64,23 @@ def select_key_levels(profile, n_levels=7):
 def interp_level(lev0, lev1, t):
     return tuple(lev0[i] + t * (lev1[i] - lev0[i]) for i in range(7))
 
-def normalize_levels(key_levels, scale_z=8.0, scale_r=1.4):
+def normalize_levels(key_levels):
+    """Normaliza os niveis mantendo as proporcoes reais do modelo."""
     z_min = key_levels[0][0]
     z_max = key_levels[-1][0]
     r_max = max(max(l[3], l[4], l[5], l[6]) for l in key_levels)
+    z_range = z_max - z_min
+
+    # Manter proporcoes reais: scale_z e scale_r derivados da geometria
+    # O raio e normalizado para 1.0, o z escala proporcionalmente
+    scale_r = 1.0
+    scale_z = (z_range / r_max) * scale_r
 
     norm = []
     for lev in key_levels:
         z, cx, cy, rx_neg, rx_pos, ry_neg, ry_pos = lev
-        z_n   = (z - z_min) / (z_max - z_min) * scale_z
-        f     = scale_r / r_max
+        z_n = (z - z_min) / z_range * scale_z
+        f   = scale_r / r_max
         norm.append((z_n, cx*f, cy*f, rx_neg*f, rx_pos*f, ry_neg*f, ry_pos*f))
 
     return norm
@@ -61,15 +89,15 @@ def ellipse_quads(z, cx, cy, rx_neg, rx_pos, ry_neg, ry_pos):
     k = 0.5523
     return [
         # Q0: +x -> +y
-        [(cx+rx_pos, cy,          z),
-         (cx+rx_pos, cy+ry_pos*k, z),
-         (cx+rx_pos*k, cy+ry_pos, z),
-         (cx,          cy+ry_pos, z)],
+        [(cx+rx_pos,   cy,          z),
+         (cx+rx_pos,   cy+ry_pos*k, z),
+         (cx+rx_pos*k, cy+ry_pos,   z),
+         (cx,          cy+ry_pos,   z)],
         # Q1: +y -> -x
-        [(cx,          cy+ry_pos, z),
-         (cx-rx_neg*k, cy+ry_pos, z),
+        [(cx,          cy+ry_pos,   z),
+         (cx-rx_neg*k, cy+ry_pos,   z),
          (cx-rx_neg,   cy+ry_pos*k, z),
-         (cx-rx_neg,   cy,        z)],
+         (cx-rx_neg,   cy,          z)],
         # Q2: -x -> -y
         [(cx-rx_neg,   cy,          z),
          (cx-rx_neg,   cy-ry_neg*k, z),
@@ -83,7 +111,6 @@ def ellipse_quads(z, cx, cy, rx_neg, rx_pos, ry_neg, ry_pos):
     ]
 
 def build_patches(norm_levels):
-    # Adicionar polos nas extremidades
     z_start = norm_levels[0][0]
     z_end   = norm_levels[-1][0]
     pole_start = (z_start, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
@@ -174,32 +201,36 @@ def write_patch(patches, all_points, output_path):
 
 def main():
     if len(sys.argv) < 3:
-        print("Uso: python obj_to_patch.py <input.obj> <output.patch> [n_levels] [scale_z] [scale_r]")
-        print("  n_levels  : numero de niveis chave ao longo do eixo (default: 7)")
-        print("  scale_z   : comprimento normalizado do eixo Z (default: 8.0)")
-        print("  scale_r   : raio maximo normalizado (default: 1.4)")
+        print("Uso: python obj_to_patch.py <input.obj> <output.patch> [n_levels]")
+        print("  n_levels : niveis chave ao longo do eixo principal (default: 7)")
         sys.exit(1)
 
-    obj_path    = sys.argv[1]
-    patch_path  = sys.argv[2]
-    n_levels    = int(sys.argv[3])   if len(sys.argv) > 3 else 7
-    scale_z     = float(sys.argv[4]) if len(sys.argv) > 4 else 8.0
-    scale_r     = float(sys.argv[5]) if len(sys.argv) > 5 else 1.4
+    obj_path   = sys.argv[1]
+    patch_path = sys.argv[2]
+    n_levels   = int(sys.argv[3]) if len(sys.argv) > 3 else 7
+
+    # n_bins é derivado automaticamente: usar o dobro dos niveis chave
+    # para garantir resolucao suficiente na extracao do perfil
+    n_bins = n_levels * 3
 
     print(f"A ler: {obj_path}")
     vertices = parse_obj(obj_path)
     print(f"  Vertices lidos: {len(vertices)}")
 
-    profile = extract_profile(vertices)
+    main_axis, ranges = find_main_axis(vertices)
+    axis_names = ['X', 'Y', 'Z']
+    print(f"  Eixo principal: {axis_names[main_axis]} (extensao {ranges[main_axis]:.3f})")
+
+    vertices = reorder_vertices(vertices, main_axis)
+
+    profile = extract_profile(vertices, n_bins)
     print(f"  Faixas extraidas: {len(profile)}")
 
     key_levels = select_key_levels(profile, n_levels)
-    print(f"  Niveis chave selecionados: {len(key_levels)}")
+    print(f"  Niveis chave: {len(key_levels)}")
 
-    norm_levels = normalize_levels(key_levels, scale_z, scale_r)
-
+    norm_levels = normalize_levels(key_levels)
     patches, all_points = build_patches(norm_levels)
-
     write_patch(patches, all_points, patch_path)
 
 if __name__ == '__main__':
