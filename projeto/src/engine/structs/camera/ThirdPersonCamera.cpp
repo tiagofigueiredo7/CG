@@ -1,4 +1,4 @@
-#include "engine/structs/camera/ThirdPerson.hpp"
+#include "engine/structs/camera/ThirdPersonCamera.hpp"
 
 ThirdPersonCamera::ThirdPersonCamera() : Camera() {
     
