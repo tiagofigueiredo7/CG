@@ -470,6 +470,12 @@ int Data::loadTexture(string s) {
 }
 
 void Data::initLights() {
+
+    glEnable(GL_LIGHTING);
+
+    float amb[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+
     int i = 0;
     for (Light* l : this->lights) {
         GLenum light = static_cast<GLenum>(GL_LIGHT0 + i);

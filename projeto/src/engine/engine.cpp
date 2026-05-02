@@ -139,8 +139,8 @@ int main(int argc, char** argv) {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_LIGHTING);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_RESCALE_NORMAL);//Nota dos profs
 
 	store->initLights();
 
