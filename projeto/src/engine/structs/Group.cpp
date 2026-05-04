@@ -31,6 +31,11 @@ Group::~Group() {
 		free(g);
 	}
 
+	// Liberar VBO da GPU antes de liberar o ponteiro
+    if (this->buffers[0] != 0 && this->buffers[1] != 0 && this->buffers[2] != 0) {
+        glDeleteBuffers(3, this->buffers);
+    }
+
 
     free(this->buffers);
 

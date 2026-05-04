@@ -124,7 +124,7 @@ void Data::parseCameraField(XMLElement* camera) {
 
 void Data::parseLightsField(XMLElement* lights) {
     if (!lights) {
-        cerr << "[Erro] Elemento <lights> não encontrado!" << endl;
+        cerr << "[Aviso] Não há luzes definidas!" << endl;
         return;
     }
 
@@ -273,6 +273,10 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
                 }
 
                 g.addMaterial(m);
+            } else {
+                // Se não houver material, adicionar um material padrão para manter a consistência
+                Material* defaultMaterial = new Material();
+                g.addMaterial(defaultMaterial);
             }
 
             model = model->NextSiblingElement("model");
