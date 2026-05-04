@@ -534,7 +534,7 @@ void Data::initLights() {
             glLightfv(light, GL_POSITION, direction);
         } else if (Spotlight* s = dynamic_cast<Spotlight*>(l)) {
             GLfloat position[] = { s->getPosX(), s->getPosY(), s->getPosZ(), 1.0f };
-            GLfloat direction[] = { s->getDirX(), s->getDirY(), s->getDirZ(), 0.0f };
+            GLfloat direction[] = { s->getDirX(), s->getDirY(), s->getDirZ() };
             normalize(direction); 
             glLightfv(light, GL_POSITION, position);
             glLightfv(light, GL_SPOT_DIRECTION, direction);
