@@ -63,6 +63,7 @@ class Data {
 
         // Lights
         void initLights();
+        void executeLights();
 
         // Parser XML
         void parse_Window_Information(char* file);

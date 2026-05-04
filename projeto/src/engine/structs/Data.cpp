@@ -505,7 +505,14 @@ int Data::loadTexture(string s) {
 
 void Data::initLights() {
 
+    if (lights.empty()) return;
+    else if (lights.size() > 8) {
+        cerr << "[Aviso] Número de luzes excede o máximo (8)." << endl;
+        exit(1);
+    }
+
     glEnable(GL_LIGHTING);
+    glEnable(GL_RESCALE_NORMAL);//Nota dos profs
 
     float amb[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
@@ -515,8 +522,7 @@ void Data::initLights() {
     GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat light_ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-    int i = 0;
-    for (Light* l : this->lights) {
+    for (int i=0; i<lights.size(); i++) {
         GLenum light = static_cast<GLenum>(GL_LIGHT0 + i);
         glEnable(light);
         
@@ -524,7 +530,18 @@ void Data::initLights() {
         glLightfv(light, GL_DIFFUSE, light_diffuse);
         glLightfv(light, GL_SPECULAR, light_specular);
         glLightfv(light, GL_AMBIENT, light_ambient);
-        
+    }
+
+}
+
+void Data::executeLights() {
+
+    if (lights.empty()) return;
+
+    int i = 0;
+    for (Light* l : this->lights) {
+        GLenum light = static_cast<GLenum>(GL_LIGHT0 + i);
+     
         if (Point* p = dynamic_cast<Point*>(l)) {
             GLfloat position[] = { p->getPosX(), p->getPosY(), p->getPosZ(), 1.0f };
             glLightfv(light, GL_POSITION, position);
@@ -545,7 +562,6 @@ void Data::initLights() {
         }
         i++;
     }
-
 }
 
 void Data::setRenderCurve(bool flag) { renderCurve = flag; }

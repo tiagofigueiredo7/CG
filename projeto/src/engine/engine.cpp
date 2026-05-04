@@ -40,7 +40,7 @@ void renderScene(void) {
 		      cam->getLookX(), cam->getLookY(), cam->getLookZ(),
 			  cam->getUpX(), cam->getUpY(), cam->getUpZ());
 
-	store->initLights();
+	store->executeLights();
 
     // Axis lines
 	// Desenha os eixos sem a iluminação
@@ -150,7 +150,8 @@ int main(int argc, char** argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_RESCALE_NORMAL);//Nota dos profs
+
+	store->initLights();
 
 
 	glutTimerFunc(16, update_camera, 0);  // ~60 FPS
