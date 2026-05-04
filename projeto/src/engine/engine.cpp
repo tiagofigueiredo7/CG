@@ -41,6 +41,10 @@ void renderScene(void) {
 			  cam->getUpX(), cam->getUpY(), cam->getUpZ());
 
     // Axis lines
+	// Desenha os eixos sem a iluminação
+	GLboolean lightingWasEnabled = glIsEnabled(GL_LIGHTING);
+	if (lightingWasEnabled) glDisable(GL_LIGHTING);
+
 	glBegin(GL_LINES);
 		// X axis in red
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -56,7 +60,9 @@ void renderScene(void) {
 		glVertex3f(0.0f, 0.0f, 1000.0f);
 	glEnd();
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if (lightingWasEnabled) glEnable(GL_LIGHTING);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //Nas fases anteriores estava  GL_LINE
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
 	
 	Group* main_group = store->getGroup();

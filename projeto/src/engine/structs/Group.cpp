@@ -156,6 +156,10 @@ void Group::createModel_wTexture(int init, int count, GLuint* buffers, GLuint* t
 
 	glBindTexture(GL_TEXTURE_2D, *textureID);
 
+	// Habilitar caso esteja desabilitado
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
 	glVertexPointer(3,GL_FLOAT,0,0);
 
@@ -194,6 +198,11 @@ void Group::createModel(int init, int count, GLuint* buffers){
 		return;
 	}
 
+	GLboolean texture2DWasEnabled = glIsEnabled(GL_TEXTURE_2D);
+	GLboolean textureArrayWasEnabled = glIsEnabled(GL_TEXTURE_COORD_ARRAY);
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
 	glVertexPointer(3,GL_FLOAT,0,0);
 
@@ -201,4 +210,11 @@ void Group::createModel(int init, int count, GLuint* buffers){
 	glNormalPointer(GL_FLOAT,0,0);
 
 	glDrawArrays(GL_TRIANGLES, init, count);
+
+	if (textureArrayWasEnabled) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
+	if (texture2DWasEnabled) {
+		glEnable(GL_TEXTURE_2D);
+	}
 }
