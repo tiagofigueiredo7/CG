@@ -18,14 +18,28 @@ PrimitiveBuffers generateBox(float length, int divisions) {
             float y1 = half;
             float y2 = -half;
 
+            float u1 = (float)j / divisions;
+            float u2 = (float)(j + 1) / divisions;
+            float v1 = (float)i / divisions;
+            float v2 = (float)(i + 1) / divisions;
+
             // plano "de cima"
-            
             buffers.addTriangle(x1, y1, z1, x2, y1, z2, x2, y1, z1);
+            buffers.addNormals(0, 1, 0, 0, 1, 0, 0, 1, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
+
             buffers.addTriangle(x1, y1, z1, x1, y1, z2, x2, y1, z2);
+            buffers.addNormals(0, 1, 0, 0, 1, 0, 0, 1, 0);
+            buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
 
             // plano "de baixo"
             buffers.addTriangle(x1, y2, z1, x2, y2, z1, x2, y2, z2);
+            buffers.addNormals(0, -1, 0, 0, -1, 0, 0, -1, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v1, u2, v2);
+
             buffers.addTriangle(x1, y2, z1, x2, y2, z2, x1, y2, z2);
+            buffers.addNormals(0, -1, 0, 0, -1, 0, 0, -1, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u1, v2);
         }
     }
 
@@ -39,13 +53,29 @@ PrimitiveBuffers generateBox(float length, int divisions) {
             float z1 = half;
             float z2 = -half;
 
+            float u1 = (float)j / divisions;
+            float u2 = (float)(j + 1) / divisions;
+            float v1 = (float)i / divisions;
+            float v2 = (float)(i + 1) / divisions;
+
             // plano "da frente"
             buffers.addTriangle(x1, y1, z1, x2, y2, z1, x1, y2, z1);
+            buffers.addNormals(0, 0, 1, 0, 0, 1, 0, 0, 1);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
+
             buffers.addTriangle(x1, y1, z1, x2, y1, z1, x2, y2, z1);
+            buffers.addNormals(0, 0, 1, 0, 0, 1, 0, 0, 1);
+            buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
 
             // plano "de trás"
 			buffers.addTriangle(x1, y1, z2, x1, y2, z2, x2, y2, z2);
+            buffers.addNormals(0, 0, -1, 0, 0, -1, 0, 0, -1);
+            buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
+
+
 			buffers.addTriangle(x1, y1, z2, x2, y2, z2, x2, y1, z2);
+            buffers.addNormals(0, 0, -1, 0, 0, -1, 0, 0, -1);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
         }
     }
 
@@ -59,13 +89,28 @@ PrimitiveBuffers generateBox(float length, int divisions) {
             float z1 = (j * divlength) - half;
             float z2 = z1 + divlength;
 
+            float u1 = (float)j / divisions;
+            float u2 = (float)(j + 1) / divisions;
+            float v1 = (float)i / divisions;
+            float v2 = (float)(i + 1) / divisions;
+
             // plano "da direita"
             buffers.addTriangle(x1, y1, z1, x1, y2, z2, x1, y1, z2);
+            buffers.addNormals(1, 0, 0, 1, 0, 0, 1, 0, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u1, v2);
+
             buffers.addTriangle(x1, y1, z1, x1, y2, z1, x1, y2, z2);
+            buffers.addNormals(1, 0, 0, 1, 0, 0, 1, 0, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v1, u2, v2);
 
             // plano "da esquerda"
             buffers.addTriangle(x2, y1, z1, x2, y1, z2, x2, y2, z2);
+            buffers.addNormals(-1, 0, 0, -1, 0, 0, -1, 0, 0);
+            buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
+
             buffers.addTriangle(x2, y1, z1, x2, y2, z2, x2, y2, z1);
+            buffers.addNormals(-1, 0, 0, -1, 0, 0, -1, 0, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
         }
     }
 
