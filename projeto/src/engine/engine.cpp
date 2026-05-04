@@ -40,25 +40,29 @@ void renderScene(void) {
 		      cam->getLookX(), cam->getLookY(), cam->getLookZ(),
 			  cam->getUpX(), cam->getUpY(), cam->getUpZ());
 
+	store->initLights();
+
     // Axis lines
 	// Desenha os eixos sem a iluminação
 	GLboolean lightingWasEnabled = glIsEnabled(GL_LIGHTING);
 	if (lightingWasEnabled) glDisable(GL_LIGHTING);
 
-	glBegin(GL_LINES);
-		// X axis in red
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-1000.0f, 0.0f, 0.0f);
-		glVertex3f( 1000.0f, 0.0f, 0.0f);
-		// Y Axis in Green
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, -1000.0f, 0.0f);
-		glVertex3f(0.0f, 1000.0f, 0.0f);
-		// Z Axis in Blue
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f, 0.0f, -1000.0f);
-		glVertex3f(0.0f, 0.0f, 1000.0f);
-	glEnd();
+	if (store->getRenderCurve()) {
+		glBegin(GL_LINES);
+			// X axis in red
+			glColor3f(1.0f, 0.0f, 0.0f);
+			glVertex3f(-1000.0f, 0.0f, 0.0f);
+			glVertex3f( 1000.0f, 0.0f, 0.0f);
+			// Y Axis in Green
+			glColor3f(0.0f, 1.0f, 0.0f);
+			glVertex3f(0.0f, -1000.0f, 0.0f);
+			glVertex3f(0.0f, 1000.0f, 0.0f);
+			// Z Axis in Blue
+			glColor3f(0.0f, 0.0f, 1.0f);
+			glVertex3f(0.0f, 0.0f, -1000.0f);
+			glVertex3f(0.0f, 0.0f, 1000.0f);
+		glEnd();
+	}
 
 	if (lightingWasEnabled) glEnable(GL_LIGHTING);
 
@@ -147,8 +151,6 @@ int main(int argc, char** argv) {
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_RESCALE_NORMAL);//Nota dos profs
-
-	store->initLights();
 
 
 	glutTimerFunc(16, update_camera, 0);  // ~60 FPS
