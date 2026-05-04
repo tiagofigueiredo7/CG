@@ -13,8 +13,21 @@ PrimitiveBuffers generatePlane(float length, int divisions) {
             float z1 = (i * divlength) - half; 
             float z2 = z1 + divlength;
 
+
+            float u1 = (float)j / divisions;
+            float u2 = (float)(j + 1) / divisions;
+            float v1 = (float)i / divisions;
+            float v2 = (float)(i + 1) / divisions;
+
             buffers.addTriangle(x1, 0, z1, x2, 0, z2, x2, 0, z1);
+            buffers.addNormals(0, 1, 0, 0, 1, 0, 0, 1, 0);
+            buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
+
+
             buffers.addTriangle(x1, 0, z1, x1, 0, z2, x2, 0, z2);
+            buffers.addNormals(0, 1, 0, 0, 1, 0, 0, 1, 0);
+            buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
+
         } 
     } 
     return buffers;

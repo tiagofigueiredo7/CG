@@ -31,10 +31,6 @@ Group::~Group() {
 		free(g);
 	}
 
-    // Liberar VBO da GPU antes de liberar o ponteiro
-    if (this->buffers[0] != 0 && this->buffers[1] != 0 && this->buffers[2] != 0) {
-        glDeleteBuffers(3, this->buffers);
-    }
 
     free(this->buffers);
 
@@ -113,7 +109,7 @@ void Group::renderGroup(bool flag){
 	if (buffers[0] && buffers[1] && buffers[2]) {
 		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size(); ++i) {
 			materials[i]->aplicarMaterial();
-			if (texturesIDs[i][0] != 0) {
+			if (texturesIDs[i] != nullptr && *texturesIDs[i] != 0) {
 				createModel_wTexture(acumulador, vertices_count[i], buffers, texturesIDs[i]);
 			} else {
 				createModel(acumulador, vertices_count[i], buffers);
@@ -132,6 +128,32 @@ void Group::renderGroup(bool flag){
 
 void Group::createModel_wTexture(int init, int count, GLuint* buffers, GLuint* textureID){
 
+	if (buffers == nullptr || textureID == nullptr || count <= 0) {
+		return;
+	}
+
+	if (!glIsBuffer(buffers[0]) || !glIsBuffer(buffers[1]) || !glIsBuffer(buffers[2])) {
+		cerr << "[ERRO] Buffer(s) inválido(s) ao desenhar modelo com textura!" << endl;
+		return;
+	}
+
+	GLint vertexSize = 0;
+	GLint normalSize = 0;
+	GLint textureSize = 0;
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &vertexSize);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &normalSize);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &textureSize);
+
+	if (vertexSize < count * 3 * static_cast<GLint>(sizeof(float)) ||
+		normalSize < count * 3 * static_cast<GLint>(sizeof(float)) ||
+		textureSize < count * 2 * static_cast<GLint>(sizeof(float))) {
+		cerr << "[ERRO] Buffer(s) demasiado pequeno(s) ao desenhar modelo com textura!" << endl;
+		return;
+	}
+
 	glBindTexture(GL_TEXTURE_2D, *textureID);
 
 	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
@@ -149,6 +171,28 @@ void Group::createModel_wTexture(int init, int count, GLuint* buffers, GLuint* t
 }
 
 void Group::createModel(int init, int count, GLuint* buffers){
+
+	if (buffers == nullptr || count <= 0) {
+		return;
+	}
+
+	if (!glIsBuffer(buffers[0]) || !glIsBuffer(buffers[1])) {
+		cerr << "[ERRO] Buffer(s) inválido(s) ao desenhar modelo!" << endl;
+		return;
+	}
+
+	GLint vertexSize = 0;
+	GLint normalSize = 0;
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &vertexSize);
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &normalSize);
+
+	if (vertexSize < count * 3 * static_cast<GLint>(sizeof(float)) ||
+		normalSize < count * 3 * static_cast<GLint>(sizeof(float))) {
+		cerr << "[ERRO] Buffer(s) demasiado pequeno(s) ao desenhar modelo!" << endl;
+		return;
+	}
 
 	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
 	glVertexPointer(3,GL_FLOAT,0,0);

@@ -247,24 +247,24 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
             XMLElement* material = model->FirstChildElement("color");
             if (material) {
                 Material* m = new Material();
-                XMLElement* difuse = material->FirstChildElement("difuse");
+                XMLElement* difuse = material->FirstChildElement("diffuse");
                 if (difuse) {
-                    m->setDifuse(difuse->FloatAttribute("r"), difuse->FloatAttribute("g"), difuse->FloatAttribute("b"), 1.0f);
+                    m->setDifuse(difuse->FloatAttribute("R"), difuse->FloatAttribute("G"), difuse->FloatAttribute("B"), 1.0f);
                 }
 
                 XMLElement* ambient = material->FirstChildElement("ambient");
                 if (ambient) {
-                    m->setAmbient(ambient->FloatAttribute("r"), ambient->FloatAttribute("g"), ambient->FloatAttribute("b"), 1.0f);
+                    m->setAmbient(ambient->FloatAttribute("R"), ambient->FloatAttribute("G"), ambient->FloatAttribute("B"), 1.0f);
                 }
 
                 XMLElement* specular = material->FirstChildElement("specular");
                 if (specular) {
-                    m->setSpecular(specular->FloatAttribute("r"), specular->FloatAttribute("g"), specular->FloatAttribute("b"), 1.0f);
+                    m->setSpecular(specular->FloatAttribute("R"), specular->FloatAttribute("G"), specular->FloatAttribute("B"), 1.0f);
                 }
 
                 XMLElement* emissive = material->FirstChildElement("emissive");
                 if (emissive) {
-                    m->setEmissive(emissive->FloatAttribute("r"), emissive->FloatAttribute("g"), emissive->FloatAttribute("b"), 1.0f);
+                    m->setEmissive(emissive->FloatAttribute("R"), emissive->FloatAttribute("G"), emissive->FloatAttribute("B"), 1.0f);
                 }
 
                 XMLElement* shininess = material->FirstChildElement("shininess");
@@ -297,22 +297,25 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
 }
 
 void Data::fill_Buffer(Group& g, vector<char*>& arr){
-    int count_aux = 0;
     vector<float> vertices_aux;
     vector<float> normals_aux;
     vector<float> texCoords_aux;
 
     for(char* model_file : arr){
-        count_aux = 0;
+        vector<float> vertices_temp;
+        vector<float> normals_temp;
+        vector<float> texCoords_temp;
+        int count_aux = 0;
 
         string model_path = string("../models/") + model_file;
         ifstream file(model_path);
         if (!file.is_open()){
             cerr << "[ERRO] Erro ao abrir ficheiro: " << model_file << endl;
+            continue;
         }
 
         string line;
-        getline(file, line); // Ler número de vértices (mas não é necessário para o buffer, apenas para contar)
+        getline(file, line);
         int num = 0;
         try {
             num = stoi(line);
@@ -320,6 +323,8 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
             cerr << "[ERRO] Número de vértices inválido no ficheiro: " << model_file << endl;
             continue;
         }
+
+        // Ler vértices
         for (int i = 0; i < num; i++) {
             getline(file,line);
             if (line.empty()) continue;
@@ -330,14 +335,14 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
                 cerr << "[ERRO] Erro ao ler vértice: " << line << endl;
                 continue;
             }
-            vertices_aux.push_back(x);
-            vertices_aux.push_back(y);
-            vertices_aux.push_back(z);
+            vertices_temp.push_back(x);
+            vertices_temp.push_back(y);
+            vertices_temp.push_back(z);
             count_aux += 1;
         }
 
-        g.addVerticeCount(count_aux);
-
+        int normals_count = 0;
+        // Ler normais
         for (int i = 0; i < num; i++) {
             getline(file,line);
             if (line.empty()) continue;
@@ -348,11 +353,14 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
                 cerr << "[ERRO] Erro ao ler normal: " << line << endl;
                 continue;
             }
-            normals_aux.push_back(x);
-            normals_aux.push_back(y);
-            normals_aux.push_back(z);
+            normals_temp.push_back(x);
+            normals_temp.push_back(y);
+            normals_temp.push_back(z);
+            normals_count += 1;
         }
 
+        int texCoords_count = 0;
+        // Ler coordenadas de textura
         for (int i = 0; i < num; i++) {
             getline(file,line);
             if (line.empty()) continue;
@@ -363,12 +371,38 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
                 cerr << "[ERRO] Erro ao ler coordenadas de textura: " << line << endl;
                 continue;
             }
-            texCoords_aux.push_back(u);
-            texCoords_aux.push_back(v);
+            texCoords_temp.push_back(u);
+            texCoords_temp.push_back(v);
+            texCoords_count += 1;
         }
 
         file.close();
 
+        // Validar consistência antes de adicionar
+        if (count_aux != normals_count || count_aux != texCoords_count) {
+            cerr << "[ERRO] Desalinhamento de dados em " << model_file << ": "
+                 << count_aux << " vértices, " << normals_count << " normais, " 
+                 << texCoords_count << " texturas" << endl;
+            continue;
+        }
+
+        // Adicionar aos vetores globais apenas se tudo estiver correto
+        vertices_aux.insert(vertices_aux.end(), vertices_temp.begin(), vertices_temp.end());
+        normals_aux.insert(normals_aux.end(), normals_temp.begin(), normals_temp.end());
+        texCoords_aux.insert(texCoords_aux.end(), texCoords_temp.begin(), texCoords_temp.end());
+        g.addVerticeCount(count_aux);
+
+    }
+
+    if (vertices_aux.empty() || normals_aux.empty() || texCoords_aux.empty()) {
+        cerr << "[ERRO] Nenhum vértice, normal ou coordenada de textura foi carregado!" << endl;
+        return;
+    } else if (vertices_aux.size() % 3 != 0 || normals_aux.size() % 3 != 0 || texCoords_aux.size() % 2 != 0) {
+        cerr << "[ERRO] O número de vértices, normais ou coordenadas de textura não é múltiplo do esperado!" << endl;
+        return;
+    } else if (vertices_aux.size() / 3 != normals_aux.size() / 3 || vertices_aux.size() / 3 != texCoords_aux.size() / 2) {
+        cerr << "[ERRO] O número de vértices, normais e coordenadas de textura não corresponde!" << endl;
+        return;
     }
 
     GLuint* buffers = g.getBuffers();
