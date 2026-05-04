@@ -510,22 +510,36 @@ void Data::initLights() {
     float amb[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 
+    // Propriedades por defeito das luzes
+    GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
     int i = 0;
     for (Light* l : this->lights) {
         GLenum light = static_cast<GLenum>(GL_LIGHT0 + i);
         glEnable(light);
+        
+        // Configurar propriedades de cor da luz
+        glLightfv(light, GL_DIFFUSE, light_diffuse);
+        glLightfv(light, GL_SPECULAR, light_specular);
+        glLightfv(light, GL_AMBIENT, light_ambient);
+        
         if (Point* p = dynamic_cast<Point*>(l)) {
             GLfloat position[] = { p->getPosX(), p->getPosY(), p->getPosZ(), 1.0f };
             glLightfv(light, GL_POSITION, position);
         } else if (Directional* d = dynamic_cast<Directional*>(l)) {
             GLfloat direction[] = { d->getDirX(), d->getDirY(), d->getDirZ(), 0.0f };
+            normalize(direction);
             glLightfv(light, GL_POSITION, direction);
         } else if (Spotlight* s = dynamic_cast<Spotlight*>(l)) {
             GLfloat position[] = { s->getPosX(), s->getPosY(), s->getPosZ(), 1.0f };
-            GLfloat direction[] = { s->getDirX(), s->getDirY(), s->getDirZ() };
+            GLfloat direction[] = { s->getDirX(), s->getDirY(), s->getDirZ(), 0.0f };
+            normalize(direction); 
             glLightfv(light, GL_POSITION, position);
             glLightfv(light, GL_SPOT_DIRECTION, direction);
             glLightf(light, GL_SPOT_CUTOFF, s->getCutoff());
+            glLightf(light, GL_SPOT_EXPONENT, 0.0f); // Exponente de atenuação da luz
         } else {
             cerr << "[ERRO] Tipo de luz desconhecido!" << endl;
         }

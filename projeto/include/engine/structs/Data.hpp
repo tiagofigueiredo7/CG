@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "utils/util.hpp"
 #include "engine/structs/Group.hpp"
 #include "engine/structs/camera/Camera.hpp"
 #include "engine/structs/camera/OrbitalCamera.hpp"
@@ -21,6 +22,7 @@
 #include "engine/structs/lights/Spotlight.hpp"
 
 using namespace std;
+using namespace util;
 using namespace tinyxml2;
 
 class Data {

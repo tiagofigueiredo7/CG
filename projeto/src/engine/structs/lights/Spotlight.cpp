@@ -29,4 +29,4 @@ void Spotlight::setPosY(float y) { posY = y; }
 void Spotlight::setPosZ(float z) { posZ = z; }
 
 float Spotlight::getCutoff() { return cutoff; }
-void Spotlight::setCutoff(float cutoff) { cutoff = cutoff; }
+void Spotlight::setCutoff(float cutoff) { this->cutoff = cutoff; }

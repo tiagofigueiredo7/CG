@@ -2,10 +2,10 @@
 
 Material::Material() {
     // Valores padrão
-    difuse[0] = 200; difuse[1] = 200; difuse[2] = 200; difuse[3] = 1.0f;
-    ambient[0] = 50; ambient[1] = 50; ambient[2] = 50; ambient[3] = 1.0f;
-    specular[0] = 0; specular[1] = 0; specular[2] = 0; specular[3] = 1.0f;
-    emissive[0] = 0; emissive[1] = 0; emissive[2] = 0; emissive[3] = 1.0f;
+    difuse[0] = 200.0f/255.0f; difuse[1] = 200.0f/255.0f; difuse[2] = 200.0f/255.0f; difuse[3] = 1.0f;
+    ambient[0] = 50.0f/255.0f; ambient[1] = 50.0f/255.0f; ambient[2] = 50.0f/255.0f; ambient[3] = 1.0f;
+    specular[0] = 0.0f; specular[1] = 0.0f; specular[2] = 0.0f; specular[3] = 1.0f;
+    emissive[0] = 0.0f; emissive[1] = 0.0f; emissive[2] = 0.0f; emissive[3] = 1.0f;
     shininess = 0.0f;
 }
 
@@ -18,19 +18,19 @@ void Material::aplicarMaterial() {
 }
 
 void Material::setDifuse(float r, float g, float b, float a) {
-    difuse[0] = r; difuse[1] = g; difuse[2] = b; difuse[3] = a;
+    difuse[0] = r/255.0f; difuse[1] = g/255.0f; difuse[2] = b/255.0f; difuse[3] = a;
 }
 
 void Material::setAmbient(float r, float g, float b, float a) {
-    ambient[0] = r; ambient[1] = g; ambient[2] = b; ambient[3] = a;
+    ambient[0] = r/255.0f; ambient[1] = g/255.0f; ambient[2] = b/255.0f; ambient[3] = a;
 }
 
 void Material::setSpecular(float r, float g, float b, float a) {
-    specular[0] = r; specular[1] = g; specular[2] = b; specular[3] = a;
+    specular[0] = r/255.0f; specular[1] = g/255.0f; specular[2] = b/255.0f; specular[3] = a;
 }
 
 void Material::setEmissive(float r, float g, float b, float a) {
-    emissive[0] = r; emissive[1] = g; emissive[2] = b; emissive[3] = a;
+    emissive[0] = r/255.0f; emissive[1] = g/255.0f; emissive[2] = b/255.0f; emissive[3] = a;
 }
 
 void Material::setShininess(float s) {
