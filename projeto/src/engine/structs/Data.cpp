@@ -231,7 +231,7 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
             XMLElement* texture = model->FirstChildElement("texture");
             if (texture) {
                 char *texture_file = strdup(texture->Attribute("file"));
-                string texture_path = string("../textures/") + texture_file;
+                string texture_path = string("../texturas/") + texture_file;
                 GLuint* textureID = (GLuint*)malloc(sizeof(GLuint));
                 *textureID = loadTexture(texture_path);
                 g.addTextureID(textureID);
