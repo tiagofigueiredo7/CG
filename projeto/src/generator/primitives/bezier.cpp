@@ -92,10 +92,41 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 Point3D C = superficie[i+1][j];
                 Point3D D = superficie[i+1][j+1];
 
-                buffers.addTriangle(A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
-                buffers.addTriangle(C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+                // Primeiro triângulo ABC
+                float AB[3] = {B.x - A.x, B.y - A.y, B.z - A.z};
+                float AC[3] = {C.x - A.x, C.y - A.y, C.z - A.z};
+                float normal1[3];
+                cross(AB, AC, normal1);
+                normalize(normal1);
 
-                //buffers.add
+                // Se normalize deu NaN, usar normal default
+                if (isnan(normal1[0]) || isnan(normal1[1]) || isnan(normal1[2])) {
+                    normal1[0] = 0.0f;
+                    normal1[1] = 1.0f;
+                    normal1[2] = 0.0f;
+                }
+
+                buffers.addTriangle(A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+                buffers.addNormals(normal1[0], normal1[1], normal1[2], normal1[0], normal1[1], normal1[2], normal1[0], normal1[1], normal1[2]);
+                buffers.addTextureCoordinates(u[i][j], v[i][j], u[i][j+1], v[i][j+1], u[i+1][j], v[i+1][j]);
+
+                // Segundo triângulo CBD
+                float CB[3] = {B.x - C.x, B.y - C.y, B.z - C.z};
+                float CD[3] = {D.x - C.x, D.y - C.y, D.z - C.z};
+                float normal2[3];
+                cross(CB, CD, normal2);
+                normalize(normal2);
+
+                // Se normalize deu NaN, usar normal default
+                if (isnan(normal2[0]) || isnan(normal2[1]) || isnan(normal2[2])) {
+                    normal2[0] = 0.0f;
+                    normal2[1] = 1.0f;
+                    normal2[2] = 0.0f;
+                }
+
+                buffers.addTriangle(C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
+                buffers.addNormals(normal2[0], normal2[1], normal2[2], normal2[0], normal2[1], normal2[2], normal2[0], normal2[1], normal2[2]);
+                buffers.addTextureCoordinates(u[i+1][j], v[i+1][j], u[i][j+1], v[i][j+1], u[i+1][j+1], v[i+1][j+1]);
 
             }
         }

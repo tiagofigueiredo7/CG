@@ -90,6 +90,7 @@ PrimitiveBuffers generateCone(float radius, float height, int slices, int stacks
 			buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
 			buffers.addNormals(n1[0], n1[1], n1[2], n3[0], n3[1], n3[2], n4[0], n4[1], n4[2]);
 
+			free(n1); free(n2); free(n3); free(n4);
 		}
 	}
 	return buffers;
