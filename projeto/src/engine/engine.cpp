@@ -85,19 +85,24 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Group* main_group = store->getGroup();
+	Camera* cam = store->getCamera();
 
-	// Atualizar posições world-space dos players sem a transformação da câmara.
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	if (main_group != nullptr) updatePlayersWorldPositions(main_group);
-	glPopMatrix();
+	if (store->getPlayers().size() > 0) {
+
+		// Atualizar posições world-space dos players sem a transformação da câmara.
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		if (main_group != nullptr) updatePlayersWorldPositions(main_group);
+		glPopMatrix();
+
+		if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
+			oc->update_cartesian_coordinates();
+		}
+
+	}
 
 	// set the camera
-	Camera* cam = store->getCamera();
-	if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
-		oc->update_cartesian_coordinates();
-	}
 	glLoadIdentity();
 	gluLookAt(cam->getPosX(), cam->getPosY(), cam->getPosZ(),
 		      cam->getLookX(), cam->getLookY(), cam->getLookZ(),
