@@ -45,8 +45,12 @@ class Data {
         // Flag para renderizar ou não a trajetória da curva
         bool renderCurve;
 
-        // Model files and transformations
+        // Nodo raiz da hierarquia de grupos
         Group* group;
+
+        // Players
+        vector<Group*> players;
+
 
         // Group element parser
         void parseCameraField(XMLElement* camera);
@@ -96,6 +100,10 @@ class Data {
 
         void setRenderCurve(bool flag);
         bool getRenderCurve();
+
+        vector<Group*> getPlayers();
+        void addPlayer(Group* player);
+        Group* getPlayerByIndex(int id);
 };
 
 

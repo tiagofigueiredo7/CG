@@ -15,6 +15,8 @@ Data::Data() {
     camera = new Camera();
     lights = vector<Light*>();
 
+    players = vector<Group*>();
+
     renderCurve = true;
 }
 
@@ -155,6 +157,16 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
         cerr << "[Erro] Elemento <group> não encontrado!" << endl;
         return;
     }
+
+    // Verificar se é um grupo de jogador
+    const char* playerAttr = group->Attribute("player");
+    if (playerAttr) {
+        g.setIsPlayer(true);
+        g.setPlayerName(string(playerAttr));
+        this->addPlayer(&g);
+    }
+
+
     XMLElement* transf = group->FirstChildElement("transform");
 
     if (transf){
@@ -571,3 +583,15 @@ void Data::executeLights() {
 void Data::setRenderCurve(bool flag) { renderCurve = flag; }
 
 bool Data::getRenderCurve() { return renderCurve; }
+
+vector<Group*> Data::getPlayers() { return players; }
+
+void Data::addPlayer(Group* player) { players.push_back(player); }
+
+Group* Data::getPlayerByIndex(int id) {
+    if (id < 0 || id >= players.size()) {
+        cerr << "[Erro] Índice de jogador inválido: " << id << endl;
+        return nullptr;
+    }
+    return players[id];
+}

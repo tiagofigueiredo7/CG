@@ -11,6 +11,10 @@ Group::Group() {
     this->vertices_count = vector<int>();
 	this->materials = vector<Material*>();
 	this->texturesIDs = vector<GLuint*>();
+
+	this->isPlayer = false;
+	this->playerName = "";
+	this->globalPosition = {0.0f, 0.0f, 0.0f};
 }
 
 // Destrutor
@@ -222,4 +226,28 @@ void Group::createModel(int init, int count, GLuint* buffers){
 	if (texture2DWasEnabled) {
 		glEnable(GL_TEXTURE_2D);
 	}
+}
+
+bool Group::getIsPlayer() {
+	return isPlayer;
+}
+
+void Group::setIsPlayer(bool isPlayer) {
+	this->isPlayer = isPlayer;
+}
+
+string Group::getPlayerName() {
+	return playerName;
+}
+
+void Group::setPlayerName(string playerName) {
+	this->playerName = playerName;
+}
+
+Pos Group::getGlobalPosition() {
+	return globalPosition;
+}
+
+void Group::setGlobalPosition(float x, float y, float z) {
+	this->globalPosition = {x, y, z};
 }

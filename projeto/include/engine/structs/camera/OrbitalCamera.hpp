@@ -2,6 +2,7 @@
 #define ORBITALCAMERA_HPP
 
 #include "Camera.hpp"
+#include "engine/structs/Group.hpp"
 
 class OrbitalCamera : public Camera {
     private:
@@ -13,11 +14,18 @@ class OrbitalCamera : public Camera {
         // Velocidade do zoom
         float zoom_speed;
 
+        //target
+        Group* target;
+        int targetIndex;
+        int numPlayers;
+
+
+
         void calculate_spherical_from_camera(Camera* cam);
 
     public:
-        OrbitalCamera();
-        OrbitalCamera(Camera* cam);
+        OrbitalCamera(int playersCount);
+        OrbitalCamera(Camera* cam, int playersCount);
 
         void update_cartesian_coordinates();
 
@@ -35,6 +43,11 @@ class OrbitalCamera : public Camera {
         float get_beta();
         float get_radius();
         float get_zoom_speed();
+
+        int getTargetIndex();
+        void incrementTargetIndex();
+        void setTarget(Group* target);
+        Group* getTarget();
 };
 
 

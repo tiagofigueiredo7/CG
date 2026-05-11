@@ -27,6 +27,8 @@
 using namespace std;
 using namespace util;
 
+void updatePlayersWorldPositions(Group* g);
+
 int main(int argc, char** argv);
 
 void update_camera(int value);

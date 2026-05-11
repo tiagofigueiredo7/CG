@@ -9,7 +9,7 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		store->setCamera(new_cam);
 	}
 	else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
-		OrbitalCamera* oc = new OrbitalCamera(cam);
+		OrbitalCamera* oc = new OrbitalCamera(cam, store->getPlayers().size());
 		store->setCamera(oc);
 	}
 	else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
@@ -25,6 +25,13 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	}
 	else if (c == 'h' || c == 'H') {//Esconder trajetoria da curva
 		store->setRenderCurve(false);
+	}
+	else if (c == 't' || c == 'T') { // Mudar target da OrbitalCamera
+		if (store->getPlayers().size() == 0) return;
+		else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
+			oc->incrementTargetIndex();
+			oc->setTarget(store->getPlayerByIndex(oc->getTargetIndex()));
+		}
 	}
 	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		processKeys_Fpc_aux(c, xx, yy, fpc);

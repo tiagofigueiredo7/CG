@@ -24,6 +24,12 @@ using namespace std;
 #include "engine/structs/transformations/TimedFullRotate.hpp"
 #include "engine/structs/Material.hpp"
 
+typedef struct pos {
+    float x;
+    float y;
+    float z;
+} Pos;
+
 
 class Group {
     private:
@@ -35,6 +41,10 @@ class Group {
         vector<GLuint*> texturesIDs;
         
         GLuint* buffers;
+
+        bool isPlayer;
+        string playerName;
+        Pos globalPosition;
 
 
         void createModel(int init, int count, GLuint* buffers);
@@ -59,6 +69,13 @@ class Group {
         vector<Material*> getMaterials();
 
         void renderGroup(bool flag);
+
+        bool getIsPlayer();
+        void setIsPlayer(bool isPlayer);
+        string getPlayerName();
+        void setPlayerName(string playerName);
+        Pos getGlobalPosition();
+        void setGlobalPosition(float x, float y, float z);
 
 };
 
