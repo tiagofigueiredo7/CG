@@ -144,7 +144,7 @@
 					<texture file="2k_mars.jpg" />
 				</model>
 			</models>
-			<!-- Fobos -->
+			<!-- Phobos -->
 			<group>
 				<transform>
 						<translate time="4" align="true">
@@ -162,7 +162,7 @@
 				</transform>
 				<models>
 					<model file="sphere_1_50_50.3d">
-						<texture file="2k_ceres_fictional.jpg" />
+						<texture file="phobosbump.jpg" />
 					</model>
 				</models>
 			</group>
@@ -184,7 +184,7 @@
 				</transform>
 				<models>
 					<model file="sphere_1_50_50.3d">
-						<texture file="2k_ceres_fictional.jpg" />
+						<texture file="deimosbump.jpg" />
 					</model>
 				</models>
 			</group>
@@ -4893,7 +4893,7 @@
 				</transform>
 				<models>
 					<model file="sphere_1_50_50.3d">
-						<texture file="2k_moon.jpg" />
+						<texture file="2k_ceres_fictional.jpg" />
 					</model>
 				</models>
 			</group>
@@ -4915,7 +4915,7 @@
 				</transform>
 				<models>
 					<model file="sphere_1_50_50.3d">
-						<texture file="2k_moon.jpg" />
+						<texture file="2k_haumea_fictional.jpg" />
 					</model>
 				</models>
 			</group>
@@ -4995,7 +4995,7 @@
 					</transform>
 				<models>
 					<model file="sphere_1_50_50.3d">
-						<texture file="2k_moon.jpg" />
+						<texture file="2k_eris_fictional.jpg" />
 					</model>
 				</models>
 			</group>
@@ -5030,7 +5030,7 @@
 				</transform>
 				<models>
 					<model file="torus.3d"> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
-						<texture file="2k_saturn_ring_alpha.png" />
+						<texture file="uranusringcolour.jpg" />
 					</model>
 				</models>
 			</group>
@@ -5074,7 +5074,7 @@
 		<!-- COMETA -->
 		<group>
 			<transform>
-				<rotate time="-180" x="0" y="1" z="0" />
+				<rotate time="-360" x="0" y="1" z="0" />
 				<scale x="0.08" y="0.08" z="0.08" />
 				<translate time = "40" align="true">
 					<point x = "-315" y = "6.3" z = "0" />
@@ -5089,7 +5089,7 @@
 			</transform>
 			<models>
 				<model file="comet_10.3d"> <!-- generator patch comet_fase_4.patch 10 comet_10.3d -->
-					<texture file="2k_moon.jpg" />
+					<texture file="2k_makemake_fictional.jpg" />
 				</model>
 			</models>
 		</group>
