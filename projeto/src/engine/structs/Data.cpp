@@ -17,7 +17,7 @@ Data::Data() {
 
     players = vector<Group*>();
 
-    renderCurve = true;
+    renderExtraLines = true;
 }
 
 // Destrutor
@@ -580,9 +580,9 @@ void Data::executeLights() {
     }
 }
 
-void Data::setRenderCurve(bool flag) { renderCurve = flag; }
+void Data::setRenderExtraLines(bool flag) { renderExtraLines = flag; }
 
-bool Data::getRenderCurve() { return renderCurve; }
+bool Data::getRenderExtraLines() { return renderExtraLines; }
 
 vector<Group*> Data::getPlayers() { return players; }
 

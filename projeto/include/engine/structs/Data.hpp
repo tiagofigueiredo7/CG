@@ -42,8 +42,8 @@ class Data {
         int width;
         int height;    
         
-        // Flag para renderizar ou não a trajetória da curva
-        bool renderCurve;
+        // Flag para renderizar ou não a trajetória da curva e eixos
+        bool renderExtraLines;
 
         // Nodo raiz da hierarquia de grupos
         Group* group;
@@ -98,8 +98,8 @@ class Data {
         vector<Light*> getLights();
         void addLight(Light* light);
 
-        void setRenderCurve(bool flag);
-        bool getRenderCurve();
+        void setRenderExtraLines(bool flag);
+        bool getRenderExtraLines();
 
         vector<Group*> getPlayers();
         void addPlayer(Group* player);

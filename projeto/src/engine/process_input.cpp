@@ -36,11 +36,11 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		glutSetWindowTitle(title);
 		store->setCamera(tpc);
 	}
-	else if (c == 'r' || c == 'R') {//Render trajetoria da curva
-		store->setRenderCurve(true);
+	else if (c == 'r' || c == 'R') {//Render trajetoria da curva + eixos
+		store->setRenderExtraLines(true);
 	}
-	else if (c == 'h' || c == 'H') {//Esconder trajetoria da curva
-		store->setRenderCurve(false);
+	else if (c == 'h' || c == 'H') {//Esconder trajetoria da curva + eixos
+		store->setRenderExtraLines(false);
 	}
 	else if (c == 't' || c == 'T') { // Mudar target da OrbitalCamera
 		if (store->getPlayers().size() == 0) return;

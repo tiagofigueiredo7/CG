@@ -119,7 +119,7 @@ void renderScene(void) {
 	GLboolean lightingWasEnabled = glIsEnabled(GL_LIGHTING);
 	if (lightingWasEnabled) glDisable(GL_LIGHTING);
 
-	if (store->getRenderCurve()) {
+	if (store->getRenderExtraLines()) {
 		glBegin(GL_LINES);
 			// X axis in red
 			glColor3f(1.0f, 0.0f, 0.0f);
@@ -141,7 +141,7 @@ void renderScene(void) {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //Nas fases anteriores estava  GL_LINE
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
 	
-    if (main_group != nullptr) main_group->renderGroup(store->getRenderCurve());
+    if (main_group != nullptr) main_group->renderGroup(store->getRenderExtraLines());
 
 	// End of frame
 	glutSwapBuffers();
