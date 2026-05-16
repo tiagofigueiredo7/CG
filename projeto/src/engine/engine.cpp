@@ -99,6 +99,10 @@ void renderScene(void) {
 		if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 			oc->update_cartesian_coordinates();
 		}
+		else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
+			tpc->update_camera_Pos();
+			tpc->update_camera_LookAt();
+		}
 
 	}
 
@@ -173,6 +177,11 @@ void update_camera(int value) {
 	}
 	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 		oc->update_cartesian_coordinates();
+		glutPostRedisplay();
+	}
+	else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
+		tpc->update_camera_Pos();
+		tpc->update_camera_LookAt();
 		glutPostRedisplay();
 	}
 

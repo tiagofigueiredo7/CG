@@ -10,6 +10,10 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	}
 	else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
 		OrbitalCamera* oc = new OrbitalCamera(cam, store->getPlayers().size());
+		if (!store->getPlayers().empty()) {
+			oc->incrementTargetIndex();
+			oc->setTarget(store->getPlayerByIndex(oc->getTargetIndex()));
+		}
 		store->setCamera(oc);
 	}
 	else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
@@ -17,7 +21,11 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		store->setCamera(fpc);
 	}
 	else if (c == '3' && (dynamic_cast<ThirdPersonCamera*>(cam) == nullptr)) {
-		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam);
+		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam, store->getPlayers().size());
+		if (!store->getPlayers().empty()) {
+			tpc->incrementTargetIndex();
+			tpc->setTarget(store->getPlayerByIndex(tpc->getTargetIndex()));
+		}
 		store->setCamera(tpc);
 	}
 	else if (c == 'r' || c == 'R') {//Render trajetoria da curva
@@ -32,6 +40,10 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 			oc->incrementTargetIndex();
 			oc->setTarget(store->getPlayerByIndex(oc->getTargetIndex()));
 		}
+		else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
+			tpc->incrementTargetIndex();
+			tpc->setTarget(store->getPlayerByIndex(tpc->getTargetIndex()));
+		}
 	}
 	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		processKeys_Fpc_aux(c, xx, yy, fpc);
@@ -39,6 +51,23 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 		processKeys_Orb_aux(c, xx, yy, oc);
 	}
+	else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
+		processKeys_Tpc_aux(c,xx,yy, tpc);
+	}
+}
+
+void processKeys_Tpc_aux(unsigned char c, int xx, int yy, ThirdPersonCamera* tpc) {
+
+	if (c == 'Z' || c == 'z') tpc->setDistance(tpc->getDistance() - 0.5f);
+	else if (c == 'X' || c == 'x') tpc->setDistance(tpc->getDistance() + 0.5f);
+	else if (c == 'C' || c == 'c') tpc->setHeight(tpc->getHeight() - 0.5f);
+	else if (c == 'V' || c == 'v') tpc->setHeight(tpc->getHeight() + 0.5f);
+	else if (c == 'B' || c == 'b') {// Reset da distância, altura e lookHeight
+		tpc->setDistance(6.0f);
+		tpc->setHeight(2.5f);
+		tpc->setLookHeight(1.0f);
+	}
+
 }
 
 void processKeys_Orb_aux(unsigned char c, int xx, int yy, OrbitalCamera* oc) {
