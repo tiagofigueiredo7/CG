@@ -200,7 +200,7 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(store->getWidth(), store->getHeight());
-	glutCreateWindow("CG-TP");
+	glutCreateWindow("GG-TP: Camera Normal");
 		
     // Required callback registry 
 	glutDisplayFunc(renderScene);
