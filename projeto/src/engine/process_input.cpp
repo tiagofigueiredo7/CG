@@ -72,15 +72,49 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 
 void processKeys_Tpc_aux(unsigned char c, int xx, int yy, ThirdPersonCamera* tpc) {
 
-	if (c == 'Z' || c == 'z') tpc->setDistance(tpc->getDistance() - 0.5f);
+	if (c == 'Z' || c == 'z') {
+		if (tpc->getDistance() > 1.0f) {
+			tpc->setDistance(tpc->getDistance() - 0.5f);
+		} else {
+			tpc->setDistance(0.5f);
+		}
+	}
 	else if (c == 'X' || c == 'x') tpc->setDistance(tpc->getDistance() + 0.5f);
-	else if (c == 'C' || c == 'c') tpc->setHeight(tpc->getHeight() - 0.5f);
+	
+	else if (c == 'C' || c == 'c') {
+		if (tpc->getHeight() > 1.0f) {
+			tpc->setHeight(tpc->getHeight() - 0.5f);
+		} else {
+			tpc->setHeight(0.5f);
+		}
+	}
 	else if (c == 'V' || c == 'v') tpc->setHeight(tpc->getHeight() + 0.5f);
-	else if (c == 'B' || c == 'b') {// Reset da distância, altura e lookHeight
+	
+	else if (c == 'B' || c == 'b') {
+		if (tpc->getLookHeight() > -1.5f) {
+			tpc->setLookHeight(tpc->getLookHeight() - 0.5f);
+		} else {
+			tpc->setLookHeight(-2.0f);
+		}
+	}
+	else if (c == 'N' || c == 'n') {
+		if (tpc->getLookHeight() < 9.5f) {
+			tpc->setLookHeight(tpc->getLookHeight() + 0.5f);
+		} else {
+			tpc->setLookHeight(10.0f);
+		}
+	}
+
+	else if (c == 'M' || c == 'm') {// Reset da distância, altura e lookHeight
 		tpc->setDistance(6.0f);
 		tpc->setHeight(2.5f);
 		tpc->setLookHeight(1.0f);
 	}
+
+
+	tpc->update_camera_Pos();
+	tpc->update_camera_LookAt();
+	glutPostRedisplay();
 
 }
 
