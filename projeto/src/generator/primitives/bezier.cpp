@@ -34,6 +34,74 @@ Point3D bezier(float u, float v, vector<float>* control_points){
 
 }
 
+Point3D bezierDerivadaU(float u, float v, vector<float>* control_points){
+
+    float B[3];
+    float C[4];
+
+    B[0] = (1 - u) * (1 - u);
+    B[1] = 2 * u * (1 - u);
+    B[2] = u * u;
+
+    C[0] = (1 - v) * (1 - v) * (1 - v);
+    C[1] = 3 * v * (1 - v) * (1 - v);
+    C[2] = 3 * v * v * (1 - v);
+    C[3] = v * v * v;
+
+    Point3D result = { .x = 0, .y = 0, .z = 0};
+
+    for (int i=0; i<3; i++){
+        for (int j=0; j<4; j++){
+
+            float peso = 3.0f * B[i] * C[j];
+
+            int pos = (i*4 + j)*3;
+            int pos_next = ((i + 1)*4 + j)*3;
+
+            result.x += ((*control_points)[pos_next] - (*control_points)[pos]) * peso;
+            result.y += ((*control_points)[pos_next + 1] - (*control_points)[pos + 1]) * peso;
+            result.z += ((*control_points)[pos_next + 2] - (*control_points)[pos + 2]) * peso;
+        }
+    }
+
+    return result;
+
+}
+
+Point3D bezierDerivadaV(float u, float v, vector<float>* control_points){
+
+    float B[4];
+    float C[3];
+
+    B[0] = (1 - u) * (1 - u) * (1 - u);
+    B[1] = 3 * u * (1 - u) * (1 - u);
+    B[2] = 3 * u * u * (1 - u);
+    B[3] = u * u * u;
+
+    C[0] = (1 - v) * (1 - v);
+    C[1] = 2 * v * (1 - v);
+    C[2] = v * v;
+
+    Point3D result = { .x = 0, .y = 0, .z = 0};
+
+    for (int i=0; i<4; i++){
+        for (int j=0; j<3; j++){
+
+            float peso = 3.0f * B[i] * C[j];
+
+            int pos = (i*4 + j)*3;
+            int pos_next = (i*4 + (j + 1))*3;
+
+            result.x += ((*control_points)[pos_next] - (*control_points)[pos]) * peso;
+            result.y += ((*control_points)[pos_next + 1] - (*control_points)[pos + 1]) * peso;
+            result.z += ((*control_points)[pos_next + 2] - (*control_points)[pos + 2]) * peso;
+        }
+    }
+
+    return result;
+
+}
+
 vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* control_points){
     vector<float> result;
     for (float index : *indices){
@@ -77,26 +145,29 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
         // Matriz que vai conter os pontos usados para fazer os triangulos
         // Cada P(i,i) = u_v[i,j] + pontos de controlo
         Point3D superficie[tesselation+1][tesselation+1];
+        Point3D derivadaU[tesselation+1][tesselation+1];
+        Point3D derivadaV[tesselation+1][tesselation+1];
 
         for (int i = 0; i < tesselation + 1; i++){
             for (int j = 0; j < tesselation + 1; j++){
                 superficie[i][j] = bezier(u[i][j],v[i][j],&valores);
+                derivadaU[i][j] = bezierDerivadaU(u[i][j],v[i][j],&valores);
+                derivadaV[i][j] = bezierDerivadaV(u[i][j],v[i][j],&valores);
             }
         }
 
         // É usado tesselation sem o +1, visto que ele vai ler 4 pontos/1 quadrado/2 triangulos de uma vez
         for (int i = 0; i < tesselation; i++){
             for (int j = 0; j < tesselation; j++){
-                Point3D A = superficie[i][j];
-                Point3D B = superficie[i][j+1];
-                Point3D C = superficie[i+1][j];
-                Point3D D = superficie[i+1][j+1];
+                Point3D A = superficie[i][j]; Point3D A_devU = derivadaU[i][j]; Point3D A_devV = derivadaV[i][j];
+                Point3D B = superficie[i][j+1]; Point3D B_devU = derivadaU[i][j+1]; Point3D B_devV = derivadaV[i][j+1];
+                Point3D C = superficie[i+1][j]; Point3D C_devU = derivadaU[i+1][j]; Point3D C_devV = derivadaV[i+1][j];
+                Point3D D = superficie[i+1][j+1]; Point3D D_devU = derivadaU[i+1][j+1]; Point3D D_devV = derivadaV[i+1][j+1];
 
-                // Primeiro triângulo ABC
-                float AB[3] = {B.x - A.x, B.y - A.y, B.z - A.z};//Talvez seja melhor calcular as normais sem aproximações??
-                float AC[3] = {C.x - A.x, C.y - A.y, C.z - A.z};
+                float A_u[3] = {A_devU.x, A_devU.y, A_devU.z};
+                float A_v[3] = {A_devV.x, A_devV.y, A_devV.z};
                 float normal1[3];
-                cross(AB, AC, normal1);
+                cross(A_u, A_v, normal1);
                 normalize(normal1);
 
                 // Se normalize deu NaN, usar normal default
@@ -106,15 +177,10 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                     normal1[2] = 0.0f;
                 }
 
-                buffers.addTriangle(A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
-                buffers.addNormals(normal1[0], normal1[1], normal1[2], normal1[0], normal1[1], normal1[2], normal1[0], normal1[1], normal1[2]);
-                buffers.addTextureCoordinates(u[i][j], v[i][j], u[i][j+1], v[i][j+1], u[i+1][j], v[i+1][j]);
-
-                // Segundo triângulo CBD
-                float CB[3] = {B.x - C.x, B.y - C.y, B.z - C.z};
-                float CD[3] = {D.x - C.x, D.y - C.y, D.z - C.z};
+                float B_u[3] = {B_devU.x, B_devU.y, B_devU.z};
+                float B_v[3] = {B_devV.x, B_devV.y, B_devV.z};
                 float normal2[3];
-                cross(CB, CD, normal2);
+                cross(B_u, B_v, normal2);
                 normalize(normal2);
 
                 // Se normalize deu NaN, usar normal default
@@ -124,8 +190,39 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                     normal2[2] = 0.0f;
                 }
 
+                float C_u[3] = {C_devU.x, C_devU.y, C_devU.z};
+                float C_v[3] = {C_devV.x, C_devV.y, C_devV.z};
+                float normal3[3];
+                cross(C_u, C_v, normal3);
+                normalize(normal3);
+
+                // Se normalize deu NaN, usar normal default
+                if (isnan(normal3[0]) || isnan(normal3[1]) || isnan(normal3[2])) {
+                    normal3[0] = 0.0f;
+                    normal3[1] = 1.0f;
+                    normal3[2] = 0.0f;
+                }
+
+                float D_u[3] = {D_devU.x, D_devU.y, D_devU.z};
+                float D_v[3] = {D_devV.x, D_devV.y, D_devV.z};
+                float normal4[3];
+                cross(D_u, D_v, normal4);
+                normalize(normal4);
+
+                // Se normalize deu NaN, usar normal default
+                if (isnan(normal4[0]) || isnan(normal4[1]) || isnan(normal4[2])) {
+                    normal4[0] = 0.0f;
+                    normal4[1] = 1.0f;
+                    normal4[2] = 0.0f;
+                }
+                // Primeiro triângulo ABC
+                buffers.addTriangle(A.x, A.y, A.z, B.x, B.y, B.z, C.x, C.y, C.z);
+                buffers.addNormals(normal1[0], normal1[1], normal1[2], normal2[0], normal2[1], normal2[2], normal3[0], normal3[1], normal3[2]);
+                buffers.addTextureCoordinates(u[i][j], v[i][j], u[i][j+1], v[i][j+1], u[i+1][j], v[i+1][j]);
+
+                // Segundo triângulo CBD
                 buffers.addTriangle(C.x, C.y, C.z, B.x, B.y, B.z, D.x, D.y, D.z);
-                buffers.addNormals(normal2[0], normal2[1], normal2[2], normal2[0], normal2[1], normal2[2], normal2[0], normal2[1], normal2[2]);
+                buffers.addNormals(normal3[0], normal3[1], normal3[2], normal2[0], normal2[1], normal2[2], normal4[0], normal4[1], normal4[2]);
                 buffers.addTextureCoordinates(u[i+1][j], v[i+1][j], u[i][j+1], v[i][j+1], u[i+1][j+1], v[i+1][j+1]);
 
             }

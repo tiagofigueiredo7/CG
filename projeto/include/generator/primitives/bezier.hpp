@@ -15,6 +15,10 @@ using namespace util;
 
 Point3D bezier(float u, float v, vector<float>* control_points);
 
+Point3D bezierDerivadaV(float u, float v, vector<float>* control_points);
+
+Point3D bezierDerivadaU(float u, float v, vector<float>* control_points);
+
 vector<float> getValores_in_Indices(vector<float>* indices, vector<float>* control_points);
 
 PrimitiveBuffers generateBezierModel(char* file_path, int tesselation);

@@ -87,6 +87,8 @@ void BezierPatch::parse_Patch_File(char* file_path) {
     }
     this->setControlPointsCount(n_control_points);
 
+    int count_control_points = 0;
+
     // Ler os valores dos control points
     for (int i = 0; i < n_control_points; i++) {
         getline(file, line);
@@ -113,6 +115,14 @@ void BezierPatch::parse_Patch_File(char* file_path) {
             file.close();
             return;
         }
+
+        count_control_points++;
+    }
+
+    if (count_control_points != n_control_points) {
+        cerr << "[ERRO] Número de control points lidos (" << count_control_points << ") não corresponde ao número declarado (" << n_control_points << ")." << endl;
+        file.close();
+        return;
     }
 
     file.close();
