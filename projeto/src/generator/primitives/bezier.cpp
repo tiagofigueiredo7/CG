@@ -167,7 +167,7 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 float A_u[3] = {A_devU.x, A_devU.y, A_devU.z};
                 float A_v[3] = {A_devV.x, A_devV.y, A_devV.z};
                 float normal1[3];
-                cross(A_u, A_v, normal1);
+                cross(A_v, A_u, normal1);
                 normalize(normal1);
 
                 // Se normalize deu NaN, usar normal default
@@ -180,7 +180,7 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 float B_u[3] = {B_devU.x, B_devU.y, B_devU.z};
                 float B_v[3] = {B_devV.x, B_devV.y, B_devV.z};
                 float normal2[3];
-                cross(B_u, B_v, normal2);
+                cross(B_v, B_u, normal2);
                 normalize(normal2);
 
                 // Se normalize deu NaN, usar normal default
@@ -193,7 +193,7 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 float C_u[3] = {C_devU.x, C_devU.y, C_devU.z};
                 float C_v[3] = {C_devV.x, C_devV.y, C_devV.z};
                 float normal3[3];
-                cross(C_u, C_v, normal3);
+                cross(C_v, C_u, normal3);
                 normalize(normal3);
 
                 // Se normalize deu NaN, usar normal default
@@ -206,7 +206,7 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 float D_u[3] = {D_devU.x, D_devU.y, D_devU.z};
                 float D_v[3] = {D_devV.x, D_devV.y, D_devV.z};
                 float normal4[3];
-                cross(D_u, D_v, normal4);
+                cross(D_v, D_u, normal4);
                 normalize(normal4);
 
                 // Se normalize deu NaN, usar normal default
