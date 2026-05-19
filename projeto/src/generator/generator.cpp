@@ -37,9 +37,6 @@ int main(int argc, char** argv) {
     else if (figure == "mobiusStrip") {
         buffers = generateMobiusStrip(stof(argv[2]), stof(argv[3]), stoi(argv[4]));
     }
-    else if (figure == "noiseSphere") {
-        buffers = generateNoiseSphere(stof(argv[2]), stoi(argv[3]), stoi(argv[4]), stof(argv[5]));
-    }
     else if (figure == "kleinBottle") {
         buffers = generateKleinBottle(stoi(argv[2]), stoi(argv[3]));
     }

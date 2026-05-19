@@ -93,7 +93,7 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 Point3D D = superficie[i+1][j+1];
 
                 // Primeiro triângulo ABC
-                float AB[3] = {B.x - A.x, B.y - A.y, B.z - A.z};
+                float AB[3] = {B.x - A.x, B.y - A.y, B.z - A.z};//Talvez seja melhor calcular as normais sem aproximações??
                 float AC[3] = {C.x - A.x, C.y - A.y, C.z - A.z};
                 float normal1[3];
                 cross(AB, AC, normal1);
