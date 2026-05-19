@@ -60,18 +60,14 @@ PrimitiveBuffers generateCone(float radius, float height, int slices, int stacks
 			float y4 = b2;
 			float z4 = r2 * sin(a2);
 
-			// Normais
-			float *n1 = (float*)malloc(3*sizeof(float));
-			n1[0] = x1; n1[1] = radius/height; n1[2] = z1;
+			// Normais para cada vértice
+			float n1[3] = {x1, radius / height, z1};
+			float n2[3] = {x2, radius / height, z2};
+			float n3[3] = {x3, radius / height, z3};
+			float n4[3] = {x4, radius / height, z4};
 			normalize(n1);
-			float *n2 = (float*)malloc(3*sizeof(float));
-			n2[0] = x3; n2[1] = radius/height; n2[2] = z3;
 			normalize(n2);
-			float *n3 = (float*)malloc(3*sizeof(float));
-			n3[0] = x4; n3[1] = radius/height; n3[2] = z4;
 			normalize(n3);
-			float *n4 = (float*)malloc(3*sizeof(float));
-			n4[0] = x2; n4[1] = radius/height; n4[2] = z2;
 			normalize(n4);
 
 			// Coordenadas de textura
@@ -83,14 +79,12 @@ PrimitiveBuffers generateCone(float radius, float height, int slices, int stacks
 
 			buffers.addTriangle(x1, y1, z1, x3, y3, z3, x4, y4, z4);
 			buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
-			buffers.addNormals(n1[0], n1[1], n1[2], n2[0], n2[1], n2[2], n3[0], n3[1], n3[2]);
+			buffers.addNormals(n1[0], n1[1], n1[2], n3[0], n3[1], n3[2], n4[0], n4[1], n4[2]);
 
 
 			buffers.addTriangle(x1, y1, z1, x4, y4, z4, x2, y2, z2);
 			buffers.addTextureCoordinates(u1, v1, u2, v2, u2, v1);
-			buffers.addNormals(n1[0], n1[1], n1[2], n3[0], n3[1], n3[2], n4[0], n4[1], n4[2]);
-
-			free(n1); free(n2); free(n3); free(n4);
+			buffers.addNormals(n1[0], n1[1], n1[2], n4[0], n4[1], n4[2], n2[0], n2[1], n2[2]);
 		}
 	}
 	return buffers;
