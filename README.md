@@ -21,8 +21,11 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - [Demo Fase 3](./tests/others/p3/demo_fase_3.xml)
 - [Demo Fase 4](./tests/others/p4/demo_fase_4.xml)
 
-#### Patchs
-- Os ficheiros `.patch` podem ser encontrados na diretoria [projeto/patchs](./projeto/patchs/)
+#### Outros ficheiros
+- **Ficheiros de cena:** [`projeto/tests/`](./projeto/tests/) ou em subdiretórios de [`projeto/tests/`](./projeto/tests/).
+- **Ficheiros de modelos:** [`projeto/models/`](./projeto/models/).
+- **Ficheiros `.patch`:** [`projeto/patchs/`](./projeto/patchs/).
+- **Ficheiros de texturas:** [`projeto/texturas/`](./projeto/texturas/).
 
 > [!WARNING]
 > **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
@@ -62,10 +65,5 @@ Este comando é genérico já que é necessário especificar o ficheiro de cena 
 ./engine ../../tests/others/p1/sphere.xml
 ```
 > [!NOTE]
-> - **Ficheiros de cena:** `projeto/tests/` ou em subdiretórios de `projeto/tests/`.
-> - **Ficheiros de modelos:** `projeto/models/`.
-> - **Ficheiros `.patch`:** `projeto/patchs/`.
-> - **Ficheiros de texturas:** `projeto/texturas/`.
-
 > Os ficheiros gerados pelo programa `generator` são guardados diretamente na diretoria `projeto/models/`.
 > O `engine` lê os ficheiros `.patch` da diretoria `projeto/patchs/`, as texturas da diretoria `projeto/texturas/` e os ficheiros `.3d` da diretoria `projeto/models/`.
