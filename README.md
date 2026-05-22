@@ -67,6 +67,6 @@ Este comando é genérico já que é necessário especificar o ficheiro de cena 
 > - **Ficheiros `.patch`:** `projeto/patchs/`.
 > - **Ficheiros de texturas:** `projeto/texturas/`.
 
-> [!NOTE 2]
+> [!NOTE2]
 > Os ficheiros gerados pelo programa `generator` são guardados diretamente na diretoria `projeto/models/`.
 > O `engine` lê os ficheiros `.patch` da diretoria `projeto/patchs/`, as texturas da diretoria `projeto/texturas/` e os ficheiros `.3d` da diretoria `projeto/models/`.
