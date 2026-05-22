@@ -37,9 +37,11 @@ class Group {
         vector<Transformation*> transformations;
         vector<Group*> subgroups;
 
+        // Dados dos modelos
         vector<int> vertices_count;
         vector<Material*> materials;
         vector<GLuint*> texturesIDs;
+        vector<float> raios_Esferas; // vetor para armazenar os raios das esferas circunscritas aos modelos
         
         GLuint* buffers;
 
@@ -61,11 +63,13 @@ class Group {
         void addSubGroup(Group* subgroup);
         void addVerticeCount(int count);
         void addTextureID(GLuint* id);
+        void addRaioEsfera(float raio);
 
         vector<Transformation*> getTransformations();
         vector<Group*> getSubGroups();
         vector<int> getVerticesCount();
         vector<GLuint*> getTexturesIDs();
+        vector<float> getRaiosEsferas();
         GLuint* getBuffers();
         vector<Material*> getMaterials();
 

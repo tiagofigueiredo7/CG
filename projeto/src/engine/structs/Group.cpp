@@ -11,6 +11,7 @@ Group::Group() {
     this->vertices_count = vector<int>();
 	this->materials = vector<Material*>();
 	this->texturesIDs = vector<GLuint*>();
+	this->raios_Esferas = vector<float>();
 
 	this->isPlayer = false;
 	this->playerName = "";
@@ -113,10 +114,16 @@ void Group::renderGroup(Data* data){
 		}
 	}
 
+	Frustum* f = data->getFrustum();
+
 	int acumulador = 0;
 	GLuint* buffers = this->getBuffers();
 	if (buffers[0] && buffers[1] && buffers[2]) {
-		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size(); ++i) {
+		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size() && i < raios_Esferas.size(); ++i) {
+			if (!f->sphereInFrustum(globalPosition.x,globalPosition.y,globalPosition.z, raios_Esferas[i])) {
+				acumulador += vertices_count[i];
+				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
+			}
 			materials[i]->aplicarMaterial();
 			if (texturesIDs[i] != nullptr && *texturesIDs[i] != 0) {
 				createModel_wTexture(acumulador, vertices_count[i], buffers, texturesIDs[i]);
@@ -250,4 +257,12 @@ Pos Group::getGlobalPosition() {
 
 void Group::setGlobalPosition(float x, float y, float z) {
 	this->globalPosition = {x, y, z};
+}
+
+vector<float> Group::getRaiosEsferas() {
+	return raios_Esferas;
+}
+
+void Group::addRaioEsfera(float raio) {
+	this->raios_Esferas.push_back(raio);
 }

@@ -78,6 +78,8 @@ PrimitiveBuffers generateTorus(float majorRadius, float minorRadius, int slices,
 
         }
     }
+
+    buffers.setRaioEsfera(majorRadius + minorRadius); // raio da esfera circunscrita ao toro é a soma dos raios maior e menor
     
     return buffers;
 }

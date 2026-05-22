@@ -114,5 +114,7 @@ PrimitiveBuffers generateBox(float length, int divisions) {
         }
     }
 
+    buffers.setRaioEsfera(length * sqrt(3) / 2.0f); // raio da esfera circunscrita à caixa
+
     return buffers;
 }

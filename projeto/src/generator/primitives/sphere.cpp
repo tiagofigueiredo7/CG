@@ -113,5 +113,7 @@ PrimitiveBuffers generateSphere(float radius, int slices, int stacks){
 		buffers.addTextureCoordinates(u, v_bottom, u1, v_bottom, u, v_surface);
 	}
 
+	buffers.setRaioEsfera(radius); // raio da esfera é igual ao raio do círculo base
+
 	return buffers;
 }

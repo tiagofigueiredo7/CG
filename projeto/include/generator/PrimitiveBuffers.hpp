@@ -14,6 +14,8 @@ class PrimitiveBuffers {
         vector<float> vertices;
         vector<float> normais;
         vector<float> textures;
+
+        float raio_esfera;
     public:
         PrimitiveBuffers();
 
@@ -26,6 +28,9 @@ class PrimitiveBuffers {
         void addTextureCoordinates(float u1, float v1, float u2, float v2, float u3, float v3);
 
         void storeBuffers(string file); 
+
+        void setRaioEsfera(float raio);
+        float getRaioEsfera();
 };
 
 

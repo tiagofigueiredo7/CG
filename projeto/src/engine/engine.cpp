@@ -87,14 +87,14 @@ void renderScene(void) {
 	Group* main_group = store->getGroup();
 	Camera* cam = store->getCamera();
 
-	if (store->getPlayers().size() > 0) {
+	// Atualizar posições world-space dos players sem a transformação da câmara.
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	if (main_group != nullptr) updatePlayersWorldPositions(main_group);
+	glPopMatrix();
 
-		// Atualizar posições world-space dos players sem a transformação da câmara.
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		if (main_group != nullptr) updatePlayersWorldPositions(main_group);
-		glPopMatrix();
+	if (store->getPlayers().size() > 0) {
 
 		if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 			oc->update_cartesian_coordinates();

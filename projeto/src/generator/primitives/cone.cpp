@@ -87,5 +87,8 @@ PrimitiveBuffers generateCone(float radius, float height, int slices, int stacks
 			buffers.addNormals(n1[0], n1[1], n1[2], n4[0], n4[1], n4[2], n2[0], n2[1], n2[2]);
 		}
 	}
+
+	buffers.setRaioEsfera(sqrt(radius*radius + (height/2)*(height/2))); // raio da esfera circunscrita ao cone
+
 	return buffers;
 }

@@ -29,6 +29,9 @@ PrimitiveBuffers generatePlane(float length, int divisions) {
             buffers.addTextureCoordinates(u1, v1, u1, v2, u2, v2);
 
         } 
-    } 
+    }
+    
+    buffers.setRaioEsfera(length * sqrt(2) / 2.0f); // raio da esfera circunscrita ao plano
+
     return buffers;
 }

@@ -63,6 +63,8 @@ PrimitiveBuffers generateCylinder(float radius, float height, int slices){
         buffers.addTextureCoordinates(u2, v_bottom, u2, v_top, u1, v_bottom);
     
     }
+
+    buffers.setRaioEsfera(sqrt(radius*radius + (height/2)*(height/2))); // raio da esfera circunscrita ao cilindro
     
     return buffers;
 }

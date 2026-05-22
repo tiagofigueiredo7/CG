@@ -334,6 +334,29 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         }
 
         string line;
+
+        getline(file,line);
+        if (line.empty()) {
+            cerr << "[ERRO] Ficheiro vazio: " << model_file << endl;
+            file.close();
+            continue;
+        }
+
+        float raio_esfera;
+        try {
+            raio_esfera = stof(line);
+        } catch (exception) {
+            cerr << "[ERRO] Raio da esfera inválido no ficheiro: " << model_file << endl;
+            continue;
+        }
+
+        if (raio_esfera <= 0) {
+            cerr << "[ERRO] Raio da esfera deve ser positivo no ficheiro: " << model_file << endl;
+            continue;
+        }
+
+        g.addRaioEsfera(raio_esfera); 
+
         getline(file, line);
         int num = 0;
         try {
