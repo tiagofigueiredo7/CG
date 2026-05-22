@@ -330,6 +330,7 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         ifstream file(model_path);
         if (!file.is_open()){
             cerr << "[ERRO] Erro ao abrir ficheiro: " << model_file << endl;
+            cerr << "\n[NOTA] Não é necessário especificar o caminho completo para o ficheiro, basta especificar o nome do ficheiro (com a extensão). Certifique-se de que o ficheiro existe na diretoria 'projeto/models/' e de que o nome do ficheiro está correto." << endl;
             continue;
         }
 

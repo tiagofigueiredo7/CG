@@ -37,6 +37,7 @@ void BezierPatch::parse_Patch_File(char* file_path) {
     ifstream file(path);
     if (!file.is_open()){
         cerr << "[ERRO] Erro ao abrir ficheiro: " << file_path << endl;
+        cerr << "\n[NOTA] Não é necessário especificar o caminho completo para o ficheiro, basta especificar o nome do ficheiro (com a extensão). Certifique-se de que o ficheiro existe na diretoria 'projeto/patchs/' e de que o nome do ficheiro está correto." << endl;
         return;
     }
 
