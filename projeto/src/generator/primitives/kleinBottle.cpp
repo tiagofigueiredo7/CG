@@ -11,6 +11,8 @@ PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
     float u_text_grid[slices+1][stacks+1];
     float v_text_grid[slices+1][stacks+1];
 
+    float maxDist2 = 0.0f; // Para calcular o raio da esfera circunscrita
+
     for (int i=0; i<=slices; i++) {
         u = i*(2*M_PI/slices);
 
@@ -28,7 +30,12 @@ PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
                 grid[i][j].y = 8*sin(u) + (2*(1-cos(u)/2))*sin(u)*cos(v);
                 grid[i][j].z = (2*(1-cos(u)/2))*sin(v);
 
-                
+                // Calcular a distância ao quadrado do vértice à origem
+                float dist2 = grid[i][j].x*grid[i][j].x + grid[i][j].y*grid[i][j].y + grid[i][j].z*grid[i][j].z;
+                if (dist2 > maxDist2) {
+                    maxDist2 = dist2;
+                }
+
                 // Nota: 2*(1 - cos(u)/2) = 2 - cos(u)
                 du_x = -3*sin(u)*(1+sin(u)) + 3*cos(u)*cos(u)
                        + sin(u)*cos(u)*cos(v) - (2 - cos(u))*sin(u)*cos(v);
@@ -43,6 +50,12 @@ PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
                 grid[i][j].x = 3*cos(u)*(1+sin(u)) + (2*(1-cos(u)/2))*cos(v+M_PI);
                 grid[i][j].y = 8*sin(u);
                 grid[i][j].z = (2*(1-cos(u)/2))*sin(v);
+
+                // Calcular a distância ao quadrado do vértice à origem
+                float dist2 = grid[i][j].x*grid[i][j].x + grid[i][j].y*grid[i][j].y + grid[i][j].z*grid[i][j].z;
+                if (dist2 > maxDist2) {
+                    maxDist2 = dist2;
+                }
 
 
                 du_x = -3*sin(u)*(1+sin(u)) + 3*cos(u)*cos(u) - sin(u)*cos(v);
@@ -112,6 +125,8 @@ PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
             buffers.addTextureCoordinates(uC, vC, uB, vB, uD, vD);
         }
     }
+
+    buffers.setRaioEsfera(sqrt(maxDist2)); // O raio da esfera circunscrita é a raiz da distância máxima ao quadrado encontrada
 
     
 

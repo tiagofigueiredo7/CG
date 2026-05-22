@@ -137,6 +137,8 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
         }
     }
 
+    float maxDist2 = 0.0f; 
+
     for (int p = 0; p< n_patches; p++){
 
         // Pontos de controlo usados para definir a superficie
@@ -153,6 +155,13 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 superficie[i][j] = bezier(u[i][j],v[i][j],&valores);
                 derivadaU[i][j] = bezierDerivadaU(u[i][j],v[i][j],&valores);
                 derivadaV[i][j] = bezierDerivadaV(u[i][j],v[i][j],&valores);
+
+
+                // Calcular a distância ao quadrado do vértice à origem
+                float dist2 = superficie[i][j].x*superficie[i][j].x + superficie[i][j].y*superficie[i][j].y + superficie[i][j].z*superficie[i][j].z;
+                if (dist2 > maxDist2) {
+                    maxDist2 = dist2;
+                }
             }
         }
 
@@ -229,6 +238,8 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
         }
 
     }
+
+    buffers.setRaioEsfera(sqrt(maxDist2)); // O raio da esfera circunscrita é a raiz da distância máxima ao quadrado encontrada
 
     return buffers;
 

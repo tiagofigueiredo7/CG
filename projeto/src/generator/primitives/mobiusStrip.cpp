@@ -96,5 +96,7 @@ PrimitiveBuffers generateMobiusStrip(float radius, float width, int slices){
         buffers.addNormals(Cnx, Cny, Cnz, Bnx, Bny, Bnz, Dnx, Dny, Dnz);
     }
 
+    buffers.setRaioEsfera(radius + width); // A esfera circunscrita tem raio igual à distância máxima do centro, que é radius + width
+
     return buffers;
 }
