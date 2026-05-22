@@ -62,4 +62,11 @@ Este comando é genérico já que é necessário especificar o ficheiro de cena 
 ./engine ../../tests/others/p1/sphere.xml
 ```
 > [!NOTE]
-> Os ficheiros de cena devem estar localizados na diretoria `tests/` ou em subdiretorias da mesma, os ficheiros de modelos devem estar localizados na diretoria `projeto/models/` e os ficheiros `.patch` devem estar localizados na diretoria `projeto/patchs/`.
+> - **Ficheiros de cena:** `projeto/tests/` ou em subdiretórios de `projeto/tests/`.
+> - **Ficheiros de modelos:** `projeto/models/`.
+> - **Ficheiros `.patch`:** `projeto/patchs/`.
+> - **Ficheiros de texturas:** `projeto/texturas/`.
+
+> [!NOTE 2]
+> Os ficheiros gerados pelo programa `generator` são guardados diretamente na diretoria `projeto/models/`.
+> O `engine` lê os ficheiros `.patch` da diretoria `projeto/patchs/`, as texturas da diretoria `projeto/texturas/` e os ficheiros `.3d` da diretoria `projeto/models/`.
