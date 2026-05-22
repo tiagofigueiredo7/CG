@@ -20,15 +20,20 @@
 #include "engine/structs/lights/Directional.hpp"
 #include "engine/structs/lights/Point.hpp"
 #include "engine/structs/lights/Spotlight.hpp"
+#include "engine/structs/Frustum.hpp"
 
 using namespace std;
 using namespace util;
 using namespace tinyxml2;
 
 class Data {
-    private:       
+    private:
+
         // Camera
         Camera* camera;
+
+        // Frustum
+        Frustum* frustum;
 
         // Lights
         vector<Light*> lights;
@@ -64,6 +69,10 @@ class Data {
         Data();
 
         ~Data();
+
+        // Frustum
+        Frustum* getFrustum();
+        void updateFrustum();
 
         // Lights
         void initLights();

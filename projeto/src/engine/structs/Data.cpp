@@ -18,6 +18,8 @@ Data::Data() {
     players = vector<Group*>();
 
     renderExtraLines = true;
+
+    frustum = new Frustum();
 }
 
 // Destrutor
@@ -28,6 +30,7 @@ Data::~Data(){
     for (Light* light : lights) {
         delete light;
     }
+    delete this->frustum;
 }
 
 // Parser
@@ -594,4 +597,18 @@ Group* Data::getPlayerByIndex(int id) {
         return nullptr;
     }
     return players[id];
+}
+
+Frustum* Data::getFrustum() {
+    return frustum;
+}
+
+void Data::updateFrustum() {
+    float ratio;
+
+    if (height == 0) {
+        ratio = width * 1.0 / 1.0;
+    } else ratio = width * 1.0 / height;
+    
+    frustum->updateFrustum(camera, fov, nearPlane, farPlane, ratio);
 }
