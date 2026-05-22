@@ -22,10 +22,10 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - [Demo Fase 4](./tests/others/p4/demo_fase_4.xml)
 
 #### Outros ficheiros
-- **Ficheiros de cena:** [`projeto/tests/`](./projeto/tests/) ou em subdiretórios de [`projeto/tests/`](./projeto/tests/).
-- **Ficheiros de modelos:** [`projeto/models/`](./projeto/models/).
-- **Ficheiros `.patch`:** [`projeto/patchs/`](./projeto/patchs/).
-- **Ficheiros de texturas:** [`projeto/texturas/`](./projeto/texturas/).
+- **Ficheiros de cena:** [projeto/tests/](./projeto/tests/) ou em subdiretórios de [projeto/tests/](./projeto/tests/).
+- **Ficheiros de modelos:** [projeto/models/](./projeto/models/).
+- **Ficheiros `.patch`:** [projeto/patchs/](./projeto/patchs/).
+- **Ficheiros de texturas:** [projeto/texturas/](./projeto/texturas/).
 
 > [!WARNING]
 > **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
