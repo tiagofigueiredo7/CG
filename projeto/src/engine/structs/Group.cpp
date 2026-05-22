@@ -73,7 +73,7 @@ void Group::addTextureID(GLuint* id) { texturesIDs.push_back(id); }
 
 // Renderização
 
-void Group::renderGroup(Data* data){
+void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 	glPushMatrix(); 
 
 	for(Transformation* t : this->getTransformations()){
@@ -87,7 +87,7 @@ void Group::renderGroup(Data* data){
 			glScalef(s->getX(), s->getY(), s->getZ());
 		}
 		else if (Curve* c = dynamic_cast<Curve*>(t)){
-			if (data->getRenderExtraLines()) c->renderCatmullRomCurve();
+			if (renderExtraLines) c->renderCatmullRomCurve();
 			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
 			float time = c->getTime(), gt = fmod(elapsedSeconds,time) / time;		
 			float pos[3], deriv[3];
@@ -114,8 +114,6 @@ void Group::renderGroup(Data* data){
 		}
 	}
 
-	Frustum* f = data->getFrustum();
-
 	int acumulador = 0;
 	GLuint* buffers = this->getBuffers();
 	if (buffers[0] && buffers[1] && buffers[2]) {
@@ -135,7 +133,7 @@ void Group::renderGroup(Data* data){
 	} 
 
 	for (Group* gp : this->getSubGroups()){
-		gp->renderGroup(data);
+		gp->renderGroup(renderExtraLines, f);
 	}
 
 	glPopMatrix();

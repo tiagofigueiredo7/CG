@@ -142,7 +142,7 @@ void renderScene(void) {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //Nas fases anteriores estava  GL_LINE
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca
 	
-    if (main_group != nullptr) main_group->renderGroup(store);
+    if (main_group != nullptr) main_group->renderGroup(store->getRenderExtraLines(), store->getFrustum());
 
 	// End of frame
 	glutSwapBuffers();

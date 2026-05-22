@@ -23,7 +23,7 @@ using namespace std;
 #include "engine/structs/transformations/Curve.hpp"
 #include "engine/structs/transformations/TimedFullRotate.hpp"
 #include "engine/structs/Material.hpp"
-#include "engine/structs/Data.hpp"
+#include "engine/structs/Frustum.hpp"
 
 typedef struct pos {
     float x;
@@ -73,7 +73,7 @@ class Group {
         GLuint* getBuffers();
         vector<Material*> getMaterials();
 
-        void renderGroup(Data* data);
+        void renderGroup(bool renderExtraLines, Frustum* f);
 
         bool getIsPlayer();
         void setIsPlayer(bool isPlayer);
