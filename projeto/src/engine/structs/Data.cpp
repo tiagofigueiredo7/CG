@@ -636,3 +636,13 @@ void Data::updateFrustum() {
     
     frustum->updateFrustum(camera, fov, nearPlane, farPlane, ratio);
 }
+
+void Data::drawFrustum() {
+    float ratio;
+
+    if (height == 0) {
+        ratio = width * 1.0 / 1.0;
+    } else ratio = width * 1.0 / height;
+
+    frustum->drawFrustum(camera, fov, nearPlane, farPlane, ratio);
+}

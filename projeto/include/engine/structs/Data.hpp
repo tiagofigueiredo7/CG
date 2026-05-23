@@ -73,6 +73,7 @@ class Data {
         // Frustum
         Frustum* getFrustum();
         void updateFrustum();
+        void drawFrustum();
 
         // Lights
         void initLights();

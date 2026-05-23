@@ -133,6 +133,8 @@ void renderScene(void) {
 			glVertex3f(0.0f, 0.0f, -1000.0f);
 			glVertex3f(0.0f, 0.0f, 1000.0f);
 		glEnd();
+
+		store->drawFrustum();
 	}
 
 	if (lightingWasEnabled) glEnable(GL_LIGHTING);
