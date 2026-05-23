@@ -125,7 +125,9 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 			Pos worldcenter = this->getModelCenters_world()[i];
 			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, raios_Esferas[i])) {
 				acumulador += vertices_count[i];
-				printf("%s\n", this->getPlayerName().c_str());
+				if (this->getIsPlayer()) {
+					printf("%s\n", this->getPlayerName().c_str());
+				}
 				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
 			}
 			materials[i]->aplicarMaterial();
