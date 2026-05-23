@@ -108,7 +108,7 @@ void Frustum::updateFrustum(Camera* cam, float fov, float nearDist, float farDis
     createPlane(planes[3], ntl, ftr, ntr); // top
     createPlane(planes[4], ftl, fbl, fbr); // far
     createPlane(planes[5], ntr, nbl, ntl); // near
-/*
+
     float probe[3] = {
         pos[0] + d[0] * ((nearDist + farDist) * 0.5f),
         pos[1] + d[1] * ((nearDist + farDist) * 0.5f),
@@ -118,6 +118,7 @@ void Frustum::updateFrustum(Camera* cam, float fov, float nearDist, float farDis
     for (int i = 0; i < 6; i++) {
         float side = planes[i].a * probe[0] + planes[i].b * probe[1] + planes[i].c * probe[2] + planes[i].d;
         if (side < 0.0f) {
+            printf("Inverting plane %d\n", i);
             planes[i].a = -planes[i].a;
             planes[i].b = -planes[i].b;
             planes[i].c = -planes[i].c;
@@ -125,8 +126,8 @@ void Frustum::updateFrustum(Camera* cam, float fov, float nearDist, float farDis
         }
     }
 
-*/ 
- 
+
+
 }
 
 void Frustum::createPlane(Plane& plane, float* p1, float* p2, float* p3){
