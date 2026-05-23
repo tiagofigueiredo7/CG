@@ -41,11 +41,9 @@ void updatePlayersWorldPositions(Group* g) {
 		}
 	}
 
-	if (g->getIsPlayer()) {
-		GLfloat modelview[16];
-		glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-		g->setGlobalPosition(modelview[12], modelview[13], modelview[14]);
-	}
+	GLfloat modelview[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+	g->setGlobalPosition(modelview[12], modelview[13], modelview[14]);
 
 	for (Group* gp : g->getSubGroups()) {
 		updatePlayersWorldPositions(gp);

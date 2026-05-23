@@ -34,13 +34,34 @@ void Frustum::updateFrustum(Camera* cam, float fov, float nearDist, float farDis
         cam->getLookZ() - cam->getPosZ()
     };
     normalize(d);
+    if (d[0] == 0.0f && d[1] == 0.0f && d[2] == 0.0f) {
+        return;
+    }
 
     float up[3] = {cam->getUpX(), cam->getUpY(), cam->getUpZ()};
     normalize(up);
+    if (up[0] == 0.0f && up[1] == 0.0f && up[2] == 0.0f) {
+        up[0] = 0.0f;
+        up[1] = 1.0f;
+        up[2] = 0.0f;
+    }
 
     float r[3];
     cross(d, up, r);
     normalize(r);
+    if (r[0] == 0.0f && r[1] == 0.0f && r[2] == 0.0f) {
+        float fallbackUp[3] = {0.0f, 1.0f, 0.0f};
+        if (fabs(d[1]) > 0.9f) {
+            fallbackUp[0] = 1.0f;
+            fallbackUp[1] = 0.0f;
+            fallbackUp[2] = 0.0f;
+        }
+        cross(d, fallbackUp, r);
+        normalize(r);
+        if (r[0] == 0.0f && r[1] == 0.0f && r[2] == 0.0f) {
+            return;
+        }
+    }
 
     float u[3];
     cross(r, d, u);

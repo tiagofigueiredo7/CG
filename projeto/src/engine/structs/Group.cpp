@@ -120,6 +120,7 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size() && i < raios_Esferas.size(); ++i) {
 			if (!f->sphereInFrustum(globalPosition.x,globalPosition.y,globalPosition.z, raios_Esferas[i])) {
 				acumulador += vertices_count[i];
+				//printf("%f %f %f %f\n", globalPosition.x, globalPosition.y, globalPosition.z, raios_Esferas[i]);
 				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
 			}
 			materials[i]->aplicarMaterial();
