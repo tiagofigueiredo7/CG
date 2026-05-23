@@ -14,8 +14,6 @@
 #include <iostream>
 #include <stdlib.h>
 
-using namespace std;
-
 #include "engine/structs/transformations/Transformation.hpp"
 #include "engine/structs/transformations/Translate.hpp"
 #include "engine/structs/transformations/Rotate.hpp"
@@ -24,6 +22,10 @@ using namespace std;
 #include "engine/structs/transformations/TimedFullRotate.hpp"
 #include "engine/structs/Material.hpp"
 #include "engine/structs/Frustum.hpp"
+#include "utils/util.hpp"
+
+using namespace std;
+using namespace util;
 
 typedef struct pos {
     float x;
@@ -42,7 +44,9 @@ class Group {
         vector<Material*> materials;
         vector<GLuint*> texturesIDs;
         vector<float> raios_Esferas; // vetor para armazenar os raios das esferas circunscritas aos modelos
-        
+        vector<Pos> modelCenters; // centros locais dos modelos para culling / Local
+        vector<Pos> modelCenters_world; // centros mundiais dos modelos para culling / World
+
         GLuint* buffers;
 
         bool isPlayer;
@@ -70,8 +74,15 @@ class Group {
         vector<int> getVerticesCount();
         vector<GLuint*> getTexturesIDs();
         vector<float> getRaiosEsferas();
+        vector<Pos> getModelCenters();
         GLuint* getBuffers();
         vector<Material*> getMaterials();
+
+        void addModelCenter(Pos c);
+
+        void addModelCenter_world(Pos c);
+        vector<Pos> getModelCenters_world();
+        void setModelCenters_world(Pos p, int index);
 
         void renderGroup(bool renderExtraLines, Frustum* f);
 

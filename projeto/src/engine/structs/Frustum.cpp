@@ -9,7 +9,7 @@ Frustum::Frustum() {
 
 bool Frustum::pointInFrustum(float x, float y, float z) {
     for (int i = 0; i < 6; i++) {
-        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < 0) {
+        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < -1e-4f) {
             return false;
         }
     }
@@ -18,7 +18,7 @@ bool Frustum::pointInFrustum(float x, float y, float z) {
 
 bool Frustum::sphereInFrustum(float x, float y, float z, float radius) {
     for (int i = 0; i < 6; i++) {
-        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < -radius) {
+        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < -radius - 1e-4f) {
             return false;
         }
     }
@@ -102,12 +102,31 @@ void Frustum::updateFrustum(Camera* cam, float fov, float nearDist, float farDis
     float fbl[3] = {fc[0] - u[0] * fh2 - r[0] * fw2, fc[1] - u[1] * fh2 - r[1] * fw2, fc[2] - u[2] * fh2 - r[2] * fw2};
     float fbr[3] = {fc[0] - u[0] * fh2 + r[0] * fw2, fc[1] - u[1] * fh2 + r[1] * fw2, fc[2] - u[2] * fh2 + r[2] * fw2};
 
-    createPlane(planes[0], ntr, nbr, fbr); // right
-    createPlane(planes[1], nbl, ntl, ftl); // left
-    createPlane(planes[2], nbr, nbl, fbl); // bottom
-    createPlane(planes[3], ntl, ntr, ftr); // top
+    createPlane(planes[0], ntr, fbr, nbr); // right
+    createPlane(planes[1], nbl, ftl, ntl); // left
+    createPlane(planes[2], nbr, fbl, nbl); // bottom
+    createPlane(planes[3], ntl, ftr, ntr); // top
     createPlane(planes[4], ftl, fbl, fbr); // far
-    createPlane(planes[5], ntr, ntl, nbl); // near
+    createPlane(planes[5], ntr, nbl, ntl); // near
+/*
+    float probe[3] = {
+        pos[0] + d[0] * ((nearDist + farDist) * 0.5f),
+        pos[1] + d[1] * ((nearDist + farDist) * 0.5f),
+        pos[2] + d[2] * ((nearDist + farDist) * 0.5f)
+    };
+
+    for (int i = 0; i < 6; i++) {
+        float side = planes[i].a * probe[0] + planes[i].b * probe[1] + planes[i].c * probe[2] + planes[i].d;
+        if (side < 0.0f) {
+            planes[i].a = -planes[i].a;
+            planes[i].b = -planes[i].b;
+            planes[i].c = -planes[i].c;
+            planes[i].d = -planes[i].d;
+        }
+    }
+
+*/ 
+ 
 }
 
 void Frustum::createPlane(Plane& plane, float* p1, float* p2, float* p3){

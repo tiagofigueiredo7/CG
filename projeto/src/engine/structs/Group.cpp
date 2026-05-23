@@ -12,6 +12,9 @@ Group::Group() {
 	this->materials = vector<Material*>();
 	this->texturesIDs = vector<GLuint*>();
 	this->raios_Esferas = vector<float>();
+	this->modelCenters = vector<Pos>();
+
+	this->modelCenters_world = vector<Pos>();
 
 	this->isPlayer = false;
 	this->playerName = "";
@@ -117,10 +120,12 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 	int acumulador = 0;
 	GLuint* buffers = this->getBuffers();
 	if (buffers[0] && buffers[1] && buffers[2]) {
+		vector<Pos> centers = this->getModelCenters();
 		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size() && i < raios_Esferas.size(); ++i) {
-			if (!f->sphereInFrustum(globalPosition.x,globalPosition.y,globalPosition.z, raios_Esferas[i])) {
+			Pos worldcenter = this->getModelCenters_world()[i];
+			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, raios_Esferas[i])) {
 				acumulador += vertices_count[i];
-				//printf("%f %f %f %f\n", globalPosition.x, globalPosition.y, globalPosition.z, raios_Esferas[i]);
+				printf("%s\n", this->getPlayerName().c_str());
 				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
 			}
 			materials[i]->aplicarMaterial();
@@ -262,6 +267,28 @@ vector<float> Group::getRaiosEsferas() {
 	return raios_Esferas;
 }
 
+vector<Pos> Group::getModelCenters() {
+	return modelCenters;
+}
+
 void Group::addRaioEsfera(float raio) {
 	this->raios_Esferas.push_back(raio);
+}
+
+void Group::addModelCenter(Pos c) {
+	this->modelCenters.push_back(c);
+}
+
+void Group::addModelCenter_world(Pos c) {
+	this->modelCenters_world.push_back(c);
+}
+
+vector<Pos> Group::getModelCenters_world() {
+	return modelCenters_world;
+}
+
+void Group::setModelCenters_world(Pos p, int index) {
+	if (index >= 0 && index < modelCenters_world.size()) {
+		this->modelCenters_world[index] = p;
+	}
 }

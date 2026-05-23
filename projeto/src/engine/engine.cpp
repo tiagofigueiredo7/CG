@@ -45,6 +45,29 @@ void updatePlayersWorldPositions(Group* g) {
 	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
 	g->setGlobalPosition(modelview[12], modelview[13], modelview[14]);
 
+
+	vector<Pos> centers = g->getModelCenters();
+	for (size_t i = 0; i < g->getMaterials().size() && i < g->getVerticesCount().size() && i < g->getTexturesIDs().size() && i < g->getRaiosEsferas().size(); ++i) {
+		float centerX = g->getGlobalPosition().x;
+		float centerY = g->getGlobalPosition().y;
+		float centerZ = g->getGlobalPosition().z;
+		if (i < centers.size()) {
+			GLfloat modelview[16];
+			glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+			float localCenter[4] = { centers[i].x, centers[i].y, centers[i].z, 1.0f };
+			float worldCenter[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+			multMatrixVector(modelview, localCenter, worldCenter);
+			centerX = worldCenter[0];
+			centerY = worldCenter[1];
+			centerZ = worldCenter[2];
+
+			g->setModelCenters_world(Pos{centerX, centerY, centerZ}, i);
+
+
+		}
+		
+	}
+
 	for (Group* gp : g->getSubGroups()) {
 		updatePlayersWorldPositions(gp);
 	}
@@ -112,6 +135,8 @@ void renderScene(void) {
 
 	store->executeLights();
 	store->updateFrustum();
+	//store->drawFrustum();
+	
 
     // Axis lines
 	// Desenha os eixos sem a iluminação
@@ -134,7 +159,6 @@ void renderScene(void) {
 			glVertex3f(0.0f, 0.0f, 1000.0f);
 		glEnd();
 
-		store->drawFrustum();
 	}
 
 	if (lightingWasEnabled) glEnable(GL_LIGHTING);
