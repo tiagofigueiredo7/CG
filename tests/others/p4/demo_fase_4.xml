@@ -4972,7 +4972,7 @@
 					<rotate time="30" x="0" y="1" z="0" />
 				</transform>
 				<models>
-					<model file="torus.3d"> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
+					<model file="torus_1.2_0.4_25_25.3d"> <!-- generator torus 1.2 0.4 25 25 torus_1.2_0.4_25_25.3d -->
 						<texture file="2k_saturn_ring_alpha.png" />
 					</model>
 				</models>
@@ -5029,7 +5029,7 @@
 					<rotate time="22" x="0" y="1" z="0" />
 				</transform>
 				<models>
-					<model file="torus.3d"> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
+					<model file="torus_1.2_0.4_25_25.3d"> <!-- generator torus 1.2 0.4 25 25 torus_1.2_0.4_25_25.3d -->
 						<texture file="uranusringcolour.jpg" />
 					</model>
 				</models>
@@ -5064,7 +5064,7 @@
 					<rotate time="26" x="0" y="1" z="0" />
 				</transform>
 				<models>
-					<model file="torus.3d"> <!-- generator torus 1.2 0.4 25 25 torus.3d -->
+					<model file="torus_1.2_0.4_25_25.3d"> <!-- generator torus 1.2 0.4 25 25 torus_1.2_0.4_25_25.3d -->
 						<texture file="2k_saturn_ring_alpha.png" />
 					</model>
 				</models>
