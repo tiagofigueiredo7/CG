@@ -31,7 +31,21 @@ PrimitiveBuffers generatePlane(float length, int divisions) {
         } 
     }
     
-    buffers.setRaioEsfera(length * sqrt(2) / 2.0f); // raio da esfera circunscrita ao plano
+    // Calcular centro e raio a partir dos vértices gerados
+    vector<float> verts = buffers.getVertices();
+    int totalVertices = (int)verts.size() / 3;
+    if (totalVertices > 0) {
+        float cx = 0.0f, cy = 0.0f, cz = 0.0f;
+        for (size_t i = 0; i < verts.size(); i += 3) {
+            cx += verts[i];
+            cy += verts[i + 1];
+            cz += verts[i + 2];
+        }
+        cx /= totalVertices; cy /= totalVertices; cz /= totalVertices;
+        buffers.setCenter(cx, cy, cz);
+
+        buffers.setRaioEsfera(length * sqrt(2) / 2.0f); // raio da esfera circunscrita ao plano
+    }
 
     return buffers;
 }

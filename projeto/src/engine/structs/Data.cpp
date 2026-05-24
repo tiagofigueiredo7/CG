@@ -343,11 +343,10 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
             continue;
         }
 
-        float raio_esfera;
-        try {
-            raio_esfera = stof(line);
-        } catch (exception) {
-            cerr << "[ERRO] Raio da esfera inválido no ficheiro: " << model_file << endl;
+        istringstream iss(line);
+        float raio_esfera, center_x, center_y, center_z;
+        if (!(iss >> raio_esfera >> center_x >> center_y >> center_z)) {
+            cerr << "[ERRO] Erro ao ler raio e centro: " << line << endl;
             continue;
         }
 
@@ -359,6 +358,10 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         g.addRaioEsfera(raio_esfera); 
         g.addRaioEsfera_world(raio_esfera); // Inicializar o raio mundial com um valor padrão, será atualizado durante a renderização
 
+        Pos center = {center_x, center_y, center_z};
+        g.addModelCenter(center);
+        g.addModelCenter_world(center); // Inicializar o centro mundial com o centro local, será atualizado durante a renderização
+
         getline(file, line);
         int num = 0;
         try {
@@ -367,10 +370,6 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
             cerr << "[ERRO] Número de vértices inválido no ficheiro: " << model_file << endl;
             continue;
         }
-
-        float cx = 0.0f;
-        float cy = 0.0f;
-        float cz = 0.0f;
 
         // Ler vértices
         for (int i = 0; i < num; i++) {
@@ -386,20 +385,8 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
             vertices_temp.push_back(x);
             vertices_temp.push_back(y);
             vertices_temp.push_back(z);
-            cx += x;
-            cy += y;
-            cz += z;
             count_aux += 1;
         }
-
-        if (count_aux > 0) {
-            Pos center = { cx / count_aux, cy / count_aux, cz / count_aux };
-            g.addModelCenter(center);
-        } else {
-            Pos center = {0.0f, 0.0f, 0.0f};
-            g.addModelCenter(center);
-        }
-        g.addModelCenter_world({0.0f, 0.0f, 0.0f}); // Inicializar o centro mundial com um valor padrão, será atualizado durante a renderização
 
         int normals_count = 0;
         // Ler normais

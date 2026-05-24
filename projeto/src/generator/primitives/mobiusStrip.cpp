@@ -96,7 +96,21 @@ PrimitiveBuffers generateMobiusStrip(float radius, float width, int slices){
         buffers.addNormals(Cnx, Cny, Cnz, Bnx, Bny, Bnz, Dnx, Dny, Dnz);
     }
 
-    buffers.setRaioEsfera(radius + width); // A esfera circunscrita tem raio igual à distância máxima do centro, que é radius + width
+    // Calcular centro e raio a partir dos vértices gerados
+    vector<float> verts = buffers.getVertices();
+    int totalVertices = (int)verts.size() / 3;
+    if (totalVertices > 0) {
+        float cx = 0.0f, cy = 0.0f, cz = 0.0f;
+        for (size_t i = 0; i < verts.size(); i += 3) {
+            cx += verts[i];
+            cy += verts[i + 1];
+            cz += verts[i + 2];
+        }
+        cx /= totalVertices; cy /= totalVertices; cz /= totalVertices;
+        buffers.setCenter(cx, cy, cz);
+
+        buffers.setRaioEsfera(radius + width); // A esfera circunscrita tem raio igual à distância máxima do centro, que é radius + width
+    }
 
     return buffers;
 }

@@ -16,6 +16,9 @@ class PrimitiveBuffers {
         vector<float> textures;
 
         float raio_esfera;
+        float center_x;
+        float center_y;
+        float center_z;
     public:
         PrimitiveBuffers();
 
@@ -31,6 +34,10 @@ class PrimitiveBuffers {
 
         void setRaioEsfera(float raio);
         float getRaioEsfera();
+        void setCenter(float x, float y, float z);
+        float getCenterX();
+        float getCenterY();
+        float getCenterZ();
 };
 
 

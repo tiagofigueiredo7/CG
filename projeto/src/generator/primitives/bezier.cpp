@@ -135,9 +135,7 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
             u[i][j] = i*delta;
             v[i][j] = j*delta;
         }
-    }
-
-    float maxDist2 = 0.0f; 
+    } 
 
     for (int p = 0; p< n_patches; p++){
 
@@ -156,12 +154,6 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
                 derivadaU[i][j] = bezierDerivadaU(u[i][j],v[i][j],&valores);
                 derivadaV[i][j] = bezierDerivadaV(u[i][j],v[i][j],&valores);
 
-
-                // Calcular a distância ao quadrado do vértice à origem
-                float dist2 = superficie[i][j].x*superficie[i][j].x + superficie[i][j].y*superficie[i][j].y + superficie[i][j].z*superficie[i][j].z;
-                if (dist2 > maxDist2) {
-                    maxDist2 = dist2;
-                }
             }
         }
 
@@ -239,7 +231,29 @@ PrimitiveBuffers generateBezierModel(char* file_path, int tesselation) {
 
     }
 
-    buffers.setRaioEsfera(sqrt(maxDist2)); // O raio da esfera circunscrita é a raiz da distância máxima ao quadrado encontrada
+    // Calcular centro e raio a partir dos vértices gerados
+    vector<float> verts = buffers.getVertices();
+    int totalVertices = (int)verts.size() / 3;
+    if (totalVertices > 0) {
+        float cx = 0.0f, cy = 0.0f, cz = 0.0f;
+        for (size_t i = 0; i < verts.size(); i += 3) {
+            cx += verts[i];
+            cy += verts[i + 1];
+            cz += verts[i + 2];
+        }
+        cx /= totalVertices; cy /= totalVertices; cz /= totalVertices;
+        buffers.setCenter(cx, cy, cz);
+
+        float maxDist2_local = 0.0f;
+        for (size_t i = 0; i < verts.size(); i += 3) {
+            float dx = verts[i] - cx;
+            float dy = verts[i + 1] - cy;
+            float dz = verts[i + 2] - cz;
+            float d2 = dx*dx + dy*dy + dz*dz;
+            if (d2 > maxDist2_local) maxDist2_local = d2;
+        }
+        buffers.setRaioEsfera(sqrt(maxDist2_local));
+    }
 
     return buffers;
 

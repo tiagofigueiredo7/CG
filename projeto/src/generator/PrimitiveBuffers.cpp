@@ -6,14 +6,25 @@ PrimitiveBuffers::PrimitiveBuffers() {
     this->textures = vector<float>();
 
     this->raio_esfera = 0.0f;
+    this->center_x = 0.0f;
+    this->center_y = 0.0f;
+    this->center_z = 0.0f;
 }
 
 vector<float> PrimitiveBuffers::getVertices() { return vertices; }
 vector<float> PrimitiveBuffers::getNormais() { return normais; }
 vector<float> PrimitiveBuffers::getTextures() { return textures; }
 float PrimitiveBuffers::getRaioEsfera() { return raio_esfera; }
+float PrimitiveBuffers::getCenterX() { return center_x; }
+float PrimitiveBuffers::getCenterY() { return center_y; }
+float PrimitiveBuffers::getCenterZ() { return center_z; }
 
 void PrimitiveBuffers::setRaioEsfera(float raio) { this->raio_esfera = raio; }
+void PrimitiveBuffers::setCenter(float x, float y, float z) {
+    this->center_x = x;
+    this->center_y = y;
+    this->center_z = z;
+}
 
 // Adiciona coordenadas dos vértices de um trinânculo a um vetor
 void PrimitiveBuffers::addTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3) {
@@ -59,7 +70,7 @@ void PrimitiveBuffers::storeBuffers(string file) {
         cerr << "[ERRO] Não foi possível abrir o ficheiro.";
         return;
     }
-    out << raio_esfera << "\n";
+    out << raio_esfera << " " << center_x << " " << center_y << " " << center_z << "\n";
     out << vertices.size() / 3 << "\n"; // número de vértices (3 coordenadas por vértice)
     for (size_t i = 0; i < vertices.size(); i += 3) {
         out << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n"; // um ponto (3 coordenadas) por linha
