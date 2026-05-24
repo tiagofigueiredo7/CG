@@ -294,3 +294,74 @@ void Group::setModelCenters_world(Pos p, int index) {
 		this->modelCenters_world[index] = p;
 	}
 }
+
+void Group::updatePlayersWorldPositions() {
+
+	glPushMatrix();
+
+	for (Transformation* t : this->getTransformations()) {
+		if (Translate* tr = dynamic_cast<Translate*>(t)) {
+			glTranslatef(tr->getX(), tr->getY(), tr->getZ());
+		}
+		else if (Rotate* r = dynamic_cast<Rotate*>(t)) {
+			glRotatef(r->getAngle(), r->getX(), r->getY(), r->getZ());
+		}
+		else if (Scale* s = dynamic_cast<Scale*>(t)) {
+			glScalef(s->getX(), s->getY(), s->getZ());
+		}
+		else if (Curve* c = dynamic_cast<Curve*>(t)) {
+			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+			float time = c->getTime(), gt = fmod(elapsedSeconds, time) / time;
+			float pos[3], deriv[3];
+			c->getGlobalCatmullRomPoint(gt, pos, deriv);
+			glTranslatef(pos[0], pos[1], pos[2]);
+			if (c->getAlign()) {
+				float up[3] = {0, 1, 0};
+				float x[3] = {deriv[0], deriv[1], deriv[2]}; normalize(x);
+				float z[3]; cross(x, up, z); normalize(z);
+				float y[3]; cross(z, x, y); normalize(y);
+				float m[16]; buildRotMatrix(x, y, z, m);
+				glMultMatrixf(m);
+			}
+		}
+		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)) {
+			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+			float graus_sec = 360.0f / tfr->getTime();
+			float angle = fmod(elapsedSeconds * graus_sec, 360.0f);
+			glRotatef(angle, tfr->getX(), tfr->getY(), tfr->getZ());
+		}
+	}
+
+	GLfloat modelview[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+	this->setGlobalPosition(modelview[12], modelview[13], modelview[14]);
+
+
+	vector<Pos> centers = this->getModelCenters();
+	for (size_t i = 0; i < this->getMaterials().size() && i < this->getVerticesCount().size() && i < this->getTexturesIDs().size() && i < this->getRaiosEsferas().size(); ++i) {
+		float centerX = this->getGlobalPosition().x;
+		float centerY = this->getGlobalPosition().y;
+		float centerZ = this->getGlobalPosition().z;
+		if (i < centers.size()) {
+			GLfloat modelview[16];
+			glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+			float localCenter[4] = { centers[i].x, centers[i].y, centers[i].z, 1.0f };
+			float worldCenter[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+			multiMatrixVector_ColumnMajor(modelview, localCenter, worldCenter);
+			centerX = worldCenter[0];
+			centerY = worldCenter[1];
+			centerZ = worldCenter[2];
+
+			this->setModelCenters_world(Pos{centerX, centerY, centerZ}, i);
+
+
+		}
+		
+	}
+
+	for (Group* gp : this->getSubGroups()) {
+		gp->updatePlayersWorldPositions();
+	}
+
+	glPopMatrix();
+}

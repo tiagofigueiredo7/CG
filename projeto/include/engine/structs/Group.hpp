@@ -85,6 +85,7 @@ class Group {
         void setModelCenters_world(Pos p, int index);
 
         void renderGroup(bool renderExtraLines, Frustum* f);
+        void updatePlayersWorldPositions();
 
         bool getIsPlayer();
         void setIsPlayer(bool isPlayer);

@@ -3,78 +3,6 @@
 // Variável global para armazenar os dados lidos do XML
 Data* store = new Data();
 
-void updatePlayersWorldPositions(Group* g) {
-	if (g == nullptr) return;
-
-	glPushMatrix();
-
-	for (Transformation* t : g->getTransformations()) {
-		if (Translate* tr = dynamic_cast<Translate*>(t)) {
-			glTranslatef(tr->getX(), tr->getY(), tr->getZ());
-		}
-		else if (Rotate* r = dynamic_cast<Rotate*>(t)) {
-			glRotatef(r->getAngle(), r->getX(), r->getY(), r->getZ());
-		}
-		else if (Scale* s = dynamic_cast<Scale*>(t)) {
-			glScalef(s->getX(), s->getY(), s->getZ());
-		}
-		else if (Curve* c = dynamic_cast<Curve*>(t)) {
-			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
-			float time = c->getTime(), gt = fmod(elapsedSeconds, time) / time;
-			float pos[3], deriv[3];
-			c->getGlobalCatmullRomPoint(gt, pos, deriv);
-			glTranslatef(pos[0], pos[1], pos[2]);
-			if (c->getAlign()) {
-				float up[3] = {0, 1, 0};
-				float x[3] = {deriv[0], deriv[1], deriv[2]}; normalize(x);
-				float z[3]; cross(x, up, z); normalize(z);
-				float y[3]; cross(z, x, y); normalize(y);
-				float m[16]; buildRotMatrix(x, y, z, m);
-				glMultMatrixf(m);
-			}
-		}
-		else if (TimedFullRotate* tfr = dynamic_cast<TimedFullRotate*>(t)) {
-			float elapsedSeconds = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
-			float graus_sec = 360.0f / tfr->getTime();
-			float angle = fmod(elapsedSeconds * graus_sec, 360.0f);
-			glRotatef(angle, tfr->getX(), tfr->getY(), tfr->getZ());
-		}
-	}
-
-	GLfloat modelview[16];
-	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-	g->setGlobalPosition(modelview[12], modelview[13], modelview[14]);
-
-
-	vector<Pos> centers = g->getModelCenters();
-	for (size_t i = 0; i < g->getMaterials().size() && i < g->getVerticesCount().size() && i < g->getTexturesIDs().size() && i < g->getRaiosEsferas().size(); ++i) {
-		float centerX = g->getGlobalPosition().x;
-		float centerY = g->getGlobalPosition().y;
-		float centerZ = g->getGlobalPosition().z;
-		if (i < centers.size()) {
-			GLfloat modelview[16];
-			glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-			float localCenter[4] = { centers[i].x, centers[i].y, centers[i].z, 1.0f };
-			float worldCenter[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-			multiMatrixVector_ColumnMajor(modelview, localCenter, worldCenter);
-			centerX = worldCenter[0];
-			centerY = worldCenter[1];
-			centerZ = worldCenter[2];
-
-			g->setModelCenters_world(Pos{centerX, centerY, centerZ}, i);
-
-
-		}
-		
-	}
-
-	for (Group* gp : g->getSubGroups()) {
-		updatePlayersWorldPositions(gp);
-	}
-
-	glPopMatrix();
-}
-
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -112,7 +40,7 @@ void renderScene(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
-	if (main_group != nullptr) updatePlayersWorldPositions(main_group);
+	if (main_group != nullptr) main_group->updatePlayersWorldPositions();
 	glPopMatrix();
 
 	if (store->getPlayers().size() > 0) {
@@ -135,7 +63,6 @@ void renderScene(void) {
 
 	store->executeLights();
 	store->updateFrustum();
-	//store->drawFrustum();
 	
 
     // Axis lines
@@ -144,6 +71,9 @@ void renderScene(void) {
 	if (lightingWasEnabled) glDisable(GL_LIGHTING);
 
 	if (store->getRenderExtraLines()) {
+
+		store->drawFrustum();
+
 		glBegin(GL_LINES);
 			// X axis in red
 			glColor3f(1.0f, 0.0f, 0.0f);
