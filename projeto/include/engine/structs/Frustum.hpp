@@ -36,8 +36,6 @@ class Frustum {
         void updateFrustum(Camera* cam, float fov, float nearDist, float farDist, float ratio);
         void drawFrustum(Camera* cam, float fov, float nearDist, float farDist, float ratio);
 
-        
-
 };
 
 

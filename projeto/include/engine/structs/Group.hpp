@@ -44,6 +44,7 @@ class Group {
         vector<Material*> materials;
         vector<GLuint*> texturesIDs;
         vector<float> raios_Esferas; // vetor para armazenar os raios das esferas circunscritas aos modelos
+        vector<float> raios_Esferas_world; // vetor para armazenar os raios globais dos modelos
         vector<Pos> modelCenters; // centros locais dos modelos para culling / Local
         vector<Pos> modelCenters_world; // centros mundiais dos modelos para culling / World
 
@@ -62,37 +63,38 @@ class Group {
 
         ~Group();
 
+        void renderGroup(bool renderExtraLines, Frustum* f);
+        void updatePlayersWorldPositions();
+
         void addTransformation(Transformation* transf);
         void addMaterial(Material* material);
         void addSubGroup(Group* subgroup);
         void addVerticeCount(int count);
         void addTextureID(GLuint* id);
         void addRaioEsfera(float raio);
+        void addRaioEsfera_world(float raio);
+        void addModelCenter(Pos c);
+        void addModelCenter_world(Pos c);
 
         vector<Transformation*> getTransformations();
         vector<Group*> getSubGroups();
         vector<int> getVerticesCount();
         vector<GLuint*> getTexturesIDs();
         vector<float> getRaiosEsferas();
+        vector<float> getRaiosEsferas_world();
         vector<Pos> getModelCenters();
         GLuint* getBuffers();
         vector<Material*> getMaterials();
-
-        void addModelCenter(Pos c);
-
-        void addModelCenter_world(Pos c);
         vector<Pos> getModelCenters_world();
-        void setModelCenters_world(Pos p, int index);
-
-        void renderGroup(bool renderExtraLines, Frustum* f);
-        void updatePlayersWorldPositions();
-
         bool getIsPlayer();
-        void setIsPlayer(bool isPlayer);
         string getPlayerName();
+
+        void setIsPlayer(bool isPlayer);
         void setPlayerName(string playerName);
         Pos getGlobalPosition();
         void setGlobalPosition(float x, float y, float z);
+        void setModelCenters_world(Pos p, int index);
+        void setRaiosEsferas_world(float raio, int index);
 
 };
 

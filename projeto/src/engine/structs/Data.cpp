@@ -357,6 +357,7 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         }
 
         g.addRaioEsfera(raio_esfera); 
+        g.addRaioEsfera_world(raio_esfera); // Inicializar o raio mundial com um valor padrão, será atualizado durante a renderização
 
         getline(file, line);
         int num = 0;

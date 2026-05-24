@@ -12,8 +12,8 @@ Group::Group() {
 	this->materials = vector<Material*>();
 	this->texturesIDs = vector<GLuint*>();
 	this->raios_Esferas = vector<float>();
+	this->raios_Esferas_world = vector<float>();
 	this->modelCenters = vector<Pos>();
-
 	this->modelCenters_world = vector<Pos>();
 
 	this->isPlayer = false;
@@ -50,7 +50,6 @@ Group::~Group() {
     
 }
 
-// Getters
 vector<Transformation*> Group::getTransformations() { return transformations; }
 
 vector<Group* >Group::getSubGroups(){ return subgroups; }
@@ -63,7 +62,6 @@ vector<int> Group::getVerticesCount() { return vertices_count; }
 
 vector<GLuint*> Group::getTexturesIDs() { return texturesIDs; }
 
-// Add
 void Group::addTransformation(Transformation* transf){ transformations.push_back(transf); }
 
 void Group::addSubGroup(Group* subgroup) { subgroups.push_back(subgroup); }
@@ -73,6 +71,72 @@ void Group::addVerticeCount(int count) { vertices_count.push_back(count); }
 void Group::addMaterial(Material* material) { materials.push_back(material); }
 
 void Group::addTextureID(GLuint* id) { texturesIDs.push_back(id); }
+
+void Group::addRaioEsfera_world(float raio) { this->raios_Esferas_world.push_back(raio); }
+
+bool Group::getIsPlayer() {
+	return isPlayer;
+}
+
+void Group::setIsPlayer(bool isPlayer) {
+	this->isPlayer = isPlayer;
+}
+
+string Group::getPlayerName() {
+	return playerName;
+}
+
+void Group::setPlayerName(string playerName) {
+	this->playerName = playerName;
+}
+
+Pos Group::getGlobalPosition() {
+	return globalPosition;
+}
+
+void Group::setGlobalPosition(float x, float y, float z) {
+	this->globalPosition = {x, y, z};
+}
+
+vector<float> Group::getRaiosEsferas() {
+	return raios_Esferas;
+}
+
+vector<float> Group::getRaiosEsferas_world() {
+	return raios_Esferas_world;
+}
+
+vector<Pos> Group::getModelCenters() {
+	return modelCenters;
+}
+
+void Group::addRaioEsfera(float raio) {
+	this->raios_Esferas.push_back(raio);
+}
+
+void Group::addModelCenter(Pos c) {
+	this->modelCenters.push_back(c);
+}
+
+void Group::addModelCenter_world(Pos c) {
+	this->modelCenters_world.push_back(c);
+}
+
+void Group::setRaiosEsferas_world(float raio, int index) {
+	if (index >= 0 && index < raios_Esferas_world.size()) {
+		this->raios_Esferas_world[index] = raio;
+	}
+}
+
+vector<Pos> Group::getModelCenters_world() {
+	return modelCenters_world;
+}
+
+void Group::setModelCenters_world(Pos p, int index) {
+	if (index >= 0 && index < modelCenters_world.size()) {
+		this->modelCenters_world[index] = p;
+	}
+}
 
 // Renderização
 
@@ -120,10 +184,12 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 	int acumulador = 0;
 	GLuint* buffers = this->getBuffers();
 	if (buffers[0] && buffers[1] && buffers[2]) {
+
 		vector<Pos> centers = this->getModelCenters();
 		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size() && i < raios_Esferas.size(); ++i) {
 			Pos worldcenter = this->getModelCenters_world()[i];
-			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, raios_Esferas[i])) {
+			float worldRadius = this->getRaiosEsferas_world()[i];
+			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, worldRadius)) {
 				acumulador += vertices_count[i];
 				if (this->getIsPlayer()) {
 					printf("%s\n", this->getPlayerName().c_str());
@@ -241,60 +307,6 @@ void Group::createModel(int init, int count, GLuint* buffers){
 	}
 }
 
-bool Group::getIsPlayer() {
-	return isPlayer;
-}
-
-void Group::setIsPlayer(bool isPlayer) {
-	this->isPlayer = isPlayer;
-}
-
-string Group::getPlayerName() {
-	return playerName;
-}
-
-void Group::setPlayerName(string playerName) {
-	this->playerName = playerName;
-}
-
-Pos Group::getGlobalPosition() {
-	return globalPosition;
-}
-
-void Group::setGlobalPosition(float x, float y, float z) {
-	this->globalPosition = {x, y, z};
-}
-
-vector<float> Group::getRaiosEsferas() {
-	return raios_Esferas;
-}
-
-vector<Pos> Group::getModelCenters() {
-	return modelCenters;
-}
-
-void Group::addRaioEsfera(float raio) {
-	this->raios_Esferas.push_back(raio);
-}
-
-void Group::addModelCenter(Pos c) {
-	this->modelCenters.push_back(c);
-}
-
-void Group::addModelCenter_world(Pos c) {
-	this->modelCenters_world.push_back(c);
-}
-
-vector<Pos> Group::getModelCenters_world() {
-	return modelCenters_world;
-}
-
-void Group::setModelCenters_world(Pos p, int index) {
-	if (index >= 0 && index < modelCenters_world.size()) {
-		this->modelCenters_world[index] = p;
-	}
-}
-
 void Group::updatePlayersWorldPositions() {
 
 	glPushMatrix();
@@ -335,6 +347,10 @@ void Group::updatePlayersWorldPositions() {
 	GLfloat modelview[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
 	this->setGlobalPosition(modelview[12], modelview[13], modelview[14]);
+	float sx = sqrtf(modelview[0] * modelview[0] + modelview[1] * modelview[1] + modelview[2] * modelview[2]);
+	float sy = sqrtf(modelview[4] * modelview[4] + modelview[5] * modelview[5] + modelview[6] * modelview[6]);
+	float sz = sqrtf(modelview[8] * modelview[8] + modelview[9] * modelview[9] + modelview[10] * modelview[10]);
+	float scaleMax = fmaxf(sx, fmaxf(sy, sz));
 
 
 	vector<Pos> centers = this->getModelCenters();
@@ -353,6 +369,7 @@ void Group::updatePlayersWorldPositions() {
 			centerZ = worldCenter[2];
 
 			this->setModelCenters_world(Pos{centerX, centerY, centerZ}, i);
+			this->setRaiosEsferas_world(raios_Esferas[i] * scaleMax, i);
 
 
 		}
