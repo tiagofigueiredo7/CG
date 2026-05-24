@@ -88,6 +88,17 @@ namespace util {
 
 	}
 
+	void multiMatrixVector_ColumnMajor(float *m, float *v, float *res) {
+
+		for (int j = 0; j < 4; ++j) {
+			res[j] = 0;
+			for (int k = 0; k < 4; ++k) {
+				res[j] += m[j + k * 4] * v[k];
+			}
+		}
+
+	}
+
 	// Constrói matriz de rotação
 	void buildRotMatrix(float *x, float *y, float *z, float *m) {
 		m[0] = x[0]; m[1] = x[1]; m[2] = x[2]; m[3] = 0;

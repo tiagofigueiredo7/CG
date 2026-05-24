@@ -56,7 +56,7 @@ void updatePlayersWorldPositions(Group* g) {
 			glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
 			float localCenter[4] = { centers[i].x, centers[i].y, centers[i].z, 1.0f };
 			float worldCenter[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-			multMatrixVector(modelview, localCenter, worldCenter);
+			multiMatrixVector_ColumnMajor(modelview, localCenter, worldCenter);
 			centerX = worldCenter[0];
 			centerY = worldCenter[1];
 			centerZ = worldCenter[2];

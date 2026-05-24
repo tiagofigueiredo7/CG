@@ -21,6 +21,8 @@ namespace util {
 
     void multMatrixVector(float *m, float *v, float *res);
 
+    void multiMatrixVector_ColumnMajor(float *m, float *v, float *res);
+
     void buildRotMatrix(float *x, float *y, float *z, float *m);
 
     void cross(float *a, float *b, float *res);
