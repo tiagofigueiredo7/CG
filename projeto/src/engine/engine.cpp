@@ -72,6 +72,7 @@ void renderScene(void) {
 
 	if (store->getRenderExtraLines()) {
 
+		glColor3f(1.0f, 0.0f, 0.0f);
 		store->drawFrustum();
 
 		glBegin(GL_LINES);
