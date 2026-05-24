@@ -192,7 +192,7 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, worldRadius)) {
 				acumulador += vertices_count[i];
 				if (this->getIsPlayer()) {
-					printf("%s\n", this->getPlayerName().c_str());
+					//printf("%s\n", this->getPlayerName().c_str());
 				}
 				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
 			}

@@ -343,9 +343,9 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
             continue;
         }
 
-        istringstream iss(line);
+        istringstream iss_radius(line);
         float raio_esfera, center_x, center_y, center_z;
-        if (!(iss >> raio_esfera)) {
+        if (!(iss_radius >> raio_esfera)) {
             cerr << "[ERRO] Erro ao ler raio: " << line << endl;
             continue;
         }
@@ -359,8 +359,8 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         g.addRaioEsfera_world(raio_esfera); // Inicializar o raio mundial com um valor padrão, será atualizado durante a renderização
 
         getline(file, line);
-        istringstream iss(line);
-        if (!(iss >> center_x >> center_y >> center_z)) {
+        istringstream iss_center(line);
+        if (!(iss_center >> center_x >> center_y >> center_z)) {
             cerr << "[ERRO] Erro ao ler o centro: " << line << endl;
             continue;
         }
@@ -370,9 +370,9 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
         g.addModelCenter_world(center); // Inicializar o centro mundial com o centro local, será atualizado durante a renderização
 
         getline(file, line);
-        istringstream iss(line);
+        istringstream iss_num(line);
         int num;
-        if (!(iss >> num)) {
+        if (!(iss_num >> num)) {
             cerr << "[ERRO] Erro ao ler número de vértices: " << line << endl;
             continue;
         }

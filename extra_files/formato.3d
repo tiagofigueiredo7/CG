@@ -1,7 +1,9 @@
-radius 1.5
-centerX 0.0, centerY 0.0, centerZ 0.0
-count 100
-v 0.0 0.0 0
-n 0.0 1.0 0.0
-t 0.0 1.0
-
+1.5 -> raio da esfera onde a primitiva vai estar circunscrita
+0.0 0.0 0.0 -> centro da esfera onde a primitiva vai estar circunscrita
+100 -> número de vértices, normais e coordenadas de textura
+1.23 0.45 2.0 -> vertice
+.... 
+0.0 1.0 0.0 -> normal
+....
+0.0 1.0 -> coord. textura
+.....

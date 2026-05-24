@@ -70,17 +70,17 @@ void PrimitiveBuffers::storeBuffers(string file) {
         cerr << "[ERRO] Não foi possível abrir o ficheiro.";
         return;
     }
-    out << "radius " << raio_esfera << "\n";
-    out << "centerX " << center_x << ", centerY " << center_y << ", centerZ " << center_z << "\n";
-    out << "count " << vertices.size() / 3 << "\n"; // número de vértices (3 coordenadas por vértice)
+    out << raio_esfera << "\n";
+    out << center_x << " " << center_y << " " << center_z << "\n";
+    out << vertices.size() / 3 << "\n"; // número de vértices (3 coordenadas por vértice)
     for (size_t i = 0; i < vertices.size(); i += 3) {
-        out << "v " << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n"; // um ponto (3 coordenadas) por linha
+        out << vertices[i] << " " << vertices[i + 1] << " " << vertices[i + 2] << "\n"; // um ponto (3 coordenadas) por linha
     }
     for (size_t i = 0; i < normais.size(); i += 3) {
-        out << "n " << normais[i] << " " << normais[i + 1] << " " << normais[i + 2] << "\n"; // uma normal (3 coordenadas) por linha
+        out << normais[i] << " " << normais[i + 1] << " " << normais[i + 2] << "\n"; // uma normal (3 coordenadas) por linha
     }
     for (size_t i = 0; i < textures.size(); i += 2) {
-        out << "t " << textures[i] << " " << textures[i + 1] << "\n"; // uma coordenada de textura (2 coordenadas) por linha
+        out << textures[i] << " " << textures[i + 1] << "\n"; // uma coordenada de textura (2 coordenadas) por linha
     }
     out.close();
 }
