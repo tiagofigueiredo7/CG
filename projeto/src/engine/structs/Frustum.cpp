@@ -9,7 +9,7 @@ Frustum::Frustum() {
 
 bool Frustum::pointInFrustum(float x, float y, float z) {
     for (int i = 0; i < 6; i++) {
-        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < -1e-4f) {
+        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < 0) {
             return false;
         }
     }
@@ -18,7 +18,7 @@ bool Frustum::pointInFrustum(float x, float y, float z) {
 
 bool Frustum::sphereInFrustum(float x, float y, float z, float radius) {
     for (int i = 0; i < 6; i++) {
-        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < -radius - 1e-4f) {
+        if (planes[i].a * x + planes[i].b * y + planes[i].c * z + planes[i].d < -radius) {
             return false;
         }
     }
