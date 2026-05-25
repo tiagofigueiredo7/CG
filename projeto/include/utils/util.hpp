@@ -15,6 +15,19 @@ using namespace std;
 
 namespace util {
 
+    typedef struct point3D {
+        float x;
+        float y;
+        float z;
+    } Point3D;
+
+    typedef struct plane {
+        float a;
+        float b;
+        float c;
+        float d;
+    } Plane;
+
     bool checkInputEngine(const int parameters , const string scene);
     
     bool checkInputGenerator(const int parameters , const string figure);

@@ -31,7 +31,7 @@ void ThirdPersonCamera::update_camera_Pos() {
     float targetZ = 0.0f;
 
     if (target != nullptr) {
-        Pos p = target->getGlobalPosition();
+        Point3D p = target->getGlobalPosition();
         targetX = p.x;
         targetY = p.y;
         targetZ = p.z;
@@ -48,7 +48,7 @@ void ThirdPersonCamera::update_camera_LookAt() {
     float targetZ = 0.0f;
 
     if (target != nullptr) {
-        Pos p = target->getGlobalPosition();
+        Point3D p = target->getGlobalPosition();
         targetX = p.x;
         targetY = p.y;
         targetZ = p.z;

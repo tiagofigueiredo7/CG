@@ -57,7 +57,7 @@ void OrbitalCamera::update_cartesian_coordinates(){
     float targetZ = 0.0f;
 
     if (target != nullptr) {
-        Pos p = target->getGlobalPosition();
+        Point3D p = target->getGlobalPosition();
         targetX = p.x;
         targetY = p.y;
         targetZ = p.z;

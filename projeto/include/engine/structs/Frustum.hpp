@@ -16,13 +16,6 @@
 
 using namespace util;
 
-typedef struct plane {
-    float a;
-    float b;
-    float c;
-    float d;
-} Plane;
-
 class Frustum {
     private:
         Plane planes[6];

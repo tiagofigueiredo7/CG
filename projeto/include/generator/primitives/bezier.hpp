@@ -7,7 +7,6 @@
 // Bibliotecas locais
 #include "utils/util.hpp"
 #include "generator/BezierPatch.hpp"
-#include "Point3D.hpp"
 #include "generator/PrimitiveBuffers.hpp"
 
 using namespace std;

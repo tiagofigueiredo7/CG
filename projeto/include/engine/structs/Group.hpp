@@ -27,12 +27,6 @@
 using namespace std;
 using namespace util;
 
-typedef struct pos {
-    float x;
-    float y;
-    float z;
-} Pos;
-
 
 class Group {
     private:
@@ -45,14 +39,14 @@ class Group {
         vector<GLuint*> texturesIDs;
         vector<float> raios_Esferas; // vetor para armazenar os raios das esferas circunscritas aos modelos
         vector<float> raios_Esferas_world; // vetor para armazenar os raios globais dos modelos
-        vector<Pos> modelCenters; // centros locais dos modelos para culling / Local
-        vector<Pos> modelCenters_world; // centros mundiais dos modelos para culling / World
+        vector<Point3D> modelCenters; // centros locais dos modelos para culling / Local
+        vector<Point3D> modelCenters_world; // centros mundiais dos modelos para culling / World
 
         GLuint* buffers;
 
         bool isPlayer;
         string playerName;
-        Pos globalPosition;
+        Point3D globalPosition;
 
 
         void createModel(int init, int count, GLuint* buffers);
@@ -73,8 +67,8 @@ class Group {
         void addTextureID(GLuint* id);
         void addRaioEsfera(float raio);
         void addRaioEsfera_world(float raio);
-        void addModelCenter(Pos c);
-        void addModelCenter_world(Pos c);
+        void addModelCenter(Point3D c);
+        void addModelCenter_world(Point3D c);
 
         vector<Transformation*> getTransformations();
         vector<Group*> getSubGroups();
@@ -82,18 +76,18 @@ class Group {
         vector<GLuint*> getTexturesIDs();
         vector<float> getRaiosEsferas();
         vector<float> getRaiosEsferas_world();
-        vector<Pos> getModelCenters();
+        vector<Point3D> getModelCenters();
         GLuint* getBuffers();
         vector<Material*> getMaterials();
-        vector<Pos> getModelCenters_world();
+        vector<Point3D> getModelCenters_world();
         bool getIsPlayer();
         string getPlayerName();
 
         void setIsPlayer(bool isPlayer);
         void setPlayerName(string playerName);
-        Pos getGlobalPosition();
+        Point3D getGlobalPosition();
         void setGlobalPosition(float x, float y, float z);
-        void setModelCenters_world(Pos p, int index);
+        void setModelCenters_world(Point3D p, int index);
         void setRaiosEsferas_world(float raio, int index);
 
 };

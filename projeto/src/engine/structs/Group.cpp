@@ -13,8 +13,8 @@ Group::Group() {
 	this->texturesIDs = vector<GLuint*>();
 	this->raios_Esferas = vector<float>();
 	this->raios_Esferas_world = vector<float>();
-	this->modelCenters = vector<Pos>();
-	this->modelCenters_world = vector<Pos>();
+	this->modelCenters = vector<Point3D>();
+	this->modelCenters_world = vector<Point3D>();
 
 	this->isPlayer = false;
 	this->playerName = "";
@@ -90,7 +90,7 @@ void Group::setPlayerName(string playerName) {
 	this->playerName = playerName;
 }
 
-Pos Group::getGlobalPosition() {
+Point3D Group::getGlobalPosition() {
 	return globalPosition;
 }
 
@@ -106,7 +106,7 @@ vector<float> Group::getRaiosEsferas_world() {
 	return raios_Esferas_world;
 }
 
-vector<Pos> Group::getModelCenters() {
+vector<Point3D> Group::getModelCenters() {
 	return modelCenters;
 }
 
@@ -114,11 +114,11 @@ void Group::addRaioEsfera(float raio) {
 	this->raios_Esferas.push_back(raio);
 }
 
-void Group::addModelCenter(Pos c) {
+void Group::addModelCenter(Point3D c) {
 	this->modelCenters.push_back(c);
 }
 
-void Group::addModelCenter_world(Pos c) {
+void Group::addModelCenter_world(Point3D c) {
 	this->modelCenters_world.push_back(c);
 }
 
@@ -128,11 +128,11 @@ void Group::setRaiosEsferas_world(float raio, int index) {
 	}
 }
 
-vector<Pos> Group::getModelCenters_world() {
+vector<Point3D> Group::getModelCenters_world() {
 	return modelCenters_world;
 }
 
-void Group::setModelCenters_world(Pos p, int index) {
+void Group::setModelCenters_world(Point3D p, int index) {
 	if (index >= 0 && index < modelCenters_world.size()) {
 		this->modelCenters_world[index] = p;
 	}
@@ -185,9 +185,9 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 	GLuint* buffers = this->getBuffers();
 	if (buffers[0] && buffers[1] && buffers[2]) {
 
-		vector<Pos> centers = this->getModelCenters();
+		vector<Point3D> centers = this->getModelCenters();
 		for (size_t i = 0; i < materials.size() && i < vertices_count.size() && i < texturesIDs.size() && i < raios_Esferas.size(); ++i) {
-			Pos worldcenter = this->getModelCenters_world()[i];
+			Point3D worldcenter = this->getModelCenters_world()[i];
 			float worldRadius = this->getRaiosEsferas_world()[i];
 			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, worldRadius)) {
 				acumulador += vertices_count[i];
@@ -353,7 +353,7 @@ void Group::updatePlayersWorldPositions() {
 	float scaleMax = fmaxf(sx, fmaxf(sy, sz));
 
 
-	vector<Pos> centers = this->getModelCenters();
+	vector<Point3D> centers = this->getModelCenters();
 	for (size_t i = 0; i < this->getMaterials().size() && i < this->getVerticesCount().size() && i < this->getTexturesIDs().size() && i < this->getRaiosEsferas().size(); ++i) {
 		float centerX = this->getGlobalPosition().x;
 		float centerY = this->getGlobalPosition().y;
@@ -368,7 +368,7 @@ void Group::updatePlayersWorldPositions() {
 			centerY = worldCenter[1];
 			centerZ = worldCenter[2];
 
-			this->setModelCenters_world(Pos{centerX, centerY, centerZ}, i);
+			this->setModelCenters_world(Point3D{centerX, centerY, centerZ}, i);
 			this->setRaiosEsferas_world(raios_Esferas[i] * scaleMax, i);
 
 

@@ -365,7 +365,7 @@ void Data::fill_Buffer(Group& g, vector<char*>& arr){
             continue;
         }
 
-        Pos center = {center_x, center_y, center_z};
+        Point3D center = {center_x, center_y, center_z};
         g.addModelCenter(center);
         g.addModelCenter_world(center); // Inicializar o centro mundial com o centro local, será atualizado durante a renderização
 
