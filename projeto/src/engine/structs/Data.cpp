@@ -532,7 +532,10 @@ int Data::loadTexture(string s) {
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 	ilGenImages(1,&t);
 	ilBindImage(t);
-	ilLoadImage((ILstring)s.c_str());
+	if (!ilLoadImage((ILstring)s.c_str())) {
+        cerr << "[Erro] Falha ao carregar textura: " << s << endl;
+        return 0;
+    }
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);

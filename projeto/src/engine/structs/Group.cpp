@@ -197,11 +197,7 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
 			}
 			materials[i]->aplicarMaterial();
-			if (texturesIDs[i] != nullptr && *texturesIDs[i] != 0) {
-				createModel_wTexture(acumulador, vertices_count[i], buffers, texturesIDs[i]);
-			} else {
-				createModel(acumulador, vertices_count[i], buffers);
-			}
+			createModel(acumulador, vertices_count[i], buffers, texturesIDs[i]);
 			acumulador += vertices_count[i];
 		}
 	} 
@@ -214,97 +210,52 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 
 }
 
-void Group::createModel_wTexture(int init, int count, GLuint* buffers, GLuint* textureID){
+void Group::createModel(int init, int count, GLuint* buffers, GLuint* textureID) {
+    if (buffers == nullptr || count <= 0) {
+        return;
+    }
 
-	if (buffers == nullptr || textureID == nullptr || count <= 0) {
-		return;
-	}
+    bool hasTexture = (textureID != nullptr && *textureID != 0);
+    int bufferCount = hasTexture ? 3 : 2;
 
-	if (!glIsBuffer(buffers[0]) || !glIsBuffer(buffers[1]) || !glIsBuffer(buffers[2])) {
-		cerr << "[ERRO] Buffer(s) inválido(s) ao desenhar modelo com textura!" << endl;
-		return;
-	}
+    if (!glIsBuffer(buffers[0]) || !glIsBuffer(buffers[1]) || 
+        (hasTexture && !glIsBuffer(buffers[2]))) {
+        cerr << "[ERRO] Buffer(s) inválido(s)!" << endl;
+        return;
+    }
+    
+    GLboolean texture2DWasEnabled = glIsEnabled(GL_TEXTURE_2D);
+    GLboolean textureArrayWasEnabled = glIsEnabled(GL_TEXTURE_COORD_ARRAY);
 
-	GLint vertexSize = 0;
-	GLint normalSize = 0;
-	GLint textureSize = 0;
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &vertexSize);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &normalSize);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &textureSize);
+    if (hasTexture) {
+        glBindTexture(GL_TEXTURE_2D, *textureID);
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+        glTexCoordPointer(2, GL_FLOAT, 0, 0);
+    } else {
+        glDisable(GL_TEXTURE_2D);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
 
-	if (vertexSize < count * 3 * static_cast<GLint>(sizeof(float)) ||
-		normalSize < count * 3 * static_cast<GLint>(sizeof(float)) ||
-		textureSize < count * 2 * static_cast<GLint>(sizeof(float))) {
-		cerr << "[ERRO] Buffer(s) demasiado pequeno(s) ao desenhar modelo com textura!" << endl;
-		return;
-	}
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    glVertexPointer(3, GL_FLOAT, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+    glNormalPointer(GL_FLOAT, 0, 0);
 
-	glBindTexture(GL_TEXTURE_2D, *textureID);
+    glDrawArrays(GL_TRIANGLES, init, count);
 
-	// Habilitar caso esteja desabilitado
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
-	glVertexPointer(3,GL_FLOAT,0,0);
-
-	glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
-	glNormalPointer(GL_FLOAT,0,0);
-
-	glBindBuffer(GL_ARRAY_BUFFER,buffers[2]);
-	glTexCoordPointer(2,GL_FLOAT,0,0);
-
-	glDrawArrays(GL_TRIANGLES, init, count);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-void Group::createModel(int init, int count, GLuint* buffers){
-
-	if (buffers == nullptr || count <= 0) {
-		return;
-	}
-
-	if (!glIsBuffer(buffers[0]) || !glIsBuffer(buffers[1])) {
-		cerr << "[ERRO] Buffer(s) inválido(s) ao desenhar modelo!" << endl;
-		return;
-	}
-
-	GLint vertexSize = 0;
-	GLint normalSize = 0;
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &vertexSize);
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &normalSize);
-
-	if (vertexSize < count * 3 * static_cast<GLint>(sizeof(float)) ||
-		normalSize < count * 3 * static_cast<GLint>(sizeof(float))) {
-		cerr << "[ERRO] Buffer(s) demasiado pequeno(s) ao desenhar modelo!" << endl;
-		return;
-	}
-
-	GLboolean texture2DWasEnabled = glIsEnabled(GL_TEXTURE_2D);
-	GLboolean textureArrayWasEnabled = glIsEnabled(GL_TEXTURE_COORD_ARRAY);
-	glDisable(GL_TEXTURE_2D);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glBindBuffer(GL_ARRAY_BUFFER,buffers[0]);
-	glVertexPointer(3,GL_FLOAT,0,0);
-
-	glBindBuffer(GL_ARRAY_BUFFER,buffers[1]);
-	glNormalPointer(GL_FLOAT,0,0);
-
-	glDrawArrays(GL_TRIANGLES, init, count);
-
-	if (textureArrayWasEnabled) {
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	}
-	if (texture2DWasEnabled) {
-		glEnable(GL_TEXTURE_2D);
-	}
+    if (hasTexture) {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    
+    // Restaurar estado anterior
+    if (!hasTexture && textureArrayWasEnabled) {
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    }
+    if (!texture2DWasEnabled) {
+        glDisable(GL_TEXTURE_2D);
+    }
 }
 
 void Group::updatePlayersWorldPositions() {

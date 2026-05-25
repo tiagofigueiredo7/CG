@@ -49,8 +49,7 @@ class Group {
         Point3D globalPosition;
 
 
-        void createModel(int init, int count, GLuint* buffers);
-        void createModel_wTexture(int init, int count, GLuint* buffers, GLuint* textureID);
+        void createModel(int init, int count, GLuint* buffers, GLuint* textureID);
 
     public:
         Group();
