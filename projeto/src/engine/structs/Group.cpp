@@ -50,17 +50,17 @@ Group::~Group() {
     
 }
 
-vector<Transformation*> Group::getTransformations() { return transformations; }
+const vector<Transformation*>& Group::getTransformations() { return transformations; }
 
-vector<Group* >Group::getSubGroups(){ return subgroups; }
+const vector<Group* >& Group::getSubGroups() { return subgroups; }
 
-vector<Material*> Group::getMaterials() { return materials; }
+const vector<Material*>& Group::getMaterials() { return materials; }
 
 GLuint* Group::getBuffers(){ return buffers; }
 
-vector<int> Group::getVerticesCount() { return vertices_count; }
+const vector<int>& Group::getVerticesCount() { return vertices_count; }
 
-vector<GLuint*> Group::getTexturesIDs() { return texturesIDs; }
+const vector<GLuint*>& Group::getTexturesIDs() { return texturesIDs; }
 
 void Group::addTransformation(Transformation* transf){ transformations.push_back(transf); }
 
@@ -98,15 +98,15 @@ void Group::setGlobalPosition(float x, float y, float z) {
 	this->globalPosition = {x, y, z};
 }
 
-vector<float> Group::getRaiosEsferas() {
+const vector<float>& Group::getRaiosEsferas() {
 	return raios_Esferas;
 }
 
-vector<float> Group::getRaiosEsferas_world() {
+const vector<float>& Group::getRaiosEsferas_world() {
 	return raios_Esferas_world;
 }
 
-vector<Point3D> Group::getModelCenters() {
+const vector<Point3D>& Group::getModelCenters() {
 	return modelCenters;
 }
 
@@ -128,7 +128,7 @@ void Group::setRaiosEsferas_world(float raio, int index) {
 	}
 }
 
-vector<Point3D> Group::getModelCenters_world() {
+const vector<Point3D>& Group::getModelCenters_world() {
 	return modelCenters_world;
 }
 

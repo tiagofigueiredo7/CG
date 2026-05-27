@@ -105,13 +105,13 @@ class Data {
         void setGroup(Group* g);
         void setCamera(Camera* c);
 
-        vector<Light*> getLights();
+        const vector<Light*>& getLights();
         void addLight(Light* light);
 
         void setRenderExtraLines(bool flag);
         bool getRenderExtraLines();
 
-        vector<Group*> getPlayers();
+        const vector<Group*>& getPlayers();
         void addPlayer(Group* player);
         Group* getPlayerByIndex(int id);
 };

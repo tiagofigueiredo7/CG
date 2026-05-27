@@ -69,16 +69,16 @@ class Group {
         void addModelCenter(Point3D c);
         void addModelCenter_world(Point3D c);
 
-        vector<Transformation*> getTransformations();
-        vector<Group*> getSubGroups();
-        vector<int> getVerticesCount();
-        vector<GLuint*> getTexturesIDs();
-        vector<float> getRaiosEsferas();
-        vector<float> getRaiosEsferas_world();
-        vector<Point3D> getModelCenters();
+        const vector<Transformation*>& getTransformations();
+        const vector<Group*>& getSubGroups();
+        const vector<int>& getVerticesCount();
+        const vector<GLuint*>& getTexturesIDs();
+        const vector<float>& getRaiosEsferas();
+        const vector<float>& getRaiosEsferas_world();
+        const vector<Point3D>& getModelCenters();
         GLuint* getBuffers();
-        vector<Material*> getMaterials();
-        vector<Point3D> getModelCenters_world();
+        const vector<Material*>& getMaterials();
+        const vector<Point3D>& getModelCenters_world();
         bool getIsPlayer();
         string getPlayerName();
 

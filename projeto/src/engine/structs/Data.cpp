@@ -507,9 +507,9 @@ void Data::setCamera(Camera* c){
     if (camera == c) return;
     delete camera;
     camera = c;
-}
+}  
 
-vector<Light*> Data::getLights() {
+const vector<Light*>& Data::getLights() {
     return lights;
 }
 
@@ -624,7 +624,7 @@ void Data::setRenderExtraLines(bool flag) { renderExtraLines = flag; }
 
 bool Data::getRenderExtraLines() { return renderExtraLines; }
 
-vector<Group*> Data::getPlayers() { return players; }
+const vector<Group*>& Data::getPlayers() { return players; }
 
 void Data::addPlayer(Group* player) { players.push_back(player); }
 

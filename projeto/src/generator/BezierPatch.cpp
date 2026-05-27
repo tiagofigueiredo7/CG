@@ -26,7 +26,7 @@ int BezierPatch::getControlPointsCount() {
     return this->control_points_count;
 }
 
-vector<float> BezierPatch::getControlPointsValues() {
+const vector<float>& BezierPatch::getControlPointsValues() {
     return this->control_points_values;
 }
 

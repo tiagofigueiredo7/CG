@@ -30,7 +30,7 @@ class Curve : public Transformation {
 
         bool getAlign();
         float getTime();
-        vector<float*> getPoints();
+        const vector<float*>& getPoints();
 
         void setAlign(bool novoAlign);
         void setTime(float novoTime);

@@ -11,9 +11,9 @@ PrimitiveBuffers::PrimitiveBuffers() {
     this->center_z = 0.0f;
 }
 
-vector<float> PrimitiveBuffers::getVertices() { return vertices; }
-vector<float> PrimitiveBuffers::getNormais() { return normais; }
-vector<float> PrimitiveBuffers::getTextures() { return textures; }
+const vector<float>& PrimitiveBuffers::getVertices() { return vertices; }
+const vector<float>& PrimitiveBuffers::getNormais() { return normais; }
+const vector<float>& PrimitiveBuffers::getTextures() { return textures; }
 float PrimitiveBuffers::getRaioEsfera() { return raio_esfera; }
 float PrimitiveBuffers::getCenterX() { return center_x; }
 float PrimitiveBuffers::getCenterY() { return center_y; }

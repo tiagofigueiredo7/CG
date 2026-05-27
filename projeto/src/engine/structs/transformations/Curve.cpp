@@ -20,7 +20,7 @@ Curve::~Curve() {
 
 bool Curve::getAlign(){ return align; }
 float Curve::getTime(){ return time; }
-vector<float*> Curve::getPoints(){ return points; }
+const vector<float*>& Curve::getPoints() { return points; }
 
 void Curve::setAlign(bool novoAlign){ this->align = novoAlign; }
 void Curve::setTime(float novoTime){ this->time = novoTime; }

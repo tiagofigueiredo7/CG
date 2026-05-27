@@ -31,7 +31,7 @@ class BezierPatch {
         vector<float>* getIndicesPatch(int index); 
 
         int getControlPointsCount();
-        vector<float> getControlPointsValues();
+        const vector<float>& getControlPointsValues();
 
         void setPatchesCount(int count);
         void setControlPointsCount(int count);
