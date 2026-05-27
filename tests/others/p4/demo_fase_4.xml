@@ -14,7 +14,7 @@
 	</lights>
 
 	<!-- SOL -->
-	<group player="Sun">
+	<group target="Sun">
 		<transform>
 			<scale x="5.5" y="5.5" z="5.5" />
 			<rotate time="90" x="0" y="1" z="0" />
@@ -33,7 +33,7 @@
 		</models>
 
 		<!-- MERCÚRIO -->
-		<group player="mercury">
+		<group target="mercury">
 			<transform>
 				<translate time="8" align="true">
 					<point x="1.41" y="0" z="0.51" />
@@ -56,7 +56,7 @@
 		</group>
 
 		<!-- VÉNUS -->
-		<group player="venus">
+		<group target="venus">
 			<transform>
 				<translate time="12" align="true">
 					<point x="0.57" y="0" z="2.12" />
@@ -79,7 +79,7 @@
 		</group>
 
 		<!-- TERRA -->
-		<group player="earth">
+		<group target="earth">
 			<transform>
 				<translate time="16" align="true">
 					<point x="-2.37" y="0" z="1.99" />
@@ -124,7 +124,7 @@
 		</group>
 
 		<!-- MARTE -->
-		<group player="mars">
+		<group target="mars">
 			<transform>
 				<translate time="20" align="true">
 					<point x="-3.64" y="0" z="-2.10" />
@@ -4855,7 +4855,7 @@
 		</group>
 
 		<!-- JÚPITER -->
-		<group player="Jupiter">
+		<group target="Jupiter">
 			<transform>
 				<translate time="28" align="true">
 					<point x="1.42" y="0" z="-8.08" />
@@ -4945,7 +4945,7 @@
 		</group>
 
 		<!-- SATURNO -->
-		<group player="Saturn">
+		<group target="Saturn">
 			<transform>
 				<translate time="34" align="true">
 					<point x="10.22" y="0" z="-5.90" />
@@ -5002,7 +5002,7 @@
 		</group>
 
 		<!-- URANO -->
-		<group player="Uranus">
+		<group target="Uranus">
 			<transform>
 				<translate time="40" align="true">
 					<point x="12.56" y="0" z="7.25" />
@@ -5037,7 +5037,7 @@
 		</group>
 
 		<!-- NEPTUNO -->
-		<group player="Neptune">
+		<group target="Neptune">
 			<transform>
 				<translate time="46" align="true">
 					<point x="-5.92" y="0" z="16.25" />
@@ -5072,7 +5072,7 @@
 		</group>
 
 		<!-- COMETA -->
-		<group player="Comet">
+		<group target="Comet">
 			<transform>
 				<rotate time="-360" x="0" y="1" z="0" />
 				<scale x="0.08" y="0.08" z="0.08" />

@@ -53,8 +53,8 @@ class Data {
         // Nodo raiz da hierarquia de grupos
         Group* group;
 
-        // Players
-        vector<Group*> players;
+        // Targets
+        vector<Group*> targets;
 
 
         // Group element parser
@@ -111,9 +111,9 @@ class Data {
         void setRenderExtraLines(bool flag);
         bool getRenderExtraLines();
 
-        const vector<Group*>& getPlayers();
-        void addPlayer(Group* player);
-        Group* getPlayerByIndex(int id);
+        const vector<Group*>& getTargets();
+        void addTarget(Group* target);
+        Group* getTargetByIndex(int id);
 };
 
 

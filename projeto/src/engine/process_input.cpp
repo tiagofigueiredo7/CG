@@ -10,13 +10,13 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		store->setCamera(new_cam);
 	}
 	else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
-		OrbitalCamera* oc = new OrbitalCamera(cam, store->getPlayers().size());
-		if (!store->getPlayers().empty()) {
+		OrbitalCamera* oc = new OrbitalCamera(cam, store->getTargets().size());
+		if (!store->getTargets().empty()) {
 			oc->incrementTargetIndex();
-			oc->setTarget(store->getPlayerByIndex(oc->getTargetIndex()));
+			oc->setTarget(store->getTargetByIndex(oc->getTargetIndex()));
 		}
 		char title[100];
-		snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getPlayerName().c_str() : "None");
+		snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getTargetName().c_str() : "None");
 		glutSetWindowTitle(title);
 		store->setCamera(oc);
 	}
@@ -26,13 +26,13 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		store->setCamera(fpc);
 	}
 	else if (c == '3' && (dynamic_cast<ThirdPersonCamera*>(cam) == nullptr)) {
-		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam, store->getPlayers().size());
-		if (!store->getPlayers().empty()) {
+		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam, store->getTargets().size());
+		if (!store->getTargets().empty()) {
 			tpc->incrementTargetIndex();
-			tpc->setTarget(store->getPlayerByIndex(tpc->getTargetIndex()));
+			tpc->setTarget(store->getTargetByIndex(tpc->getTargetIndex()));
 		}
 		char title[100];
-		snprintf(title, sizeof(title), "GG-TP: Camera de Terceira Pessoa - Target: %s", tpc->getTarget() ? tpc->getTarget()->getPlayerName().c_str() : "None");
+		snprintf(title, sizeof(title), "GG-TP: Camera de Terceira Pessoa - Target: %s", tpc->getTarget() ? tpc->getTarget()->getTargetName().c_str() : "None");
 		glutSetWindowTitle(title);
 		store->setCamera(tpc);
 	}
@@ -43,19 +43,19 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		store->setRenderExtraLines(false);
 	}
 	else if (c == 't' || c == 'T') { // Mudar target da OrbitalCamera
-		if (store->getPlayers().size() == 0) return;
+		if (store->getTargets().size() == 0) return;
 		else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 			oc->incrementTargetIndex();
-			oc->setTarget(store->getPlayerByIndex(oc->getTargetIndex()));
+			oc->setTarget(store->getTargetByIndex(oc->getTargetIndex()));
 			char title[100];
-			snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getPlayerName().c_str() : "None");
+			snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getTargetName().c_str() : "None");
 			glutSetWindowTitle(title);
 		}
 		else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
 			tpc->incrementTargetIndex();
-			tpc->setTarget(store->getPlayerByIndex(tpc->getTargetIndex()));
+			tpc->setTarget(store->getTargetByIndex(tpc->getTargetIndex()));
 			char title[100];
-			snprintf(title, sizeof(title), "GG-TP: Camera de Terceira Pessoa - Target: %s", tpc->getTarget() ? tpc->getTarget()->getPlayerName().c_str() : "None");
+			snprintf(title, sizeof(title), "GG-TP: Camera de Terceira Pessoa - Target: %s", tpc->getTarget() ? tpc->getTarget()->getTargetName().c_str() : "None");
 			glutSetWindowTitle(title);
 		}
 	}

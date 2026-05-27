@@ -15,7 +15,7 @@ Data::Data() {
     camera = new Camera();
     lights = vector<Light*>();
 
-    players = vector<Group*>();
+    targets = vector<Group*>();
 
     renderExtraLines = true;
 
@@ -162,11 +162,11 @@ void Data::parseGroupField(Group& g, XMLElement* group) {
     }
 
     // Verificar se é um grupo de jogador
-    const char* playerAttr = group->Attribute("player");
-    if (playerAttr) {
-        g.setIsPlayer(true);
-        g.setPlayerName(string(playerAttr));
-        this->addPlayer(&g);
+    const char* targetAttr = group->Attribute("target");
+    if (targetAttr) {
+        g.setIsTarget(true);
+        g.setTargetName(string(targetAttr));
+        this->addTarget(&g);
     }
 
 
@@ -624,16 +624,16 @@ void Data::setRenderExtraLines(bool flag) { renderExtraLines = flag; }
 
 bool Data::getRenderExtraLines() { return renderExtraLines; }
 
-const vector<Group*>& Data::getPlayers() { return players; }
+const vector<Group*>& Data::getTargets() { return targets; }
 
-void Data::addPlayer(Group* player) { players.push_back(player); }
+void Data::addTarget(Group* target) { targets.push_back(target); }
 
-Group* Data::getPlayerByIndex(int id) {
-    if (id < 0 || id >= players.size()) {
-        cerr << "[Erro] Índice de jogador inválido: " << id << endl;
+Group* Data::getTargetByIndex(int id) {
+    if (id < 0 || id >= targets.size()) {
+        cerr << "[Erro] Índice de target inválido: " << id << endl;
         return nullptr;
     }
-    return players[id];
+    return targets[id];
 }
 
 Frustum* Data::getFrustum() {

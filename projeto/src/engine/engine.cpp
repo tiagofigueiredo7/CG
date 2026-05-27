@@ -40,10 +40,10 @@ void renderScene(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
-	if (main_group != nullptr) main_group->updatePlayersWorldPositions();
+	if (main_group != nullptr) main_group->updateTargetsWorldPositions();
 	glPopMatrix();
 
-	if (store->getPlayers().size() > 0) {
+	if (store->getTargets().size() > 0) {
 
 		if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 			oc->update_cartesian_coordinates();

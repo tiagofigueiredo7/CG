@@ -44,8 +44,8 @@ class Group {
 
         GLuint* buffers;
 
-        bool isPlayer;
-        string playerName;
+        bool isTarget;
+        string targetName;
         Point3D globalPosition;
 
 
@@ -57,7 +57,7 @@ class Group {
         ~Group();
 
         void renderGroup(bool renderExtraLines, Frustum* f);
-        void updatePlayersWorldPositions();
+        void updateTargetsWorldPositions();
 
         void addTransformation(Transformation* transf);
         void addMaterial(Material* material);
@@ -79,11 +79,11 @@ class Group {
         GLuint* getBuffers();
         const vector<Material*>& getMaterials();
         const vector<Point3D>& getModelCenters_world();
-        bool getIsPlayer();
-        string getPlayerName();
+        bool getIsTarget();
+        string getTargetName();
 
-        void setIsPlayer(bool isPlayer);
-        void setPlayerName(string playerName);
+        void setIsTarget(bool isTarget);
+        void setTargetName(string targetName);
         Point3D getGlobalPosition();
         void setGlobalPosition(float x, float y, float z);
         void setModelCenters_world(Point3D p, int index);

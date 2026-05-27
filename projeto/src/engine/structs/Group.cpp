@@ -16,8 +16,8 @@ Group::Group() {
 	this->modelCenters = vector<Point3D>();
 	this->modelCenters_world = vector<Point3D>();
 
-	this->isPlayer = false;
-	this->playerName = "";
+	this->isTarget = false;
+	this->targetName = "";
 	this->globalPosition = {0.0f, 0.0f, 0.0f};
 }
 
@@ -74,20 +74,20 @@ void Group::addTextureID(GLuint* id) { texturesIDs.push_back(id); }
 
 void Group::addRaioEsfera_world(float raio) { this->raios_Esferas_world.push_back(raio); }
 
-bool Group::getIsPlayer() {
-	return isPlayer;
+bool Group::getIsTarget() {
+	return isTarget;
 }
 
-void Group::setIsPlayer(bool isPlayer) {
-	this->isPlayer = isPlayer;
+void Group::setIsTarget(bool isTarget) {
+	this->isTarget = isTarget;
 }
 
-string Group::getPlayerName() {
-	return playerName;
+string Group::getTargetName() {
+	return targetName;
 }
 
-void Group::setPlayerName(string playerName) {
-	this->playerName = playerName;
+void Group::setTargetName(string targetName) {
+	this->targetName = targetName;
 }
 
 Point3D Group::getGlobalPosition() {
@@ -191,7 +191,7 @@ void Group::renderGroup(bool renderExtraLines, Frustum* f) {
 			float worldRadius = this->getRaiosEsferas_world()[i];
 			if (!f->sphereInFrustum(worldcenter.x, worldcenter.y, worldcenter.z, worldRadius)) {
 				acumulador += vertices_count[i];
-				if (this->getIsPlayer()) {
+				if (this->getIsTarget()) {
 					//printf("%s\n", this->getPlayerName().c_str());
 				}
 				continue; // Pular este modelo se a esfera circunscrita não estiver no frustum
@@ -258,7 +258,7 @@ void Group::createModel(int init, int count, GLuint* buffers, GLuint* textureID)
     }
 }
 
-void Group::updatePlayersWorldPositions() {
+void Group::updateTargetsWorldPositions() {
 
 	glPushMatrix();
 
@@ -328,7 +328,7 @@ void Group::updatePlayersWorldPositions() {
 	}
 
 	for (Group* gp : this->getSubGroups()) {
-		gp->updatePlayersWorldPositions();
+		gp->updateTargetsWorldPositions();
 	}
 
 	glPopMatrix();
