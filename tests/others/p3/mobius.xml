@@ -8,7 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="mobius.3d" /> <!-- generator mobiusStrip 1.0 0.3 100 mobius.3d -->
+			<model file="mobius_1_0.3_100.3d" /> <!-- generator mobiusStrip 1.0 0.3 100 mobius_1_0.3_100.3d -->
  		</models>
  	</group>
 </world>

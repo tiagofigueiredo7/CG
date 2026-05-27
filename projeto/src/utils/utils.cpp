@@ -58,8 +58,8 @@ namespace util {
 			}
 		}
 		else if(figure == "kleinBottle"){
-			if(parameters != 5) {
-				cerr << "[ERRO] Parâmetros inválidos para a figura klein bottle.\n[USO] generator kleinBottle <slices> <stacks> <dest file>\n";
+			if(parameters != 8) {
+				cerr << "[ERRO] Parâmetros inválidos para a figura klein bottle.\n[USO] generator kleinBottle <slices> <stacks> <scale> <tubeRadius> <heightStretch> <dest file>\n";
 				return false;
 			}
 		}

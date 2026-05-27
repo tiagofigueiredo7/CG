@@ -1,6 +1,6 @@
 #include "generator/primitives/kleinBottle.hpp"
 
-PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
+PrimitiveBuffers generateKleinBottle(int slices, int stacks, float scale, float tubeRadius, float heightStretch) {
 
     PrimitiveBuffers buffers = PrimitiveBuffers();
 
@@ -25,33 +25,30 @@ PrimitiveBuffers generateKleinBottle(int slices, int stacks) {
             float du_x, du_y, du_z, dv_x, dv_y, dv_z;
 
             if (u<M_PI) {
-                grid[i][j].x = 3*cos(u)*(1+sin(u)) + (2*(1-cos(u)/2))*cos(u)*cos(v);
-                grid[i][j].y = 8*sin(u) + (2*(1-cos(u)/2))*sin(u)*cos(v);
-                grid[i][j].z = (2*(1-cos(u)/2))*sin(v);
+                grid[i][j].x = scale * (3*cos(u)*(1+sin(u)) + 2*tubeRadius*(1-cos(u)/2)*cos(u)*cos(v));
+                grid[i][j].y = scale * (8*heightStretch*sin(u) + 2*tubeRadius*(1-cos(u)/2)*sin(u)*cos(v));
+                grid[i][j].z = scale * 2*tubeRadius*(1-cos(u)/2)*sin(v);
 
-                // Nota: 2*(1 - cos(u)/2) = 2 - cos(u)
-                du_x = -3*sin(u)*(1+sin(u)) + 3*cos(u)*cos(u)
-                       + sin(u)*cos(u)*cos(v) - (2 - cos(u))*sin(u)*cos(v);
-                du_y = 8*cos(u) + (sin(u)*sin(u))*cos(v) + (2 - cos(u))*cos(u)*cos(v);
-                du_z = sin(u)*sin(v);
+                du_x = -3*sin(u)*(1+sin(u)) + 3*cos(u)*cos(u) + tubeRadius*sin(u)*cos(u)*cos(v) - 2*tubeRadius*(1-cos(u)/2)*sin(u)*cos(v);
+                du_y = 8*heightStretch*cos(u) + tubeRadius*sin(u)*sin(u)*cos(v) + 2*tubeRadius*(1-cos(u)/2)*cos(u)*cos(v);
+                du_z = tubeRadius*sin(u)*sin(v);
 
-                dv_x = - (2 - cos(u)) * cos(u) * sin(v);
-                dv_y = - (2 - cos(u)) * sin(u) * sin(v);
-                dv_z = (2 - cos(u)) * cos(v);
+                dv_x = - 2*tubeRadius*(1-cos(u)/2) * cos(u) * sin(v);
+                dv_y = - 2*tubeRadius*(1-cos(u)/2) * sin(u) * sin(v);
+                dv_z = 2*tubeRadius*(1-cos(u)/2) * cos(v);
 
             } else {
-                grid[i][j].x = 3*cos(u)*(1+sin(u)) + (2*(1-cos(u)/2))*cos(v+M_PI);
-                grid[i][j].y = 8*sin(u);
-                grid[i][j].z = (2*(1-cos(u)/2))*sin(v);
+                grid[i][j].x = scale * (3*cos(u)*(1+sin(u)) + 2*tubeRadius*(1-cos(u)/2)*cos(v+M_PI));
+                grid[i][j].y = scale * 8*heightStretch*sin(u);
+                grid[i][j].z = scale * 2*tubeRadius*(1-cos(u)/2)*sin(v);
 
+                du_x = -3*sin(u)*(1+sin(u)) + 3*cos(u)*cos(u) - tubeRadius*sin(u)*cos(v);
+                du_y = 8*heightStretch*cos(u);
+                du_z = tubeRadius*sin(u)*sin(v);
 
-                du_x = -3*sin(u)*(1+sin(u)) + 3*cos(u)*cos(u) - sin(u)*cos(v);
-                du_y = 8*cos(u);
-                du_z = sin(u)*sin(v);
-
-                dv_x = (2 - cos(u)) * sin(v);
+                dv_x = 2*tubeRadius*(1-cos(u)/2) * sin(v);
                 dv_y = 0.0f;
-                dv_z = (2 - cos(u)) * cos(v);
+                dv_z = 2*tubeRadius*(1-cos(u)/2) * cos(v);
             }
 
             // Produto vetorial: n = du × dv
