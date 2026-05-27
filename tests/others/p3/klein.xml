@@ -8,9 +8,7 @@
     </camera>
 	<group> 
   		<models> 
-			<model file="klein_80_80_0.02_2.5_6.3d" > <!-- generator kleinBottle 80 80 0.02 2.5 6 klein_80_80_0.02_2.5_6.3d -->
-				<texture file = "2k_mercury.jpg" />
-			</model> 
+			<model file="klein_80_80_0.02_2.5_6.3d" /> <!-- generator kleinBottle 80 80 0.02 2.5 6 klein_80_80_0.02_2.5_6.3d -->
  		</models>
  	</group>
 </world>

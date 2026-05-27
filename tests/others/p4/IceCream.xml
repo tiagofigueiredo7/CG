@@ -1,0 +1,79 @@
+<world>
+    <window width="512" height="512" />
+    <camera> 
+	    <position x="3" y="2" z="3" />
+	    <lookAt x="0" y="0" z="0" />
+	    <up x="0" y="1" z="0" /> <!-- optional, use these values as default-->
+        <projection fov="60" near="1" far="1000" /> <!-- optional, use these values as default-->
+    </camera>
+
+	<lights>
+		<light type="point" posx="0" posy="0" posz="0" />
+		<light type="directional" dirx="-0.6" diry="-0.4" dirz="-1" />
+	</lights>
+
+    <group target="IceCream">
+		<transform>    
+			<scale x="2" y="2" z="2" />
+			<translate x="0" y="0.2" z="0" />
+        </transform>
+		<!-- Cone (corneta) -->
+		<group>
+			<transform>
+				<translate x="0" y="0.1" z="0" />
+				<scale x="0.3" y="0.6" z="0.3" />
+				<rotate angle="180" x="1" y="0" z="0" />
+			</transform>
+			<models>
+				<model file="cone_1_2_16_12.3d">
+					<color>
+						<diffuse R="210" G="180" B="140" />
+						<ambient R="160" G="140" B="100" />
+						<specular R="200" G="180" B="150" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="32" />
+					</color>
+					<texture file="boxs.jpg" />
+				</model>
+			</models>
+		</group>
+		<!-- Primeira bola de gelado -->
+		<group>
+			<transform>
+				<translate x="0" y="0.2" z="0" />
+				<scale x="0.4" y="0.4" z="0.4" />
+			</transform>
+			<models>
+				<model file="sphere_1_50_50.3d">
+					<color>
+						<diffuse R="255" G="192" B="203" />
+						<ambient R="200" G="150" B="170" />
+						<specular R="230" G="210" B="220" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="32" />
+					</color>
+					<texture file="ice-cream-pink.jpg" />
+				</model>
+			</models>
+		</group>
+		<!-- Segunda bola de gelado -->
+		<group>
+			<transform>
+				<translate x="0" y="0.5" z="0" />
+				<scale x="0.35" y="0.35" z="0.35" />
+			</transform>
+			<models>
+				<model file="sphere_1_50_50.3d">
+					<color>
+						<diffuse R="255" G="192" B="203" />
+						<ambient R="200" G="150" B="170" />
+						<specular R="230" G="210" B="220" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="32" />
+					</color>
+					<texture file="ice-cream-green-1.jpg" />
+				</model>
+			</models>
+		</group>
+	</group>
+</world>
