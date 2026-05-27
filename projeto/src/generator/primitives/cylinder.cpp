@@ -68,15 +68,7 @@ PrimitiveBuffers generateCylinder(float radius, float height, int slices){
     vector<float> verts = buffers.getVertices();
     int totalVertices = (int)verts.size() / 3;
     if (totalVertices > 0) {
-        float cx = 0.0f, cy = 0.0f, cz = 0.0f;
-        for (size_t i = 0; i < verts.size(); i += 3) {
-            cx += verts[i];
-            cy += verts[i + 1];
-            cz += verts[i + 2];
-        }
-        cx /= totalVertices; cy /= totalVertices; cz /= totalVertices;
-        buffers.setCenter(cx, cy, cz);
-
+        buffers.setCenter(0, 0, 0); // centro do cilindro é a origem
         buffers.setRaioEsfera(sqrt(radius*radius + (height/2)*(height/2))); // raio da esfera circunscrita ao cilindro
     }
 
