@@ -20,6 +20,8 @@ Data::Data() {
     renderExtraLines = true;
 
     frustum = new Frustum();
+
+    fpsCounter = new FPS();
 }
 
 // Destrutor
@@ -31,6 +33,7 @@ Data::~Data(){
         delete light;
     }
     delete this->frustum;
+    delete this->fpsCounter;
 }
 
 // Parser
@@ -658,4 +661,29 @@ void Data::drawFrustum() {
     } else ratio = width * 1.0 / height;
 
     frustum->drawFrustum(camera, fov, nearPlane, farPlane, ratio);
+}
+
+void Data::updateFPS() {
+    fpsCounter->updateFPS();
+}
+
+string Data::getCameraName() {
+    string cameraName = "GG-TP: ";
+    
+    if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(camera)) {
+        cameraName += "Camera Orbital";
+        if (oc->getTarget() != nullptr) {
+            cameraName += " - Target: " + oc->getTarget()->getTargetName();
+        }
+    } else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(camera)) {
+        cameraName += "Camera de Primeira Pessoa";
+    } else {
+        cameraName += "Camera Normal";
+    }
+    
+    return cameraName;
+}
+
+string Data::getWindowTitle() {
+    return getCameraName() + " | " + fpsCounter->getFPSString();
 }

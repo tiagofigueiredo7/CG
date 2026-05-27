@@ -20,6 +20,7 @@
 #include "engine/structs/lights/Point.hpp"
 #include "engine/structs/lights/Spotlight.hpp"
 #include "engine/structs/Frustum.hpp"
+#include "engine/structs/FPS.hpp"
 
 using namespace std;
 using namespace util;
@@ -55,6 +56,8 @@ class Data {
         // Targets
         vector<Group*> targets;
 
+        // FPS counter
+        FPS* fpsCounter;
 
         // Group element parser
         void parseCameraField(XMLElement* camera);
@@ -113,6 +116,11 @@ class Data {
         const vector<Group*>& getTargets();
         void addTarget(Group* target);
         Group* getTargetByIndex(int id);
+
+        // FPS and Camera
+        void updateFPS();
+        string getCameraName();
+        string getWindowTitle();
 };
 
 

@@ -30,6 +30,10 @@ void changeSize(int w, int h) {
 
 void renderScene(void) {
 
+	// Update FPS
+	store->updateFPS();
+	glutSetWindowTitle(store->getWindowTitle().c_str());
+
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -125,8 +129,8 @@ void update_camera(int value) {
 	if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		fpc->update_camera_Pos();
 		fpc->update_camera_LookAt();
-		glutPostRedisplay();
 	}
+	glutPostRedisplay();
 
 	glutTimerFunc(16, update_camera, 0);
 }
@@ -148,7 +152,7 @@ int main(int argc, char** argv) {
     // Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-	glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay() 
+	//glutIdleFunc(renderScene);// Redesenha a cena quando o sistema estiver sem nada para fazer, pode se mudar o rendersence para uma função que chame  glutPostRedisplay() 
 									//, onde a mesma manda um pedido para o Glut redesenhar a cena.
 	glutKeyboardFunc(processKeys);
 	glutKeyboardUpFunc(processKeysUp);

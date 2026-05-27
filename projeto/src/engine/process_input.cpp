@@ -6,7 +6,6 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 
 	if (c == '0' && (dynamic_cast<OrbitalCamera*>(cam) != nullptr || dynamic_cast<FirstPersonCamera*>(cam) != nullptr)) {
 		Camera* new_cam = new Camera(store->getCamera());
-		glutSetWindowTitle("GG-TP: Camera Normal");
 		store->setCamera(new_cam);
 	}
 	else if (c == '1' && (dynamic_cast<OrbitalCamera*>(cam) == nullptr)) {
@@ -15,14 +14,10 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 			oc->incrementTargetIndex();
 			oc->setTarget(store->getTargetByIndex(oc->getTargetIndex()));
 		}
-		char title[100];
-		snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getTargetName().c_str() : "None");
-		glutSetWindowTitle(title);
 		store->setCamera(oc);
 	}
 	else if (c == '2' && (dynamic_cast<FirstPersonCamera*>(cam) == nullptr)) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
-		glutSetWindowTitle("GG-TP: Camera de Primeira Pessoa");
 		store->setCamera(fpc);
 	}
 	else if (c == 'r' || c == 'R') {//Render trajetoria da curva + eixos
@@ -36,9 +31,6 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 			oc->incrementTargetIndex();
 			oc->setTarget(store->getTargetByIndex(oc->getTargetIndex()));
-			char title[100];
-			snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getTargetName().c_str() : "None");
-			glutSetWindowTitle(title);
 		}
 	}
 	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
