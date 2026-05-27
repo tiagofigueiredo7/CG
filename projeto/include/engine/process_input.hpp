@@ -26,7 +26,5 @@ void processKeysUp_aux(unsigned char key, int xx, int yy, Data* store);
 
 void processSpecialKeys_aux(int key, int xx, int yy, Data* store);
 
-void processKeys_Tpc_aux(unsigned char c, int xx, int yy, ThirdPersonCamera* tpc);
-
 
 #endif

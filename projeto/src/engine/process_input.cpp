@@ -25,17 +25,6 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		glutSetWindowTitle("GG-TP: Camera de Primeira Pessoa");
 		store->setCamera(fpc);
 	}
-	else if (c == '3' && (dynamic_cast<ThirdPersonCamera*>(cam) == nullptr)) {
-		ThirdPersonCamera* tpc = new ThirdPersonCamera(cam, store->getTargets().size());
-		if (!store->getTargets().empty()) {
-			tpc->incrementTargetIndex();
-			tpc->setTarget(store->getTargetByIndex(tpc->getTargetIndex()));
-		}
-		char title[100];
-		snprintf(title, sizeof(title), "GG-TP: Camera de Terceira Pessoa - Target: %s", tpc->getTarget() ? tpc->getTarget()->getTargetName().c_str() : "None");
-		glutSetWindowTitle(title);
-		store->setCamera(tpc);
-	}
 	else if (c == 'r' || c == 'R') {//Render trajetoria da curva + eixos
 		store->setRenderExtraLines(true);
 	}
@@ -51,13 +40,6 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 			snprintf(title, sizeof(title), "GG-TP: Camera Orbital - Target: %s", oc->getTarget() ? oc->getTarget()->getTargetName().c_str() : "None");
 			glutSetWindowTitle(title);
 		}
-		else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
-			tpc->incrementTargetIndex();
-			tpc->setTarget(store->getTargetByIndex(tpc->getTargetIndex()));
-			char title[100];
-			snprintf(title, sizeof(title), "GG-TP: Camera de Terceira Pessoa - Target: %s", tpc->getTarget() ? tpc->getTarget()->getTargetName().c_str() : "None");
-			glutSetWindowTitle(title);
-		}
 	}
 	else if (FirstPersonCamera* fpc = dynamic_cast<FirstPersonCamera*>(cam)) {
 		processKeys_Fpc_aux(c, xx, yy, fpc);
@@ -65,58 +47,8 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 	else if (OrbitalCamera* oc = dynamic_cast<OrbitalCamera*>(cam)) {
 		processKeys_Orb_aux(c, xx, yy, oc);
 	}
-	else if (ThirdPersonCamera* tpc = dynamic_cast<ThirdPersonCamera*>(cam)) {
-		processKeys_Tpc_aux(c,xx,yy, tpc);
-	}
 }
 
-void processKeys_Tpc_aux(unsigned char c, int xx, int yy, ThirdPersonCamera* tpc) {
-
-	if (c == 'Z' || c == 'z') {
-		if (tpc->getDistance() > 1.0f) {
-			tpc->setDistance(tpc->getDistance() - 0.5f);
-		} else {
-			tpc->setDistance(0.5f);
-		}
-	}
-	else if (c == 'X' || c == 'x') tpc->setDistance(tpc->getDistance() + 0.5f);
-	
-	else if (c == 'C' || c == 'c') {
-		if (tpc->getHeight() > 1.0f) {
-			tpc->setHeight(tpc->getHeight() - 0.5f);
-		} else {
-			tpc->setHeight(0.5f);
-		}
-	}
-	else if (c == 'V' || c == 'v') tpc->setHeight(tpc->getHeight() + 0.5f);
-	
-	else if (c == 'B' || c == 'b') {
-		if (tpc->getLookHeight() > -1.5f) {
-			tpc->setLookHeight(tpc->getLookHeight() - 0.5f);
-		} else {
-			tpc->setLookHeight(-2.0f);
-		}
-	}
-	else if (c == 'N' || c == 'n') {
-		if (tpc->getLookHeight() < 9.5f) {
-			tpc->setLookHeight(tpc->getLookHeight() + 0.5f);
-		} else {
-			tpc->setLookHeight(10.0f);
-		}
-	}
-
-	else if (c == 'M' || c == 'm') {// Reset da distância, altura e lookHeight
-		tpc->setDistance(6.0f);
-		tpc->setHeight(2.5f);
-		tpc->setLookHeight(1.0f);
-	}
-
-
-	tpc->update_camera_Pos();
-	tpc->update_camera_LookAt();
-	glutPostRedisplay();
-
-}
 
 void processKeys_Orb_aux(unsigned char c, int xx, int yy, OrbitalCamera* oc) {
 	if (c == '+') oc->update_zoom_speed(0.1f);

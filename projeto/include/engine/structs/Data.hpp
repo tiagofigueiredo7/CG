@@ -15,7 +15,6 @@
 #include "engine/structs/camera/Camera.hpp"
 #include "engine/structs/camera/OrbitalCamera.hpp"
 #include "engine/structs/camera/FirstPersonCamera.hpp"
-#include "engine/structs/camera/ThirdPersonCamera.hpp"
 #include "engine/structs/lights/Light.hpp"
 #include "engine/structs/lights/Directional.hpp"
 #include "engine/structs/lights/Point.hpp"
