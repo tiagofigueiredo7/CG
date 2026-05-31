@@ -22,7 +22,7 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - [Demo Fase 4](./tests/others/p4/demo_fase_4.xml)
 
 #### Outros ficheiros
-- **Ficheiros de cena:** [tests/](./projeto/tests/) ou em subdiretórios de [tests/](./projeto/tests/)
+- **Ficheiros de cena:** [tests/](./tests/) ou em subdiretórios de [tests/](./tests/)
 - **Ficheiros de modelos:** [projeto/models/](./projeto/models/)
 - **Ficheiros `.patch`:** [projeto/patchs/](./projeto/patchs/)
 - **Ficheiros de texturas:** [projeto/texturas/](./projeto/texturas/)
