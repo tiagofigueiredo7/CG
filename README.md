@@ -26,7 +26,7 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - **Ficheiros de modelos:** [projeto/models/](./projeto/models/)
 - **Ficheiros `.patch`:** [projeto/patchs/](./projeto/patchs/)
 - **Ficheiros de texturas:** [projeto/texturas/](./projeto/texturas/)
-- **Formato de ficheiros de modelos:** [extra_files/format.3d](./extra_files/format.3d)
+- **Formato de ficheiros de modelos:** [extra_files/formato.3d](./extra_files/formato.3d)
 
 > [!WARNING]
 > **Dependências:** Para compilar e correr os programas é necessário ter instalado o `CMake`, o `GLUT` e a biblioteca `libtinyxml2-dev`. Para além disso, é necessário ter um compilador C++ instalado (recomenda-se o `g++`).
