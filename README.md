@@ -14,7 +14,7 @@ Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação G
 - [Relatório Fase 1](./reports/fase1/relatorio_fase_1.pdf)
 - [Relatório Fase 2](./reports/fase2/relatorio_fase_2.pdf)
 - [Relatório Fase 3](./reports/fase3/relatorio_fase_3.pdf)
-- <<report fase 4>> *(não disponível)*
+- [Relatório Fase 4](./reports/fase4/relatorio_fase_4.pdf)
 
 #### Demos
 - [Demo Fase 2](./tests/others/p2/demo_fase_2.xml)

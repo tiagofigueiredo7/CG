@@ -62,7 +62,7 @@ PrimitiveBuffers generateKleinBottle(int slices, int stacks, float scale, float 
             ny /= length;
             nz /= length;
 
-            // Garantir orientação consistente: apontar para fora (aprox. em relação à origem)
+            // Garantir orientação consistente: apontar para fora 
             float dot = nx * grid[i][j].x + ny * grid[i][j].y + nz * grid[i][j].z;
             if (dot < 0.0f) {
                 nx = -nx; ny = -ny; nz = -nz;
