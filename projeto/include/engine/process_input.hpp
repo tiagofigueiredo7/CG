@@ -9,8 +9,15 @@
 #include <GL/glut.h>    // Para correr em Linux
 #endif
 
+#include "utils/util.hpp"
+using namespace util;
+
 // Bibliotecas locais
 #include "engine/structs/Data.hpp"
+
+Point3D getMouseWorldCoordinates(int mouseX, int mouseY, bool* valid);
+
+void verificarSelecao(Point3D clickPos, Data* store);
 
 void processMouseButtons_aux(int button, int state, int xx, int yy, Data* store);
 

@@ -1,5 +1,53 @@
 #include "engine/process_input.hpp"
 
+Point3D getMouseWorldCoordinates(int mouseX, int mouseY, bool* valid) {
+	
+	int viewport[4]; 
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	float winX = (float)mouseX;
+	float winY = (float)(viewport[3] - mouseY - 1); // flip Y
+	float winZ;
+	glReadPixels((int)winX, (int)winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+
+	if (winZ == 1.0f) {
+		*valid = false;
+		return {0.0f, 0.0f, 0.0f}; // Retorna um ponto invalido se o clique for no fundo
+	}
+
+	float x = (2.0f * winX) / viewport[2] - 1.0f;
+	float y = (2.0f * winY) / viewport[3] - 1.0f;
+	float z = 2.0f * winZ - 1.0f;
+
+	float vector[4] = {x, y, z, 1.0f};
+	float modelview[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+	float projection[16];
+	glGetFloatv(GL_PROJECTION_MATRIX, projection);
+
+	// Compor matriz proj * modelview
+	float projModelview[16];
+	multMatrix(projection, modelview, projModelview);
+
+	// Inverter a matriz composta
+	float invProjModelview[16];
+	if (!invertMatrix(projModelview, invProjModelview)) {
+		*valid = false;
+		return {0.0f, 0.0f, 0.0f}; // Matriz singular, nao inversivel
+	}
+
+	// Transformar ponto de NDC para coordenadas do mundo
+	float worldCoords[4];
+	multiMatrixVector_ColumnMajor(invProjModelview, vector, worldCoords);
+
+	// Dividir por w para perspetiva
+	worldCoords[0] /= worldCoords[3];
+	worldCoords[1] /= worldCoords[3];
+	worldCoords[2] /= worldCoords[3];
+
+	*valid = true;
+	return {worldCoords[0], worldCoords[1], worldCoords[2]};
+}
+
 void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 
 	Camera* cam = store->getCamera();
@@ -137,6 +185,16 @@ void processMouseButtons_aux(int button, int state, int xx, int yy, Data* store)
 			fpc->set_tracking(0);
 		}
 	}
+
+	if (state == GLUT_DOWN) {
+		if (store->getTargets().size() == 0) return;
+		bool valid;
+		Point3D worldCoords = getMouseWorldCoordinates(xx, yy, &valid);
+		if (valid) {
+			verificarSelecao(worldCoords, store);
+		} else return;
+
+	}
 }
 
 void processMouseMotion_aux(int xx, int yy, Data* store) {
@@ -161,4 +219,51 @@ void processMouseMotion_aux(int xx, int yy, Data* store) {
 		fpc->set_startY(yy);
 		
 	}
+}
+
+void verificarSelecao(Point3D clickPos, Data* store) {
+	if (store->getTargets().size() == 0) return;
+	
+
+	Group* selectedTarget = nullptr;
+	float minDistance = numeric_limits<float>::max();
+
+	int selectedIndex = -1;
+	int groupIndex = 0;
+
+	for (Group* target : store->getTargets()) {
+		if (target->getModelCenters_world().size() == 0) {
+			groupIndex++;
+			continue;
+		}
+		
+		for (size_t i = 0; i < target->getModelCenters_world().size(); ++i) {
+			Point3D center = target->getModelCenters_world()[i];
+			float raio = target->getRaiosEsferas_world()[i];
+			float distance = sqrt(pow(clickPos.x - center.x, 2) + pow(clickPos.y - center.y, 2) + pow(clickPos.z - center.z, 2));
+			
+			if (raio > 0 && distance <= raio && distance < minDistance) {
+				minDistance = distance;
+				selectedTarget = target;
+				selectedIndex = groupIndex;
+			}
+		}
+		groupIndex++;
+	}
+
+	if (!selectedTarget || selectedIndex < 0) {
+		return;
+	}
+
+	Camera* cam = store->getCamera();
+	OrbitalCamera* oc;
+	if (dynamic_cast<OrbitalCamera*>(cam) == nullptr) {
+		oc = new OrbitalCamera(cam, store->getTargets().size());
+	} else {
+		oc = dynamic_cast<OrbitalCamera*>(cam);
+	}
+
+	oc->setIndex(selectedIndex);
+	oc->setTarget(store->getTargetByIndex(selectedIndex));
+	store->setCamera(oc);
 }

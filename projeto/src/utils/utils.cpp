@@ -1,4 +1,5 @@
 #include "utils/util.hpp"
+#include <cstring>
 
 namespace util {
 
@@ -120,5 +121,79 @@ namespace util {
 		a[0] = a[0]/l;
 		a[1] = a[1]/l;
 		a[2] = a[2]/l;
+	}
+
+	// Multiplica duas matrizes 4x4 segundo o formato column-major (OpenGL)
+	void multMatrix(float *A, float *B, float *res) {
+		///Compute res = A * B
+		for (int row = 0; row < 4; ++row) {
+			for (int col = 0; col < 4; ++col) {
+				float sum = 0.0f;
+				for (int k = 0; k < 4; ++k) {
+					// A element (row,k) stored at A[k*4 + row]
+					// B element (k,col) stored at B[col*4 + k]
+					sum += A[k*4 + row] * B[col*4 + k];
+				}
+				res[col*4 + row] = sum; // store in column-major
+			}
+		}
+	}
+
+	// Inverte uma matriz 4x4 armazenada em column-major (OpenGL) usando Gauss-Jordan.
+	// Retorna false se a matriz for singular.
+	bool invertMatrix(float *m, float *inv) {
+		float temp[16];
+		memcpy(temp, m, 16 * sizeof(float));
+
+		// Inicializar matriz identidade (column-major)
+		for (int i = 0; i < 16; ++i) inv[i] = 0;
+		for (int i = 0; i < 4; ++i) inv[i*4 + i] = 1;
+
+		// Eliminação Gaussiana com pivoteamento (opera por linhas, indexando como column-major)
+		for (int col = 0; col < 4; ++col) {
+			// Encontrar pivô na coluna 'col' (procurar o maior elemento em abs na coluna abaixo do diagonal)
+			int pivot = col;
+			float maxVal = fabs(temp[col*4 + col]); // element (row=col, col)
+			for (int row = col + 1; row < 4; ++row) {
+				float val = fabs(temp[col*4 + row]); // element (row, col)
+				if (val > maxVal) {
+					maxVal = val;
+					pivot = row;
+				}
+			}
+
+			if (maxVal < 1e-8f) return false;
+
+			// Trocar linhas 'col' e 'pivot' atravessando as colunas
+			if (pivot != col) {
+				for (int j = 0; j < 4; ++j) {
+					float tmp = temp[j*4 + col];
+					temp[j*4 + col] = temp[j*4 + pivot];
+					temp[j*4 + pivot] = tmp;
+
+					tmp = inv[j*4 + col];
+					inv[j*4 + col] = inv[j*4 + pivot];
+					inv[j*4 + pivot] = tmp;
+				}
+			}
+
+			// Normalizar linha pivô (dividir todos os elementos da linha 'col' pelo pivô)
+			float divisor = temp[col*4 + col];
+			for (int j = 0; j < 4; ++j) {
+				temp[j*4 + col] /= divisor;
+				inv[j*4 + col] /= divisor;
+			}
+
+			// Eliminar outros elementos na coluna 'col'
+			for (int row = 0; row < 4; ++row) {
+				if (row == col) continue;
+				float factor = temp[col*4 + row];
+				for (int j = 0; j < 4; ++j) {
+					temp[j*4 + row] -= factor * temp[j*4 + col];
+					inv[j*4 + row] -= factor * inv[j*4 + col];
+				}
+			}
+		}
+		return true;
 	}
 }

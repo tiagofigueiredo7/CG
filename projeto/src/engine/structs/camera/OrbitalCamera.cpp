@@ -124,6 +124,10 @@ int OrbitalCamera::getTargetIndex() {
     return targetIndex;
 }
 
+void OrbitalCamera::setIndex(int index) {
+    this->targetIndex = index;
+}
+
 void OrbitalCamera::incrementTargetIndex() {
     if (numPlayers == 0) return;
     else if (targetIndex == -1) {

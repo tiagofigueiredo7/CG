@@ -45,6 +45,7 @@ class OrbitalCamera : public Camera {
         float get_zoom_speed();
 
         int getTargetIndex();
+        void setIndex(int index);
         void incrementTargetIndex();
         void setTarget(Group* target);
         Group* getTarget();

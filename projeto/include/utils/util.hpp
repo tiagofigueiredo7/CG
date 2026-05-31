@@ -41,6 +41,10 @@ namespace util {
     void cross(float *a, float *b, float *res);
 
     void normalize(float *a);
+
+    void multMatrix(float *a, float *b, float *res);
+
+    bool invertMatrix(float *m, float *inv);
 }
 
 #endif
