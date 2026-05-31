@@ -137,16 +137,16 @@ void processMouseButtons_aux(int button, int state, int xx, int yy, Data* store)
 		else if (state == GLUT_UP) {
 			fpc->set_tracking(0);
 		}
-	}
+	} else {
+		if (state == GLUT_DOWN) {
+			if (store->getTargets().size() == 0) return;
+			bool valid;
+			Point3D worldCoords = picking(xx, yy, &valid);
+			if (valid) {
+				verificarSelecao(worldCoords, store);
+			} else return;
 
-	if (state == GLUT_DOWN) {
-		if (store->getTargets().size() == 0) return;
-		bool valid;
-		Point3D worldCoords = picking(xx, yy, &valid);
-		if (valid) {
-			verificarSelecao(worldCoords, store);
-		} else return;
-
+		}
 	}
 }
 
