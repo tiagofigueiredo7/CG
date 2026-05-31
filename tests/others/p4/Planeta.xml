@@ -1,0 +1,49 @@
+<world>
+    <window width="512" height="512" />
+    <camera> 
+	    <position x="3" y="2" z="1" />
+	    <lookAt x="0" y="0" z="0" />
+	    <up x="0" y="1" z="0" /> <!-- optional, use these values as default-->
+        <projection fov="60" near="1" far="1000" /> <!-- optional, use these values as default-->
+    </camera>
+
+	<lights>
+		<light type="point" posx="0" posy="10" posz="0" />
+		<light type="directional" dirx="-0.6" diry="-0.4" dirz="-1" />
+	</lights>
+
+	<group target="Saturn">
+		<transform>
+			<scale x="0.85" y="0.85" z="0.85" />
+		</transform>
+		<models>
+			<model file="sphere_1_50_50.3d">
+				<texture file="relva.jpg" />
+			</model>
+		</models>
+		<!-- Anel -->
+		<group>
+			<transform>
+				<scale x="1.3" y="0.03" z="1.3" />
+			</transform>
+			<models>
+				<model file="torus_1.2_0.4_25_25.3d"> <!-- generator torus 1.2 0.4 25 25 torus_1.2_0.4_25_25.3d -->
+					<texture file="box.jpg" />
+				</model>
+			</models>
+		</group>
+			<!-- Titã -->
+			<group>
+				<transform>
+					<translate x="2.5" y="1.5" z="0" />
+					<scale x="0.17" y="0.17" z="0.17" />
+				</transform>
+			<models>
+				<model file="sphere_1_50_50.3d">
+					<texture file="ice-cream-pink.jpg" />
+				</model>
+			</models>
+		</group>
+	</group>
+
+</world>

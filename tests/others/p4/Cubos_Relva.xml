@@ -1,0 +1,96 @@
+<world>
+    <window width="512" height="512" />
+    <camera> 
+	    <position x="8" y="6" z="2" />
+	    <lookAt x="0" y="0" z="0" />
+	    <up x="0" y="1" z="0" /> <!-- optional, use these values as default-->
+        <projection fov="60" near="1" far="1000" /> <!-- optional, use these values as default-->
+    </camera>
+
+    <lights>
+		<light type="point" posx="0" posy="10" posz="0" />
+	</lights>
+
+    <group>
+        <transform> 
+            <translate x="0" y="1" z="0" />
+        </transform>
+        <group> 
+            <transform> 
+                <rotate angle="45" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+        <group> 
+            <transform> 
+                <rotate angle="90" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+        <group> 
+            <transform> 
+                <rotate angle="135" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+        <group> 
+            <transform> 
+                <rotate angle="180" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+        <group> 
+            <transform> 
+                <rotate angle="225" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+        <group> 
+            <transform> 
+                <rotate angle="270" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+        <group> 
+            <transform> 
+                <rotate angle="315" x="0" y ="1" z = "0" />
+                <translate x="3.5" y="0" z="0" />
+            </transform>
+			<models> 
+				<model file="box_2_3.3d" >
+                    <texture file = "relva.jpg" />
+                </model> <!-- generator box 2 3 box_2_3.3d -->
+			</models>
+        </group>
+	</group>
+</world>
