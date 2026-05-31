@@ -49,6 +49,7 @@ class Data {
         
         // Flag para renderizar ou não a trajetória da curva e eixos
         bool renderExtraLines;
+        bool renderFrustum;
 
         // Nodo raiz da hierarquia de grupos
         Group* group;
@@ -71,6 +72,12 @@ class Data {
         Data();
 
         ~Data();
+
+        // Extra Draws
+        void drawExtraLines();
+
+        // Axis
+        void drawAxis();
 
         // Frustum
         Frustum* getFrustum();
@@ -112,6 +119,8 @@ class Data {
 
         void setRenderExtraLines(bool flag);
         bool getRenderExtraLines();
+        void setRenderFrustum(bool flag);
+        bool getRenderFrustum();
 
         const vector<Group*>& getTargets();
         void addTarget(Group* target);

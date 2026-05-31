@@ -63,36 +63,7 @@ void renderScene(void) {
 
 	store->executeLights();
 	store->updateFrustum();
-	
-
-    // Axis lines
-	// Desenha os eixos sem a iluminação
-	GLboolean lightingWasEnabled = glIsEnabled(GL_LIGHTING);
-	if (lightingWasEnabled) glDisable(GL_LIGHTING);
-
-	if (store->getRenderExtraLines()) {
-
-		glColor3f(1.0f, 0.0f, 0.0f);
-		store->drawFrustum();
-
-		glBegin(GL_LINES);
-			// X axis in red
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex3f(-1000.0f, 0.0f, 0.0f);
-			glVertex3f( 1000.0f, 0.0f, 0.0f);
-			// Y Axis in Green
-			glColor3f(0.0f, 1.0f, 0.0f);
-			glVertex3f(0.0f, -1000.0f, 0.0f);
-			glVertex3f(0.0f, 1000.0f, 0.0f);
-			// Z Axis in Blue
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glVertex3f(0.0f, 0.0f, -1000.0f);
-			glVertex3f(0.0f, 0.0f, 1000.0f);
-		glEnd();
-
-	}
-
-	if (lightingWasEnabled) glEnable(GL_LIGHTING);
+	store->drawExtraLines();
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //Nas fases anteriores estava  GL_LINE
     glColor3f(1.0f, 1.0f, 1.0f); // cor branca

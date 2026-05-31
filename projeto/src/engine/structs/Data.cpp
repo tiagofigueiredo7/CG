@@ -18,6 +18,7 @@ Data::Data() {
     targets = vector<Group*>();
 
     renderExtraLines = true;
+    renderFrustum = false;
 
     frustum = new Frustum();
 
@@ -627,6 +628,10 @@ void Data::setRenderExtraLines(bool flag) { renderExtraLines = flag; }
 
 bool Data::getRenderExtraLines() { return renderExtraLines; }
 
+void Data::setRenderFrustum(bool flag) { renderFrustum = flag; }
+
+bool Data::getRenderFrustum() { return renderFrustum; }
+
 const vector<Group*>& Data::getTargets() { return targets; }
 
 void Data::addTarget(Group* target) { targets.push_back(target); }
@@ -686,4 +691,37 @@ string Data::getCameraName() {
 
 string Data::getWindowTitle() {
     return getCameraName() + " | " + fpsCounter->getFPSString();
+}
+
+void Data::drawAxis() {
+    glBegin(GL_LINES);
+        // X axis in red
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(-1000.0f, 0.0f, 0.0f);
+        glVertex3f( 1000.0f, 0.0f, 0.0f);
+        // Y Axis in Green
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(0.0f, -1000.0f, 0.0f);
+        glVertex3f(0.0f, 1000.0f, 0.0f);
+        // Z Axis in Blue
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(0.0f, 0.0f, -1000.0f);
+        glVertex3f(0.0f, 0.0f, 1000.0f);
+	glEnd();
+}
+
+void Data::drawExtraLines() {
+    // Axis lines
+	// Desenha os eixos sem a iluminação
+	GLboolean lightingWasEnabled = glIsEnabled(GL_LIGHTING);
+	if (lightingWasEnabled) glDisable(GL_LIGHTING);
+
+	if (this->getRenderFrustum()) {
+		this->drawFrustum();
+	}
+    if (this->getRenderExtraLines()) {
+		this->drawAxis();
+	}
+
+	if (lightingWasEnabled) glEnable(GL_LIGHTING);
 }

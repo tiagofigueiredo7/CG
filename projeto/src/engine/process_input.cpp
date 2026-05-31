@@ -1,52 +1,5 @@
 #include "engine/process_input.hpp"
 
-Point3D getMouseWorldCoordinates(int mouseX, int mouseY, bool* valid) {
-	
-	int viewport[4]; 
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	float winX = (float)mouseX;
-	float winY = (float)(viewport[3] - mouseY - 1); // flip Y
-	float winZ;
-	glReadPixels((int)winX, (int)winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-
-	if (winZ == 1.0f) {
-		*valid = false;
-		return {0.0f, 0.0f, 0.0f}; // Retorna um ponto invalido se o clique for no fundo
-	}
-
-	float x = (2.0f * winX) / viewport[2] - 1.0f;
-	float y = (2.0f * winY) / viewport[3] - 1.0f;
-	float z = 2.0f * winZ - 1.0f;
-
-	float vector[4] = {x, y, z, 1.0f};
-	float modelview[16];
-	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-	float projection[16];
-	glGetFloatv(GL_PROJECTION_MATRIX, projection);
-
-	// Compor matriz proj * modelview
-	float projModelview[16];
-	multMatrix(projection, modelview, projModelview);
-
-	// Inverter a matriz composta
-	float invProjModelview[16];
-	if (!invertMatrix(projModelview, invProjModelview)) {
-		*valid = false;
-		return {0.0f, 0.0f, 0.0f}; // Matriz singular, nao inversivel
-	}
-
-	// Transformar ponto de NDC para coordenadas do mundo
-	float worldCoords[4];
-	multiMatrixVector_ColumnMajor(invProjModelview, vector, worldCoords);
-
-	// Dividir por w para perspetiva
-	worldCoords[0] /= worldCoords[3];
-	worldCoords[1] /= worldCoords[3];
-	worldCoords[2] /= worldCoords[3];
-
-	*valid = true;
-	return {worldCoords[0], worldCoords[1], worldCoords[2]};
-}
 
 void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 
@@ -68,11 +21,11 @@ void processKeys_aux(unsigned char c, int xx, int yy, Data* store) {
 		FirstPersonCamera* fpc = new FirstPersonCamera(cam);
 		store->setCamera(fpc);
 	}
-	else if (c == 'r' || c == 'R') {//Render trajetoria da curva + eixos
-		store->setRenderExtraLines(true);
+	else if (c == 'r' || c == 'R') {//Renderizar ou esconder trajetoria da curva + eixos
+		store->setRenderExtraLines(!store->getRenderExtraLines());
 	}
-	else if (c == 'h' || c == 'H') {//Esconder trajetoria da curva + eixos
-		store->setRenderExtraLines(false);
+	else if (c == 'f' || c == 'F') {//Renderizar ou esconder frustum
+		store->setRenderFrustum(!store->getRenderFrustum());
 	}
 	else if (c == 't' || c == 'T') { // Mudar target da OrbitalCamera
 		if (store->getTargets().size() == 0) return;
@@ -219,6 +172,54 @@ void processMouseMotion_aux(int xx, int yy, Data* store) {
 		fpc->set_startY(yy);
 		
 	}
+}
+
+Point3D getMouseWorldCoordinates(int mouseX, int mouseY, bool* valid) {
+	
+	int viewport[4]; 
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	float winX = (float)mouseX;
+	float winY = (float)(viewport[3] - mouseY - 1); // flip Y
+	float winZ;
+	glReadPixels((int)winX, (int)winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+
+	if (winZ == 1.0f) {
+		*valid = false;
+		return {0.0f, 0.0f, 0.0f}; // Retorna um ponto invalido se o clique for no fundo
+	}
+
+	float x = (2.0f * winX) / viewport[2] - 1.0f;
+	float y = (2.0f * winY) / viewport[3] - 1.0f;
+	float z = 2.0f * winZ - 1.0f;
+
+	float vector[4] = {x, y, z, 1.0f};
+	float modelview[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+	float projection[16];
+	glGetFloatv(GL_PROJECTION_MATRIX, projection);
+
+	// Compor matriz proj * modelview
+	float projModelview[16];
+	multMatrix(projection, modelview, projModelview);
+
+	// Inverter a matriz composta
+	float invProjModelview[16];
+	if (!invertMatrix(projModelview, invProjModelview)) {
+		*valid = false;
+		return {0.0f, 0.0f, 0.0f}; // Matriz singular, nao inversivel
+	}
+
+	// Transformar ponto de NDC para coordenadas do mundo
+	float worldCoords[4];
+	multiMatrixVector_ColumnMajor(invProjModelview, vector, worldCoords);
+
+	// Dividir por w para perspetiva
+	worldCoords[0] /= worldCoords[3];
+	worldCoords[1] /= worldCoords[3];
+	worldCoords[2] /= worldCoords[3];
+
+	*valid = true;
+	return {worldCoords[0], worldCoords[1], worldCoords[2]};
 }
 
 void verificarSelecao(Point3D clickPos, Data* store) {
