@@ -142,7 +142,7 @@ void processMouseButtons_aux(int button, int state, int xx, int yy, Data* store)
 	if (state == GLUT_DOWN) {
 		if (store->getTargets().size() == 0) return;
 		bool valid;
-		Point3D worldCoords = getMouseWorldCoordinates(xx, yy, &valid);
+		Point3D worldCoords = picking(xx, yy, &valid);
 		if (valid) {
 			verificarSelecao(worldCoords, store);
 		} else return;
@@ -174,7 +174,7 @@ void processMouseMotion_aux(int xx, int yy, Data* store) {
 	}
 }
 
-Point3D getMouseWorldCoordinates(int mouseX, int mouseY, bool* valid) {
+Point3D picking(int mouseX, int mouseY, bool* valid) {
 	
 	int viewport[4]; 
 	glGetIntegerv(GL_VIEWPORT, viewport);

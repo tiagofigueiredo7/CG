@@ -15,7 +15,7 @@ using namespace util;
 // Bibliotecas locais
 #include "engine/structs/Data.hpp"
 
-Point3D getMouseWorldCoordinates(int mouseX, int mouseY, bool* valid);
+Point3D picking(int mouseX, int mouseY, bool* valid);
 
 void verificarSelecao(Point3D clickPos, Data* store);
 
