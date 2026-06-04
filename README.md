@@ -2,17 +2,15 @@
 Projeto de grupo desenvolvido no âmbito da Unidade Curricular de Computação Gráfica. Este projeto consistiu na implementação de um  mini motor gráfico 3D baseado numa estrutura de <i>scene graph</i>, e de um gerador que forneça exemplos de utilização para o mesmo.
 
 ---
+<p>
+    <img src="imgs/solar_system_1.png" width="49%">
+    <img src="imgs/solar_system_2.png" width="49%">
+</p>
 
-<table align="center">
-  <tr>
-    <td><img src="imgs/solar_system_1.png" width="400px"></td>
-    <td><img src="imgs/solar_system_2.png" width="400px"></td>
-  </tr>
-  <tr>
-    <td><img src="imgs/snowman.png" width="400px"></td>
-    <td><img src="imgs/ice_cream.png" width="250px"></td>
-  </tr>
-</table>
+<p>
+    <img src="imgs/icecream.png" width="49%">
+    <img src="imgs/snowman.png" width="49%">
+</p>
 
 ---
 
